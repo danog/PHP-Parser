@@ -27,6 +27,26 @@ abstract class BinaryOp extends Expr {
         return ['left', 'right'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'left' => $this->left,
+            'right' => $this->right,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'left':
+                $this->left = $value;
+                return;
+            case 'right':
+                $this->right = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     /**
      * Get the operator sigil for this binary operation.
      *

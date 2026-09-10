@@ -92,10 +92,10 @@ class NodeTraverser implements NodeTraverserInterface {
      */
     protected function traverseNode(Node $node): void {
         foreach ($node->getSubNodeNames() as $name) {
-            $subNode = $node->$name;
+            $subNode = $node->getSubNode($name);
 
             if (\is_array($subNode)) {
-                $node->$name = $this->traverseArray($subNode);
+                $node->setSubNode($name, $this->traverseArray($subNode));
                 if ($this->stopTraversal) {
                     break;
                 }
@@ -115,7 +115,8 @@ class NodeTraverser implements NodeTraverserInterface {
                 if (null !== $return) {
                     if ($return instanceof Node) {
                         $this->ensureReplacementReasonable($subNode, $return);
-                        $subNode = $node->$name = $return;
+                        $node->setSubNode($name, $return);
+                        $subNode = $return;
                     } elseif (NodeVisitor::DONT_TRAVERSE_CHILDREN === $return) {
                         $traverseChildren = false;
                     } elseif (NodeVisitor::DONT_TRAVERSE_CURRENT_AND_CHILDREN === $return) {
@@ -125,7 +126,7 @@ class NodeTraverser implements NodeTraverserInterface {
                         $this->stopTraversal = true;
                         break 2;
                     } elseif (NodeVisitor::REPLACE_WITH_NULL === $return) {
-                        $node->$name = null;
+                        $node->setSubNode($name, null);
                         continue 2;
                     } else {
                         throw new \LogicException(
@@ -149,12 +150,13 @@ class NodeTraverser implements NodeTraverserInterface {
                 if (null !== $return) {
                     if ($return instanceof Node) {
                         $this->ensureReplacementReasonable($subNode, $return);
-                        $subNode = $node->$name = $return;
+                        $node->setSubNode($name, $return);
+                        $subNode = $return;
                     } elseif (NodeVisitor::STOP_TRAVERSAL === $return) {
                         $this->stopTraversal = true;
                         break 2;
                     } elseif (NodeVisitor::REPLACE_WITH_NULL === $return) {
-                        $node->$name = null;
+                        $node->setSubNode($name, null);
                         break;
                     } elseif (\is_array($return)) {
                         throw new \LogicException(

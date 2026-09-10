@@ -23,6 +23,22 @@ class PreDec extends Expr {
         return ['var'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'var' => $this->var,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'var':
+                $this->var = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Expr_PreDec';
     }

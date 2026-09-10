@@ -42,6 +42,22 @@ class String_ extends Scalar {
         return ['value'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'value' => $this->value,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'value':
+                $this->value = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     /**
      * @param array<string, mixed> $attributes
      * @param bool $parseUnicodeEscape Whether to parse PHP 7 \u escapes

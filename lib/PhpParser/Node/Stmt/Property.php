@@ -44,6 +44,38 @@ class Property extends Node\Stmt {
         return ['attrGroups', 'flags', 'type', 'props', 'hooks'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'attrGroups' => $this->attrGroups,
+            'flags' => $this->flags,
+            'type' => $this->type,
+            'props' => $this->props,
+            'hooks' => $this->hooks,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'attrGroups':
+                $this->attrGroups = $value;
+                return;
+            case 'flags':
+                $this->flags = $value;
+                return;
+            case 'type':
+                $this->type = $value;
+                return;
+            case 'props':
+                $this->props = $value;
+                return;
+            case 'hooks':
+                $this->hooks = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     /**
      * Whether the property is explicitly or implicitly public.
      */

@@ -80,7 +80,7 @@ class NodeDumper {
             foreach ($node->getSubNodeNames() as $key) {
                 $this->res .= "$this->nl    " . $key . ': ';
 
-                $value = $node->$key;
+                $value = $node->getSubNode($key);
                 if (\is_int($value)) {
                     if ('flags' === $key || 'newModifier' === $key) {
                         $this->res .= $this->dumpFlags($value);

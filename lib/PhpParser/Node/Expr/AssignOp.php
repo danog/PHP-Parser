@@ -26,4 +26,24 @@ abstract class AssignOp extends Expr {
     public function getSubNodeNames(): array {
         return ['var', 'expr'];
     }
+
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'var' => $this->var,
+            'expr' => $this->expr,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'var':
+                $this->var = $value;
+                return;
+            case 'expr':
+                $this->expr = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
 }

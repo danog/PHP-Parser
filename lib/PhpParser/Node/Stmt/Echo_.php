@@ -23,6 +23,22 @@ class Echo_ extends Node\Stmt {
         return ['exprs'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'exprs' => $this->exprs,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'exprs':
+                $this->exprs = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_Echo';
     }

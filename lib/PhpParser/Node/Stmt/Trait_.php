@@ -28,6 +28,30 @@ class Trait_ extends ClassLike {
         return ['attrGroups', 'name', 'stmts'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'attrGroups' => $this->attrGroups,
+            'name' => $this->name,
+            'stmts' => $this->stmts,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'attrGroups':
+                $this->attrGroups = $value;
+                return;
+            case 'name':
+                $this->name = $value;
+                return;
+            case 'stmts':
+                $this->stmts = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_Trait';
     }

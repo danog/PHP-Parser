@@ -63,6 +63,42 @@ class Class_ extends ClassLike {
         return ['attrGroups', 'flags', 'name', 'extends', 'implements', 'stmts'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'attrGroups' => $this->attrGroups,
+            'flags' => $this->flags,
+            'name' => $this->name,
+            'extends' => $this->extends,
+            'implements' => $this->implements,
+            'stmts' => $this->stmts,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'attrGroups':
+                $this->attrGroups = $value;
+                return;
+            case 'flags':
+                $this->flags = $value;
+                return;
+            case 'name':
+                $this->name = $value;
+                return;
+            case 'extends':
+                $this->extends = $value;
+                return;
+            case 'implements':
+                $this->implements = $value;
+                return;
+            case 'stmts':
+                $this->stmts = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     /**
      * Whether the class is explicitly abstract.
      */

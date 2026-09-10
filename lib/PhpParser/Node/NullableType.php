@@ -23,6 +23,22 @@ class NullableType extends ComplexType {
         return ['type'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'type' => $this->type,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'type':
+                $this->type = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'NullableType';
     }

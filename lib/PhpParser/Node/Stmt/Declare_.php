@@ -28,6 +28,26 @@ class Declare_ extends Node\Stmt {
         return ['declares', 'stmts'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'declares' => $this->declares,
+            'stmts' => $this->stmts,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'declares':
+                $this->declares = $value;
+                return;
+            case 'stmts':
+                $this->stmts = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_Declare';
     }

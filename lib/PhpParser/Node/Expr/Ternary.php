@@ -31,6 +31,30 @@ class Ternary extends Expr {
         return ['cond', 'if', 'else'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'cond' => $this->cond,
+            'if' => $this->if,
+            'else' => $this->else,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'cond':
+                $this->cond = $value;
+                return;
+            case 'if':
+                $this->if = $value;
+                return;
+            case 'else':
+                $this->else = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Expr_Ternary';
     }

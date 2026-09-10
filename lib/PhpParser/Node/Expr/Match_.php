@@ -26,6 +26,26 @@ class Match_ extends Node\Expr {
         return ['cond', 'arms'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'cond' => $this->cond,
+            'arms' => $this->arms,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'cond':
+                $this->cond = $value;
+                return;
+            case 'arms':
+                $this->arms = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Expr_Match';
     }

@@ -27,6 +27,26 @@ class Switch_ extends Node\Stmt {
         return ['cond', 'cases'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'cond' => $this->cond,
+            'cases' => $this->cases,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'cond':
+                $this->cond = $value;
+                return;
+            case 'cases':
+                $this->cases = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_Switch';
     }

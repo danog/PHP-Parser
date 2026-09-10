@@ -27,6 +27,26 @@ class Case_ extends Node\Stmt {
         return ['cond', 'stmts'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'cond' => $this->cond,
+            'stmts' => $this->stmts,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'cond':
+                $this->cond = $value;
+                return;
+            case 'stmts':
+                $this->stmts = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_Case';
     }

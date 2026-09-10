@@ -34,6 +34,30 @@ class Catch_ extends Node\Stmt {
         return ['types', 'var', 'stmts'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'types' => $this->types,
+            'var' => $this->var,
+            'stmts' => $this->stmts,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'types':
+                $this->types = $value;
+                return;
+            case 'var':
+                $this->var = $value;
+                return;
+            case 'stmts':
+                $this->stmts = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_Catch';
     }

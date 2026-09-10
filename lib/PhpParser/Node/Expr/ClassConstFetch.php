@@ -30,6 +30,26 @@ class ClassConstFetch extends Expr {
         return ['class', 'name'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'class' => $this->class,
+            'name' => $this->name,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'class':
+                $this->class = $value;
+                return;
+            case 'name':
+                $this->name = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Expr_ClassConstFetch';
     }

@@ -30,6 +30,26 @@ class StaticVar extends NodeAbstract {
         return ['var', 'default'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'var' => $this->var,
+            'default' => $this->default,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'var':
+                $this->var = $value;
+                return;
+            case 'default':
+                $this->default = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'StaticVar';
     }

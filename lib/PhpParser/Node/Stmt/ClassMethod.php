@@ -78,6 +78,46 @@ class ClassMethod extends Node\Stmt implements FunctionLike {
         return ['attrGroups', 'flags', 'byRef', 'name', 'params', 'returnType', 'stmts'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'attrGroups' => $this->attrGroups,
+            'flags' => $this->flags,
+            'byRef' => $this->byRef,
+            'name' => $this->name,
+            'params' => $this->params,
+            'returnType' => $this->returnType,
+            'stmts' => $this->stmts,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'attrGroups':
+                $this->attrGroups = $value;
+                return;
+            case 'flags':
+                $this->flags = $value;
+                return;
+            case 'byRef':
+                $this->byRef = $value;
+                return;
+            case 'name':
+                $this->name = $value;
+                return;
+            case 'params':
+                $this->params = $value;
+                return;
+            case 'returnType':
+                $this->returnType = $value;
+                return;
+            case 'stmts':
+                $this->stmts = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function returnsByRef(): bool {
         return $this->byRef;
     }

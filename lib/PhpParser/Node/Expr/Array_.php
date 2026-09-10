@@ -28,6 +28,22 @@ class Array_ extends Expr {
         return ['items'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'items' => $this->items,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'items':
+                $this->items = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Expr_Array';
     }

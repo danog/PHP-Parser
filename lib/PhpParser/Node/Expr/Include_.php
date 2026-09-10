@@ -32,6 +32,26 @@ class Include_ extends Expr {
         return ['expr', 'type'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'expr' => $this->expr,
+            'type' => $this->type,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'expr':
+                $this->expr = $value;
+                return;
+            case 'type':
+                $this->type = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Expr_Include';
     }

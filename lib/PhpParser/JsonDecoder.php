@@ -47,8 +47,9 @@ class JsonDecoder {
             throw new \RuntimeException('Node type must be a string');
         }
 
-        $reflectionClass = $this->reflectionClassFromNodeType($nodeType);
-        $node = $reflectionClass->newInstanceWithoutConstructor();
+        // Nodes cannot be created from their type name without reflection, which the compiled program
+        // does not have.
+        throw new \RuntimeException('Decoding nodes from JSON is not supported: ' . $nodeType);
 
         if (isset($value['attributes'])) {
             if (!\is_array($value['attributes'])) {
@@ -63,7 +64,7 @@ class JsonDecoder {
                 continue;
             }
 
-            $node->$name = $this->decodeRecursive($subNode);
+            $node->setSubNode($name, $this->decodeRecursive($subNode));
         }
 
         return $node;

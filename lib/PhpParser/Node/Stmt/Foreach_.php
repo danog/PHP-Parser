@@ -44,6 +44,38 @@ class Foreach_ extends Node\Stmt {
         return ['expr', 'keyVar', 'byRef', 'valueVar', 'stmts'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'expr' => $this->expr,
+            'keyVar' => $this->keyVar,
+            'byRef' => $this->byRef,
+            'valueVar' => $this->valueVar,
+            'stmts' => $this->stmts,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'expr':
+                $this->expr = $value;
+                return;
+            case 'keyVar':
+                $this->keyVar = $value;
+                return;
+            case 'byRef':
+                $this->byRef = $value;
+                return;
+            case 'valueVar':
+                $this->valueVar = $value;
+                return;
+            case 'stmts':
+                $this->stmts = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_Foreach';
     }

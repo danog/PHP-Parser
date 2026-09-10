@@ -30,6 +30,26 @@ class Const_ extends NodeAbstract {
         return ['name', 'value'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'name' => $this->name,
+            'value' => $this->value,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'name':
+                $this->name = $value;
+                return;
+            case 'value':
+                $this->value = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Const';
     }

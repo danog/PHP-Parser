@@ -35,6 +35,30 @@ class GroupUse extends Stmt {
         return ['type', 'prefix', 'uses'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'type' => $this->type,
+            'prefix' => $this->prefix,
+            'uses' => $this->uses,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'type':
+                $this->type = $value;
+                return;
+            case 'prefix':
+                $this->prefix = $value;
+                return;
+            case 'uses':
+                $this->uses = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_GroupUse';
     }

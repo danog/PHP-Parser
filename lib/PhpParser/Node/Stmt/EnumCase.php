@@ -30,6 +30,30 @@ class EnumCase extends Node\Stmt {
         return ['attrGroups', 'name', 'expr'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'attrGroups' => $this->attrGroups,
+            'name' => $this->name,
+            'expr' => $this->expr,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'attrGroups':
+                $this->attrGroups = $value;
+                return;
+            case 'name':
+                $this->name = $value;
+                return;
+            case 'expr':
+                $this->expr = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_EnumCase';
     }

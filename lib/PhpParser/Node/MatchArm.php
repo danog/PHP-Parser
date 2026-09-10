@@ -23,6 +23,26 @@ class MatchArm extends NodeAbstract {
         return ['conds', 'body'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'conds' => $this->conds,
+            'body' => $this->body,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'conds':
+                $this->conds = $value;
+                return;
+            case 'body':
+                $this->body = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'MatchArm';
     }

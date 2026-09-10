@@ -23,6 +23,22 @@ class Finally_ extends Node\Stmt {
         return ['stmts'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'stmts' => $this->stmts,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'stmts':
+                $this->stmts = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_Finally';
     }

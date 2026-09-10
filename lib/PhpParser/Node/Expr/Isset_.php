@@ -23,6 +23,22 @@ class Isset_ extends Expr {
         return ['vars'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'vars' => $this->vars,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'vars':
+                $this->vars = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Expr_Isset';
     }

@@ -19,6 +19,16 @@ interface Node {
     public function getSubNodeNames(): array;
 
     /**
+     * Gets the sub node with the given name (one of getSubNodeNames()).
+     */
+    public function getSubNode(string $name): mixed;
+
+    /**
+     * Sets the sub node with the given name (one of getSubNodeNames()).
+     */
+    public function setSubNode(string $name, mixed $value): void;
+
+    /**
      * Gets line the node started in (alias of getStartLine).
      *
      * @return int Start line (or -1 if not available)

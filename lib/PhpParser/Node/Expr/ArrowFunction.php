@@ -55,6 +55,42 @@ class ArrowFunction extends Expr implements FunctionLike {
         return ['attrGroups', 'static', 'byRef', 'params', 'returnType', 'expr'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'attrGroups' => $this->attrGroups,
+            'static' => $this->static,
+            'byRef' => $this->byRef,
+            'params' => $this->params,
+            'returnType' => $this->returnType,
+            'expr' => $this->expr,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'attrGroups':
+                $this->attrGroups = $value;
+                return;
+            case 'static':
+                $this->static = $value;
+                return;
+            case 'byRef':
+                $this->byRef = $value;
+                return;
+            case 'params':
+                $this->params = $value;
+                return;
+            case 'returnType':
+                $this->returnType = $value;
+                return;
+            case 'expr':
+                $this->expr = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function returnsByRef(): bool {
         return $this->byRef;
     }

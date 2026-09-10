@@ -27,6 +27,26 @@ class ClosureUse extends NodeAbstract {
         return ['var', 'byRef'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'var' => $this->var,
+            'byRef' => $this->byRef,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'var':
+                $this->var = $value;
+                return;
+            case 'byRef':
+                $this->byRef = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'ClosureUse';
     }

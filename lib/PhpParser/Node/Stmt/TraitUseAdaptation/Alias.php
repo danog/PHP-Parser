@@ -31,6 +31,34 @@ class Alias extends Node\Stmt\TraitUseAdaptation {
         return ['trait', 'method', 'newModifier', 'newName'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'trait' => $this->trait,
+            'method' => $this->method,
+            'newModifier' => $this->newModifier,
+            'newName' => $this->newName,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'trait':
+                $this->trait = $value;
+                return;
+            case 'method':
+                $this->method = $value;
+                return;
+            case 'newModifier':
+                $this->newModifier = $value;
+                return;
+            case 'newName':
+                $this->newName = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_TraitUseAdaptation_Alias';
     }

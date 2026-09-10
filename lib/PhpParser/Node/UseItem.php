@@ -35,6 +35,30 @@ class UseItem extends NodeAbstract {
         return ['type', 'name', 'alias'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'type' => $this->type,
+            'name' => $this->name,
+            'alias' => $this->alias,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'type':
+                $this->type = $value;
+                return;
+            case 'name':
+                $this->name = $value;
+                return;
+            case 'alias':
+                $this->alias = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     /**
      * Get alias. If not explicitly given this is the last component of the used name.
      */

@@ -27,6 +27,26 @@ class TraitUse extends Node\Stmt {
         return ['traits', 'adaptations'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'traits' => $this->traits,
+            'adaptations' => $this->adaptations,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'traits':
+                $this->traits = $value;
+                return;
+            case 'adaptations':
+                $this->adaptations = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_TraitUse';
     }

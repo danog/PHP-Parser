@@ -29,6 +29,26 @@ class Instanceof_ extends Expr {
         return ['expr', 'class'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'expr' => $this->expr,
+            'class' => $this->class,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'expr':
+                $this->expr = $value;
+                return;
+            case 'class':
+                $this->class = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Expr_Instanceof';
     }

@@ -27,6 +27,30 @@ class Precedence extends Node\Stmt\TraitUseAdaptation {
         return ['trait', 'method', 'insteadof'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'trait' => $this->trait,
+            'method' => $this->method,
+            'insteadof' => $this->insteadof,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'trait':
+                $this->trait = $value;
+                return;
+            case 'method':
+                $this->method = $value;
+                return;
+            case 'insteadof':
+                $this->insteadof = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_TraitUseAdaptation_Precedence';
     }

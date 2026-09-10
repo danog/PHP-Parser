@@ -102,4 +102,40 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
     public function getSubNodeNames(): array {
         return ['attrGroups', 'flags', 'byRef', 'name', 'params', 'body'];
     }
+
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'attrGroups' => $this->attrGroups,
+            'flags' => $this->flags,
+            'byRef' => $this->byRef,
+            'name' => $this->name,
+            'params' => $this->params,
+            'body' => $this->body,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'attrGroups':
+                $this->attrGroups = $value;
+                return;
+            case 'flags':
+                $this->flags = $value;
+                return;
+            case 'byRef':
+                $this->byRef = $value;
+                return;
+            case 'name':
+                $this->name = $value;
+                return;
+            case 'params':
+                $this->params = $value;
+                return;
+            case 'body':
+                $this->body = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
 }

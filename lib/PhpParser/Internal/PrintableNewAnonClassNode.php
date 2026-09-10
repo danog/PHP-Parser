@@ -68,4 +68,40 @@ class PrintableNewAnonClassNode extends Expr {
     public function getSubNodeNames(): array {
         return ['attrGroups', 'flags', 'args', 'extends', 'implements', 'stmts'];
     }
+
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'attrGroups' => $this->attrGroups,
+            'flags' => $this->flags,
+            'args' => $this->args,
+            'extends' => $this->extends,
+            'implements' => $this->implements,
+            'stmts' => $this->stmts,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'attrGroups':
+                $this->attrGroups = $value;
+                return;
+            case 'flags':
+                $this->flags = $value;
+                return;
+            case 'args':
+                $this->args = $value;
+                return;
+            case 'extends':
+                $this->extends = $value;
+                return;
+            case 'implements':
+                $this->implements = $value;
+                return;
+            case 'stmts':
+                $this->stmts = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
 }

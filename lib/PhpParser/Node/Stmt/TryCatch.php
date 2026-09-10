@@ -31,6 +31,30 @@ class TryCatch extends Node\Stmt {
         return ['stmts', 'catches', 'finally'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'stmts' => $this->stmts,
+            'catches' => $this->catches,
+            'finally' => $this->finally,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'stmts':
+                $this->stmts = $value;
+                return;
+            case 'catches':
+                $this->catches = $value;
+                return;
+            case 'finally':
+                $this->finally = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_TryCatch';
     }

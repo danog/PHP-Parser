@@ -24,6 +24,22 @@ class Static_ extends Stmt {
         return ['vars'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'vars' => $this->vars,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'vars':
+                $this->vars = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_Static';
     }

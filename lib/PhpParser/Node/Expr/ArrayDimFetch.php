@@ -27,6 +27,26 @@ class ArrayDimFetch extends Expr {
         return ['var', 'dim'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'var' => $this->var,
+            'dim' => $this->dim,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'var':
+                $this->var = $value;
+                return;
+            case 'dim':
+                $this->dim = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Expr_ArrayDimFetch';
     }

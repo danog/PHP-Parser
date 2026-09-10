@@ -23,6 +23,22 @@ class BitwiseNot extends Expr {
         return ['expr'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'expr' => $this->expr,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'expr':
+                $this->expr = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Expr_BitwiseNot';
     }

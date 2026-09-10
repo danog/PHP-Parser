@@ -41,6 +41,34 @@ class For_ extends Node\Stmt {
         return ['init', 'cond', 'loop', 'stmts'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'init' => $this->init,
+            'cond' => $this->cond,
+            'loop' => $this->loop,
+            'stmts' => $this->stmts,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'init':
+                $this->init = $value;
+                return;
+            case 'cond':
+                $this->cond = $value;
+                return;
+            case 'loop':
+                $this->loop = $value;
+                return;
+            case 'stmts':
+                $this->stmts = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_For';
     }

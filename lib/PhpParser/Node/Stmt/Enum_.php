@@ -38,6 +38,38 @@ class Enum_ extends ClassLike {
         return ['attrGroups', 'name', 'scalarType', 'implements', 'stmts'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'attrGroups' => $this->attrGroups,
+            'name' => $this->name,
+            'scalarType' => $this->scalarType,
+            'implements' => $this->implements,
+            'stmts' => $this->stmts,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'attrGroups':
+                $this->attrGroups = $value;
+                return;
+            case 'name':
+                $this->name = $value;
+                return;
+            case 'scalarType':
+                $this->scalarType = $value;
+                return;
+            case 'implements':
+                $this->implements = $value;
+                return;
+            case 'stmts':
+                $this->stmts = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_Enum';
     }

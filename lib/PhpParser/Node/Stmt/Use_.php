@@ -41,6 +41,26 @@ class Use_ extends Stmt {
         return ['type', 'uses'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'type' => $this->type,
+            'uses' => $this->uses,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'type':
+                $this->type = $value;
+                return;
+            case 'uses':
+                $this->uses = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_Use';
     }

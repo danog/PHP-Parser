@@ -586,8 +586,13 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
     }
 
     protected function pFallback(Node $node, int $precedence, int $lhsPrecedence): string {
-        return $this->{'p' . $node->getType()}($node, $precedence, $lhsPrecedence);
+        return $this->pDispatch($node, $precedence, $lhsPrecedence);
     }
+
+    /**
+     * Prints a node by its class (an explicit dispatch instead of a method named after the node type).
+     */
+    abstract protected function pDispatch(Node $node, int $precedence, int $lhsPrecedence): string;
 
     /**
      * Pretty prints a node.
@@ -607,7 +612,7 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
     ): string {
         // No orig tokens means this is a normal pretty print without preservation of formatting
         if (!$this->origTokens) {
-            return $this->{'p' . $node->getType()}($node, $precedence, $lhsPrecedence);
+            return $this->pDispatch($node, $precedence, $lhsPrecedence);
         }
 
         /** @var Node|null $origNode */
@@ -647,8 +652,8 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
         $result = '';
         $pos = $startPos;
         foreach ($node->getSubNodeNames() as $subNodeName) {
-            $subNode = $node->$subNodeName;
-            $origSubNode = $origNode->$subNodeName;
+            $subNode = $node->getSubNode($subNodeName);
+            $origSubNode = $origNode->getSubNode($subNodeName);
 
             if ((!$subNode instanceof Node && $subNode !== null)
                 || (!$origSubNode instanceof Node && $origSubNode !== null)
@@ -681,7 +686,11 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
                 [$printFn, $skipToken, $findToken] = $this->modifierChangeMap[$key];
                 $skipWSPos = $this->origTokens->skipRight($pos, $skipToken);
                 $result .= $this->origTokens->getTokenCode($pos, $skipWSPos, $indentAdjustment);
-                $result .= $this->$printFn($subNode);
+                $result .= match ($printFn) {
+                    'pModifiers' => $this->pModifiers($subNode),
+                    'pStatic' => $this->pStatic($subNode),
+                    default => throw new \LogicException('Unknown modifier printer ' . $printFn),
+                };
                 $pos = $this->origTokens->findRight($skipWSPos, $findToken);
                 continue;
             }

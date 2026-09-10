@@ -24,6 +24,22 @@ class Goto_ extends Stmt {
         return ['name'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'name' => $this->name,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'name':
+                $this->name = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_Goto';
     }

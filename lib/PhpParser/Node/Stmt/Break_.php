@@ -23,6 +23,22 @@ class Break_ extends Node\Stmt {
         return ['num'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'num' => $this->num,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'num':
+                $this->num = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Stmt_Break';
     }

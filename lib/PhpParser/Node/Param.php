@@ -60,6 +60,50 @@ class Param extends NodeAbstract {
         return ['attrGroups', 'flags', 'type', 'byRef', 'variadic', 'var', 'default', 'hooks'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'attrGroups' => $this->attrGroups,
+            'flags' => $this->flags,
+            'type' => $this->type,
+            'byRef' => $this->byRef,
+            'variadic' => $this->variadic,
+            'var' => $this->var,
+            'default' => $this->default,
+            'hooks' => $this->hooks,
+            default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        switch ($name) {
+            case 'attrGroups':
+                $this->attrGroups = $value;
+                return;
+            case 'flags':
+                $this->flags = $value;
+                return;
+            case 'type':
+                $this->type = $value;
+                return;
+            case 'byRef':
+                $this->byRef = $value;
+                return;
+            case 'variadic':
+                $this->variadic = $value;
+                return;
+            case 'var':
+                $this->var = $value;
+                return;
+            case 'default':
+                $this->default = $value;
+                return;
+            case 'hooks':
+                $this->hooks = $value;
+                return;
+        }
+        throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
+    }
+
     public function getType(): string {
         return 'Param';
     }
