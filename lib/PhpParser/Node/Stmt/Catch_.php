@@ -34,6 +34,7 @@ class Catch_ extends Node\Stmt {
         return ['types', 'var', 'stmts'];
     }
 
+    /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'types' => $this->types,
@@ -43,6 +44,7 @@ class Catch_ extends Node\Stmt {
         };
     }
 
+    /** @param \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null $value */
     public function setSubNode(string $name, mixed $value): void {
         switch ($name) {
             case 'types':

@@ -27,6 +27,7 @@ class Precedence extends Node\Stmt\TraitUseAdaptation {
         return ['trait', 'method', 'insteadof'];
     }
 
+    /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'trait' => $this->trait,
@@ -36,6 +37,7 @@ class Precedence extends Node\Stmt\TraitUseAdaptation {
         };
     }
 
+    /** @param \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null $value */
     public function setSubNode(string $name, mixed $value): void {
         switch ($name) {
             case 'trait':

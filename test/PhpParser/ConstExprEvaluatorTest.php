@@ -97,8 +97,8 @@ class ConstExprEvaluatorTest extends \PHPUnit\Framework\TestCase {
 
     public function testEvaluateFallbackPipeOperator(): void {
         $evaluator = new ConstExprEvaluator(function (Expr $expr) use (&$evaluator) {
-            if ($expr instanceof Expr\BinaryOp\Pipe) {
-                return $evaluator->evaluateDirectly($expr->right)($evaluator->evaluateDirectly($expr->left));
+            if ($expr instanceof Expr\BinaryOp\Pipe && $expr->right instanceof Scalar\String_ && $expr->right->value === 'strlen') {
+                return strlen((string) $evaluator->evaluateDirectly($expr->left));
             }
             throw new ConstExprEvaluationException();
         });

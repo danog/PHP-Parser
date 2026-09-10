@@ -12,6 +12,7 @@ class MatchArm extends NodeAbstract {
 
     /**
      * @param null|list<Node\Expr> $conds
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(?array $conds, Node\Expr $body, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->conds = $conds;
@@ -23,6 +24,7 @@ class MatchArm extends NodeAbstract {
         return ['conds', 'body'];
     }
 
+    /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'conds' => $this->conds,
@@ -31,6 +33,7 @@ class MatchArm extends NodeAbstract {
         };
     }
 
+    /** @param \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null $value */
     public function setSubNode(string $name, mixed $value): void {
         switch ($name) {
             case 'conds':

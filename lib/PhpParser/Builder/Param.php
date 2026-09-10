@@ -7,6 +7,9 @@ use PhpParser\BuilderHelpers;
 use PhpParser\Modifiers;
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type BuilderValue from \PhpParser\BuilderHelpers
+ */
 class Param implements PhpParser\Builder {
     protected string $name;
     protected ?Node\Expr $default = null;
@@ -30,7 +33,7 @@ class Param implements PhpParser\Builder {
     /**
      * Sets default value for the parameter.
      *
-     * @param mixed $value Default value to use
+     * @param BuilderValue $value Default value to use
      *
      * @return $this The builder instance (for fluid interface)
      */

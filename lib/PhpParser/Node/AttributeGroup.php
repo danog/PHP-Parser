@@ -21,6 +21,7 @@ class AttributeGroup extends NodeAbstract {
         return ['attrs'];
     }
 
+    /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'attrs' => $this->attrs,
@@ -28,6 +29,7 @@ class AttributeGroup extends NodeAbstract {
         };
     }
 
+    /** @param \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null $value */
     public function setSubNode(string $name, mixed $value): void {
         switch ($name) {
             case 'attrs':

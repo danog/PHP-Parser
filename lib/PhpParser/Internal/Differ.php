@@ -30,7 +30,7 @@ class Differ {
      * @param T[] $old Original array
      * @param T[] $new New array
      *
-     * @return DiffElem[] Diff (edit script)
+     * @return list<DiffElem<T>> Diff (edit script)
      */
     public function diff(array $old, array $new): array {
         $old = \array_values($old);
@@ -48,7 +48,7 @@ class Differ {
      * @param T[] $old Original array
      * @param T[] $new New array
      *
-     * @return DiffElem[] Diff (edit script), including replace operations
+     * @return list<DiffElem<T>> Diff (edit script), including replace operations
      */
     public function diffWithReplacements(array $old, array $new): array {
         return $this->coalesceReplacements($this->diff($old, $new));
@@ -63,6 +63,7 @@ class Differ {
         $n = \count($old);
         $m = \count($new);
         $max = $n + $m;
+        /** @var array<int, int> $v */
         $v = [1 => 0];
         $trace = [];
         for ($d = 0; $d <= $max; $d++) {
@@ -93,7 +94,7 @@ class Differ {
      * @param array<int, array<int, int>> $trace
      * @param T[] $old
      * @param T[] $new
-     * @return DiffElem[]
+     * @return list<DiffElem<T>>
      */
     private function extractDiff(array $trace, int $x, int $y, array $old, array $new): array {
         $result = [];
@@ -136,8 +137,8 @@ class Differ {
     /**
      * Coalesce equal-length sequences of remove+add into a replace operation.
      *
-     * @param DiffElem[] $diff
-     * @return DiffElem[]
+     * @param list<DiffElem<T>> $diff
+     * @return list<DiffElem<T>>
      */
     private function coalesceReplacements(array $diff): array {
         $newDiff = [];

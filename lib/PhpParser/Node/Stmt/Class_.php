@@ -37,6 +37,7 @@ class Class_ extends ClassLike {
      * @param string|Node\Identifier|null $name Name
      * @param array{
      *     flags?: int,
+     *     type?: int,
      *     extends?: Node\Name|null,
      *     implements?: Node\Name[],
      *     stmts?: Node\Stmt[],
@@ -63,6 +64,7 @@ class Class_ extends ClassLike {
         return ['attrGroups', 'flags', 'name', 'extends', 'implements', 'stmts'];
     }
 
+    /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'attrGroups' => $this->attrGroups,
@@ -75,6 +77,7 @@ class Class_ extends ClassLike {
         };
     }
 
+    /** @param \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null $value */
     public function setSubNode(string $name, mixed $value): void {
         switch ($name) {
             case 'attrGroups':

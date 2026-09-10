@@ -21,11 +21,13 @@ interface Node {
     /**
      * Gets the sub node with the given name (one of getSubNodeNames()).
      */
+    /** @return Node|list<Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed;
 
     /**
      * Sets the sub node with the given name (one of getSubNodeNames()).
      */
+    /** @param Node|list<Node|null>|string|int|float|bool|null $value */
     public function setSubNode(string $name, mixed $value): void;
 
     /**

@@ -2,9 +2,15 @@
 
 namespace PhpParser;
 
+/**
+ * @psalm-type JsonScalar = scalar|null
+ * @psalm-type JsonInput = JsonScalar|array<array-key, JsonScalar|array<array-key, JsonScalar|array<array-key, JsonScalar|array>>>
+ * @psalm-type Decoded = Node|Comment|JsonScalar|array<array-key, Node|Comment|JsonScalar|array<array-key, Node|Comment|JsonScalar|array>>
+ */
 class JsonDecoder {
-    /** @return mixed */
+    /** @return Decoded */
     public function decode(string $json) {
+        /** @var JsonInput $value */
         $value = json_decode($json, true);
         if (json_last_error()) {
             throw new \RuntimeException('JSON decoding error: ' . json_last_error_msg());
@@ -14,8 +20,8 @@ class JsonDecoder {
     }
 
     /**
-     * @param mixed $value
-     * @return mixed
+     * @param JsonInput $value
+     * @return Decoded
      */
     private function decodeRecursive($value) {
         if (\is_array($value)) {
@@ -30,6 +36,10 @@ class JsonDecoder {
         return $value;
     }
 
+    /**
+     * @param array<array-key, JsonInput> $array
+     * @return array<array-key, Decoded>
+     */
     private function decodeArray(array $array): array {
         $decodedArray = [];
         foreach ($array as $key => $value) {
@@ -38,6 +48,7 @@ class JsonDecoder {
         return $decodedArray;
     }
 
+    /** @param array<array-key, JsonInput> $value */
     private function decodeNode(array $value): Node {
         $nodeType = $value['nodeType'];
         if (!\is_string($nodeType)) {
@@ -69,6 +80,7 @@ class JsonDecoder {
         return $node;
     }
 
+    /** @param array<array-key, JsonInput> $value */
     private function decodeComment(array $value): Comment {
         if (!isset($value['text'])) {
             throw new \RuntimeException('Comment must have text');

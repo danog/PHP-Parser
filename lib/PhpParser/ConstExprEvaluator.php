@@ -26,8 +26,12 @@ use function array_merge;
  * point to string conversions are affected by the precision ini setting. Secondly, they are also
  * affected by the LC_NUMERIC locale.
  */
+/**
+ * @psalm-type ConstScalar = scalar|null
+ * @psalm-type ConstValue = ConstScalar|array<array-key, ConstScalar|array<array-key, ConstScalar|array<array-key, ConstScalar|array>>>
+ */
 class ConstExprEvaluator {
-    /** @var callable|null */
+    /** @var (callable(Expr): ConstValue)|null */
     private $fallbackEvaluator;
 
     /**
@@ -36,7 +40,7 @@ class ConstExprEvaluator {
      * The provided fallback evaluator is invoked whenever a subexpression cannot be evaluated. See
      * class doc comment for more information.
      *
-     * @param callable|null $fallbackEvaluator To call if subexpression cannot be evaluated
+     * @param (callable(Expr): ConstValue)|null $fallbackEvaluator To call if subexpression cannot be evaluated
      */
     public function __construct(?callable $fallbackEvaluator = null) {
         $this->fallbackEvaluator = $fallbackEvaluator ?? function (Expr $expr) {
@@ -59,7 +63,7 @@ class ConstExprEvaluator {
      * See class doc comment for caveats and limitations.
      *
      * @param Expr $expr Constant expression to evaluate
-     * @return mixed Result of evaluation
+     * @return ConstValue Result of evaluation
      *
      * @throws ConstExprEvaluationException if the expression cannot be evaluated or an error occurred
      */
@@ -94,7 +98,7 @@ class ConstExprEvaluator {
      * See class doc comment for caveats and limitations.
      *
      * @param Expr $expr Constant expression to evaluate
-     * @return mixed Result of evaluation
+     * @return ConstValue Result of evaluation
      *
      * @throws ConstExprEvaluationException if the expression cannot be evaluated
      */
@@ -102,7 +106,7 @@ class ConstExprEvaluator {
         return $this->evaluate($expr);
     }
 
-    /** @return mixed */
+    /** @return ConstValue */
     private function evaluate(Expr $expr) {
         if ($expr instanceof Scalar\Int_
             || $expr instanceof Scalar\Float_
@@ -148,6 +152,7 @@ class ConstExprEvaluator {
         return ($this->fallbackEvaluator)($expr);
     }
 
+    /** @return array<array-key, ConstValue> */
     private function evaluateArray(Expr\Array_ $expr): array {
         $array = [];
         foreach ($expr->items as $item) {
@@ -162,7 +167,7 @@ class ConstExprEvaluator {
         return $array;
     }
 
-    /** @return mixed */
+    /** @return ConstValue */
     private function evaluateTernary(Expr\Ternary $expr) {
         if (null === $expr->if) {
             return $this->evaluate($expr->cond) ?: $this->evaluate($expr->else);
@@ -173,7 +178,7 @@ class ConstExprEvaluator {
             : $this->evaluate($expr->else);
     }
 
-    /** @return mixed */
+    /** @return ConstValue */
     private function evaluateBinaryOp(Expr\BinaryOp $expr) {
         if ($expr instanceof Expr\BinaryOp\Coalesce
             && $expr->left instanceof Expr\ArrayDimFetch
@@ -221,7 +226,7 @@ class ConstExprEvaluator {
         throw new \Exception('Should not happen');
     }
 
-    /** @return mixed */
+    /** @return ConstValue */
     private function evaluateConstFetch(Expr\ConstFetch $expr) {
         $name = $expr->name->toLowerString();
         switch ($name) {

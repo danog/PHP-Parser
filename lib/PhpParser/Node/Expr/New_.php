@@ -30,6 +30,7 @@ class New_ extends CallLike {
         return ['class', 'args'];
     }
 
+    /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'class' => $this->class,
@@ -38,6 +39,7 @@ class New_ extends CallLike {
         };
     }
 
+    /** @param \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null $value */
     public function setSubNode(string $name, mixed $value): void {
         switch ($name) {
             case 'class':

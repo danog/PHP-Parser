@@ -49,6 +49,7 @@ class ClassMethod extends Node\Stmt implements FunctionLike {
      * @param string|Node\Identifier $name Name
      * @param array{
      *     flags?: int,
+     *     type?: int,
      *     byRef?: bool,
      *     params?: Node\Param[],
      *     returnType?: null|Node\Identifier|Node\Name|Node\ComplexType,
@@ -78,6 +79,7 @@ class ClassMethod extends Node\Stmt implements FunctionLike {
         return ['attrGroups', 'flags', 'byRef', 'name', 'params', 'returnType', 'stmts'];
     }
 
+    /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'attrGroups' => $this->attrGroups,
@@ -91,6 +93,7 @@ class ClassMethod extends Node\Stmt implements FunctionLike {
         };
     }
 
+    /** @param \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null $value */
     public function setSubNode(string $name, mixed $value): void {
         switch ($name) {
             case 'attrGroups':

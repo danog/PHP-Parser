@@ -189,7 +189,7 @@ class Comment implements \JsonSerializable {
     }
 
     /**
-     * @return array{nodeType:string, text:mixed, line:mixed, filePos:mixed}
+     * @return array{nodeType:string, text:string, line:int, filePos:int, tokenPos:int, endLine:int, endFilePos:int, endTokenPos:int}
      */
     public function jsonSerialize(): array {
         // Technically not a node, but we make it look like one anyway

@@ -27,6 +27,7 @@ class Do_ extends Node\Stmt {
         return ['stmts', 'cond'];
     }
 
+    /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'stmts' => $this->stmts,
@@ -35,6 +36,7 @@ class Do_ extends Node\Stmt {
         };
     }
 
+    /** @param \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null $value */
     public function setSubNode(string $name, mixed $value): void {
         switch ($name) {
             case 'stmts':

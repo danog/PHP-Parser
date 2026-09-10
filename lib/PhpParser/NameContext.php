@@ -70,7 +70,7 @@ class NameContext {
             $this->errorHandler->handleError(new Error(
                 sprintf(
                     'Cannot use %s%s as %s because the name is already in use',
-                    $typeStringMap[$type], $name, $aliasName
+                    $typeStringMap[$type] ?? '', $name, $aliasName
                 ),
                 $errorAttrs
             ));
@@ -188,12 +188,12 @@ class NameContext {
                 // Constants are complicated-sensitive
                 $normalizedOrig = $this->normalizeConstName($orig->toString());
                 if ($normalizedOrig === $this->normalizeConstName($name)) {
-                    $possibleNames[] = new Name($alias);
+                    $possibleNames[] = new Name((string) $alias);
                 }
             } else {
                 // Everything else is case-insensitive
                 if ($orig->toLowerString() === $lcName) {
-                    $possibleNames[] = new Name($alias);
+                    $possibleNames[] = new Name((string) $alias);
                 }
             }
         }

@@ -254,12 +254,12 @@ class NameResolver extends NodeVisitorAbstract {
         return $this->resolveName($name, Stmt\Use_::TYPE_NORMAL);
     }
 
-    protected function addNamespacedName(Node $node): void {
+    protected function addNamespacedName(Stmt\ClassLike|Stmt\Function_|Node\Const_ $node): void {
         $node->namespacedName = Name::concat(
             $this->nameContext->getNamespace(), (string) $node->name);
     }
 
-    protected function resolveAttrGroups(Node $node): void {
+    protected function resolveAttrGroups(Stmt\ClassLike|Stmt\Function_|Stmt\ClassMethod|Stmt\Property|Stmt\ClassConst|Stmt\Const_|Stmt\EnumCase|Expr\Closure|Expr\ArrowFunction|Node\Param|Node\PropertyHook $node): void {
         foreach ($node->attrGroups as $attrGroup) {
             foreach ($attrGroup->attrs as $attr) {
                 $attr->name = $this->resolveClassName($attr->name);

@@ -11,6 +11,9 @@ use PhpParser\Node\Name;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\ComplexType;
 
+/**
+ * @psalm-import-type BuilderValue from \PhpParser\BuilderHelpers
+ */
 class Property implements PhpParser\Builder {
     protected string $name;
 
@@ -137,7 +140,7 @@ class Property implements PhpParser\Builder {
     /**
      * Sets default value for the property.
      *
-     * @param mixed $value Default value to use
+     * @param BuilderValue $value Default value to use
      *
      * @return $this The builder instance (for fluid interface)
      */

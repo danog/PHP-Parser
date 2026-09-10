@@ -39,7 +39,7 @@ class NodeDumper {
      *                        information, the code needs to be passed to dump().
      *  * bool dumpOtherAttributes: Whether non-comment, non-position attributes should be dumped.
      *
-     * @param array $options Options (see description)
+     * @param array{dumpComments?: bool, dumpPositions?: bool, dumpOtherAttributes?: bool} $options Options (see description)
      */
     public function __construct(array $options = []) {
         $this->dumpComments = !empty($options['dumpComments']);
@@ -50,7 +50,7 @@ class NodeDumper {
     /**
      * Dumps a node or array.
      *
-     * @param array|Node $node Node or array to dump
+     * @param list<Node>|Node $node Node or array to dump
      * @param string|null $code Code corresponding to dumped AST. This only needs to be passed if
      *                          the dumpPositions option is enabled and the dumping of node offsets
      *                          is desired.
@@ -65,7 +65,7 @@ class NodeDumper {
         return $this->res;
     }
 
-    /** @param mixed $node */
+    /** @param Node|Comment|\WeakReference<Node>|array<array-key, Node|Comment|\WeakReference<Node>|scalar|null|array<array-key, Node|Comment|scalar|null>>|scalar|null $node */
     protected function dumpRecursive($node, bool $indent = true): void {
         if ($indent) {
             $this->nl .= "    ";

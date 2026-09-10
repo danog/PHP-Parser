@@ -36,6 +36,10 @@ use PhpParser\Node\UseItem;
 use PhpParser\Node\VarLikeIdentifier;
 use PhpParser\NodeVisitor\CommentAnnotatingVisitor;
 
+/**
+ * @psalm-type SemLeaf = Node|string|int|bool|null
+ * @psalm-type SemValue = SemLeaf|list<SemLeaf|list<SemLeaf|list<SemLeaf|list<SemLeaf>>>>
+ */
 abstract class ParserAbstract implements Parser {
     private const SYMBOL_NONE = -1;
 
@@ -115,9 +119,9 @@ abstract class ParserAbstract implements Parser {
      * The following members are part of the parser state:
      */
 
-    /** @var mixed Temporary value containing the result of last semantic action (reduction) */
-    protected $semValue;
-    /** @var mixed[] Semantic value stack (contains values of tokens and semantic action results) */
+    /** @var SemValue Temporary value containing the result of last semantic action (reduction) */
+    protected mixed $semValue = null;
+    /** @var list<SemValue> Semantic value stack (contains values of tokens and semantic action results) */
     protected array $semStack;
     /** @var int[] Token start position stack */
     protected array $tokenStartStack;
@@ -238,6 +242,7 @@ abstract class ParserAbstract implements Parser {
 
         // Start off in the initial state and keep a stack of previous states
         $state = 0;
+        /** @var array<int, int> $stateStack */
         $stateStack = [$state];
 
         // Semantic value stack (contains values of tokens and semantic action results)
@@ -373,6 +378,8 @@ abstract class ParserAbstract implements Parser {
                         case 1:
                         case 2:
                             $this->errorState = 3;
+                            $idx = 0;
+                            $action = 0;
 
                             // Pop until error-expecting state uncovered
                             while (!(
@@ -771,7 +778,7 @@ abstract class ParserAbstract implements Parser {
         return Expr\Cast\String_::KIND_STRING;
     }
 
-    /** @param array<string, mixed> $attributes */
+    /** @param NodeAttributes $attributes */
     protected function parseLNumber(string $str, NodeAttributes $attributes, bool $allowInvalidOctal = false): Int_ {
         try {
             return Int_::fromString($str, $attributes, $allowInvalidOctal);
@@ -803,7 +810,7 @@ abstract class ParserAbstract implements Parser {
         return new Int_($num, $attributes);
     }
 
-    /** @param array<string, mixed> $attributes */
+    /** @param NodeAttributes $attributes */
     protected function stripIndentation(
         string $string, int $indentLen, string $indentChar,
         bool $newlineAtStart, bool $newlineAtEnd, NodeAttributes $attributes
@@ -1261,11 +1268,12 @@ abstract class ParserAbstract implements Parser {
     /**
      * @param Property|Param $node
      */
-    protected function addPropertyNameToHooks(Node $node): void {
+    protected function addPropertyNameToHooks(Property|Param $node): void {
         if ($node instanceof Property) {
             $name = $node->props[0]->name->toString();
         } else {
-            $name = $node->var->name;
+            $var_name = $node->var->name;
+            $name = \is_string($var_name) ? $var_name : null;
         }
         foreach ($node->hooks as $hook) {
             $hook->attrs()->propertyName = $name;
@@ -1292,7 +1300,8 @@ abstract class ParserAbstract implements Parser {
         if ($this->isSimpleExit($args)) {
             // Create Exit node for backwards compatibility.
             $attrs->kind = strtolower($name) === 'exit' ? Expr\Exit_::KIND_EXIT : Expr\Exit_::KIND_DIE;
-            return new Expr\Exit_(\count($args) === 1 ? $args[0]->value : null, $attrs);
+            $arg = \count($args) === 1 ? $args[0] : null;
+            return new Expr\Exit_($arg instanceof Arg ? $arg->value : null, $attrs);
         }
         return new Expr\FuncCall(new Name($name, $this->getAttributesAt($namePos)), $args, $attrs);
     }

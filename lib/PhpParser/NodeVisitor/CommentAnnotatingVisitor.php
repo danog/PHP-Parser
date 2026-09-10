@@ -18,7 +18,7 @@ class CommentAnnotatingVisitor extends NodeVisitorAbstract {
     /**
      * Create a comment annotation visitor.
      *
-     * @param Token[] $tokens Token array
+     * @param list<Token> $tokens Token array
      */
     public function __construct(array $tokens) {
         $this->tokens = $tokens;

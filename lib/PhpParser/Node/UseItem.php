@@ -35,6 +35,7 @@ class UseItem extends NodeAbstract {
         return ['type', 'name', 'alias'];
     }
 
+    /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'type' => $this->type,
@@ -44,6 +45,7 @@ class UseItem extends NodeAbstract {
         };
     }
 
+    /** @param \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null $value */
     public function setSubNode(string $name, mixed $value): void {
         switch ($name) {
             case 'type':

@@ -10,12 +10,15 @@ use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Use_;
 
+/**
+ * @psalm-import-type BuilderValue from BuilderHelpers
+ */
 class BuilderFactory {
     /**
      * Creates an attribute node.
      *
      * @param string|Name $name Name of the attribute
-     * @param array $args Attribute named arguments
+     * @param array<array-key, Arg|BuilderValue> $args Attribute named arguments
      */
     public function attribute($name, array $args = []): Node\Attribute {
         return new Node\Attribute(
@@ -210,7 +213,7 @@ class BuilderFactory {
     /**
      * Creates node a for a literal value.
      *
-     * @param Expr|bool|null|int|float|string|array|\UnitEnum $value $value
+     * @param BuilderValue $value $value
      */
     public function val($value): Expr {
         return BuilderHelpers::normalizeValue($value);
@@ -234,7 +237,7 @@ class BuilderFactory {
      *
      * Creates Arg nodes for all arguments and converts literal values to expressions.
      *
-     * @param array $args List of arguments to normalize
+     * @param array<array-key, Arg|BuilderValue> $args List of arguments to normalize
      *
      * @return list<Arg>
      */
@@ -256,7 +259,7 @@ class BuilderFactory {
      * Creates a function call node.
      *
      * @param string|Name|Expr $name Function name
-     * @param array $args Function arguments
+     * @param array<array-key, Arg|BuilderValue> $args Function arguments
      */
     public function funcCall($name, array $args = []): Expr\FuncCall {
         return new Expr\FuncCall(
@@ -270,7 +273,7 @@ class BuilderFactory {
      *
      * @param Expr $var Variable the method is called on
      * @param string|Identifier|Expr $name Method name
-     * @param array $args Method arguments
+     * @param array<array-key, Arg|BuilderValue> $args Method arguments
      */
     public function methodCall(Expr $var, $name, array $args = []): Expr\MethodCall {
         return new Expr\MethodCall(
@@ -285,7 +288,7 @@ class BuilderFactory {
      *
      * @param string|Name|Expr $class Class name
      * @param string|Identifier|Expr $name Method name
-     * @param array $args Method arguments
+     * @param array<array-key, Arg|BuilderValue> $args Method arguments
      */
     public function staticCall($class, $name, array $args = []): Expr\StaticCall {
         return new Expr\StaticCall(
@@ -299,7 +302,7 @@ class BuilderFactory {
      * Creates an object creation node.
      *
      * @param string|Name|Expr $class Class name
-     * @param array $args Constructor arguments
+     * @param array<array-key, Arg|BuilderValue> $args Constructor arguments
      */
     public function new($class, array $args = []): Expr\New_ {
         return new Expr\New_(

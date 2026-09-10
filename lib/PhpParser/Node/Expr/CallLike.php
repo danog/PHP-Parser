@@ -45,7 +45,7 @@ abstract class CallLike extends Expr {
             return null;
         }
         foreach ($this->getRawArgs() as $i => $arg) {
-            if ($arg->unpack) {
+            if (!$arg instanceof Arg || $arg->unpack) {
                 continue;
             }
             if (

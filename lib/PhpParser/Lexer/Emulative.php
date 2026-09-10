@@ -24,6 +24,7 @@ use PhpParser\Token;
 
 class Emulative extends Lexer {
     /** @var array{int, string, string}[] Patches used to reverse changes introduced in the code */
+    /** @var list<array{int, string, string}> */
     private array $patches = [];
 
     /** @var list<TokenEmulator> */
@@ -119,7 +120,7 @@ class Emulative extends Lexer {
     private function sortPatches(): void {
         // Patches may be contributed by different emulators.
         // Make sure they are sorted by increasing patch position.
-        usort($this->patches, function ($p1, $p2) {
+        usort($this->patches, function (array $p1, array $p2): int {
             return $p1[0] <=> $p2[0];
         });
     }
@@ -141,6 +142,7 @@ class Emulative extends Lexer {
         $posDelta = 0;
         $lineDelta = 0;
         for ($i = 0, $c = \count($tokens); $i < $c; $i++) {
+            /** @var Token $token */
             $token = $tokens[$i];
             $pos = $token->pos;
             $token->pos += $posDelta;

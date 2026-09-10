@@ -30,6 +30,7 @@ class StaticVar extends NodeAbstract {
         return ['var', 'default'];
     }
 
+    /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'var' => $this->var,
@@ -38,6 +39,7 @@ class StaticVar extends NodeAbstract {
         };
     }
 
+    /** @param \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null $value */
     public function setSubNode(string $name, mixed $value): void {
         switch ($name) {
             case 'var':

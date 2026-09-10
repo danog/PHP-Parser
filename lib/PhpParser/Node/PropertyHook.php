@@ -103,6 +103,7 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
         return ['attrGroups', 'flags', 'byRef', 'name', 'params', 'body'];
     }
 
+    /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'attrGroups' => $this->attrGroups,
@@ -115,6 +116,7 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
         };
     }
 
+    /** @param \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null $value */
     public function setSubNode(string $name, mixed $value): void {
         switch ($name) {
             case 'attrGroups':

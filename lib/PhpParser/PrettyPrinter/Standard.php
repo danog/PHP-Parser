@@ -574,7 +574,8 @@ class Standard extends PrettyPrinterAbstract {
     }
 
     protected function pExpr_Include(Expr\Include_ $node, int $precedence, int $lhsPrecedence): string {
-        static $map = [
+        /** @var array<int, string> $map */
+        $map = [
             Expr\Include_::TYPE_INCLUDE      => 'include',
             Expr\Include_::TYPE_INCLUDE_ONCE => 'include_once',
             Expr\Include_::TYPE_REQUIRE      => 'require',

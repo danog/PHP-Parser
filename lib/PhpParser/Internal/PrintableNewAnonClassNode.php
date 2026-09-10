@@ -69,6 +69,7 @@ class PrintableNewAnonClassNode extends Expr {
         return ['attrGroups', 'flags', 'args', 'extends', 'implements', 'stmts'];
     }
 
+    /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'attrGroups' => $this->attrGroups,
@@ -81,6 +82,7 @@ class PrintableNewAnonClassNode extends Expr {
         };
     }
 
+    /** @param \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null $value */
     public function setSubNode(string $name, mixed $value): void {
         switch ($name) {
             case 'attrGroups':

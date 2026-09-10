@@ -38,6 +38,7 @@ class Arg extends NodeAbstract {
         return ['name', 'value', 'byRef', 'unpack'];
     }
 
+    /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'name' => $this->name,
@@ -48,6 +49,7 @@ class Arg extends NodeAbstract {
         };
     }
 
+    /** @param \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null $value */
     public function setSubNode(string $name, mixed $value): void {
         switch ($name) {
             case 'name':
