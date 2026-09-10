@@ -143,7 +143,9 @@ class ConstExprEvaluator {
         }
 
         if ($expr instanceof Expr\ArrayDimFetch && null !== $expr->dim) {
-            return $this->evaluate($expr->var)[$this->evaluate($expr->dim)];
+            /** @var ConstValue $element */
+            $element = $this->evaluate($expr->var)[$this->evaluate($expr->dim)];
+            return $element;
         }
 
         if ($expr instanceof Expr\ConstFetch) {
@@ -185,8 +187,9 @@ class ConstExprEvaluator {
             && $expr->left instanceof Expr\ArrayDimFetch
         ) {
             // This needs to be special cased to respect BP_VAR_IS fetch semantics
-            return $this->evaluate($expr->left->var)[$this->evaluate($expr->left->dim)]
-                ?? $this->evaluate($expr->right);
+            /** @var ConstValue $element */
+            $element = $this->evaluate($expr->left->var)[$this->evaluate($expr->left->dim)] ?? null;
+            return $element ?? $this->evaluate($expr->right);
         }
 
         // The evaluate() calls are repeated in each branch, because some of the operators are

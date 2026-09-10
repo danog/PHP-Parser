@@ -191,7 +191,7 @@ class BuilderFactory {
      * Creates a class constant builder.
      *
      * @param string|Identifier $name Name
-     * @param Node\Expr|bool|null|int|float|string|array $value Value
+     * @param BuilderValue $value Value
      *
      * @return Builder\ClassConst The created use const builder
      */

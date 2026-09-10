@@ -32,6 +32,7 @@ final class NullsafeTokenEmulator extends TokenEmulator {
             }
 
             // Handle ?-> inside encapsed string.
+            /** @var Token|null $prevToken */
             $prevToken = $tokens[$i - 1] ?? null;
             if ($token->id === \T_ENCAPSED_AND_WHITESPACE && $prevToken !== null
                 && $prevToken->id === \T_VARIABLE

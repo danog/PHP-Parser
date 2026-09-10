@@ -25,6 +25,7 @@ class JsonDecoder {
      */
     private function decodeRecursive($value) {
         if (\is_array($value)) {
+            /** @var array<array-key, JsonInput> $value */
             if (isset($value['nodeType'])) {
                 if ($value['nodeType'] === 'Comment' || $value['nodeType'] === 'Comment_Doc') {
                     return $this->decodeComment($value);

@@ -262,6 +262,7 @@ final class BuilderHelpers {
             $items = [];
             $lastKey = -1;
             foreach ($value as $itemKey => $itemValue) {
+                /** @var BuilderValue $itemValue */
                 // for consecutive, numeric keys don't generate keys
                 if (null !== $lastKey && ++$lastKey === $itemKey) {
                     $items[] = new Node\ArrayItem(
