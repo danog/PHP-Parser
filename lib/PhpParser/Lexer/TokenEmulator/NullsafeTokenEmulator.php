@@ -14,6 +14,10 @@ final class NullsafeTokenEmulator extends TokenEmulator {
         return strpos($code, '?->') !== false;
     }
 
+    /**
+     * @param list<Token> $tokens
+     * @return list<Token>
+     */
     public function emulate(string $code, array $tokens): array {
         // We need to manually iterate and manage a count because we'll change
         // the tokens array on the way
@@ -28,8 +32,9 @@ final class NullsafeTokenEmulator extends TokenEmulator {
             }
 
             // Handle ?-> inside encapsed string.
-            if ($token->id === \T_ENCAPSED_AND_WHITESPACE && isset($tokens[$i - 1])
-                && $tokens[$i - 1]->id === \T_VARIABLE
+            $prevToken = $tokens[$i - 1] ?? null;
+            if ($token->id === \T_ENCAPSED_AND_WHITESPACE && $prevToken !== null
+                && $prevToken->id === \T_VARIABLE
                 && preg_match('/^\?->([a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*)/', $token->text, $matches)
             ) {
                 $replacement = [

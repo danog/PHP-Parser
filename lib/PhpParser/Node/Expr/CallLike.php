@@ -11,7 +11,7 @@ abstract class CallLike extends Expr {
      * Return raw arguments, which may be actual Args, or VariadicPlaceholders for first-class
      * callables.
      *
-     * @return array<Arg|VariadicPlaceholder>
+     * @return list<Arg|VariadicPlaceholder>
      */
     abstract public function getRawArgs(): array;
 
@@ -26,7 +26,7 @@ abstract class CallLike extends Expr {
     /**
      * Assert that this is not a first-class callable and return only ordinary Args.
      *
-     * @return Arg[]
+     * @return list<Arg>
      */
     public function getArgs(): array {
         assert(!$this->isFirstClassCallable());

@@ -1272,8 +1272,8 @@ abstract class ParserAbstract implements Parser {
         if ($node instanceof Property) {
             $name = $node->props[0]->name->toString();
         } else {
-            $var_name = $node->var->name;
-            $name = \is_string($var_name) ? $var_name : null;
+            $var = $node->var;
+            $name = $var instanceof Expr\Variable && \is_string($var->name) ? $var->name : null;
         }
         foreach ($node->hooks as $hook) {
             $hook->attrs()->propertyName = $name;

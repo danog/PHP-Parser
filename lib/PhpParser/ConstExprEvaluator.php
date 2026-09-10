@@ -130,7 +130,8 @@ class ConstExprEvaluator {
             return !$this->evaluate($expr->expr);
         }
         if ($expr instanceof Expr\BitwiseNot) {
-            return ~$this->evaluate($expr->expr);
+            $value = $this->evaluate($expr->expr);
+            return \is_string($value) ? ~$value : ~(int) $value;
         }
 
         if ($expr instanceof Expr\BinaryOp) {
@@ -207,7 +208,7 @@ class ConstExprEvaluator {
             case '===': return $this->evaluate($l) === $this->evaluate($r);
             case 'and': return $this->evaluate($l) and $this->evaluate($r);
             case 'or':  return $this->evaluate($l) or  $this->evaluate($r);
-            case 'xor': return $this->evaluate($l) xor $this->evaluate($r);
+            case 'xor': return (bool) $this->evaluate($l) !== (bool) $this->evaluate($r);
             case '-':   return $this->evaluate($l) -   $this->evaluate($r);
             case '%':   return $this->evaluate($l) %   $this->evaluate($r);
             case '*':   return $this->evaluate($l) *   $this->evaluate($r);
