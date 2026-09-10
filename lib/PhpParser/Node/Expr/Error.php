@@ -14,10 +14,10 @@ class Error extends Expr {
     /**
      * Constructs an error node.
      *
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(\PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
     }
 
     public function getSubNodeNames(): array {

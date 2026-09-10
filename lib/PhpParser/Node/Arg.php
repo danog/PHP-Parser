@@ -20,14 +20,14 @@ class Arg extends NodeAbstract {
      * @param Expr $value Value to pass
      * @param bool $byRef Whether to pass by ref
      * @param bool $unpack Whether to unpack the argument
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      * @param Identifier|null $name Parameter name (for named parameters)
      */
     public function __construct(
-        Expr $value, bool $byRef = false, bool $unpack = false, array $attributes = [],
+        Expr $value, bool $byRef = false, bool $unpack = false, \PhpParser\NodeAttributes|array $attributes = [],
         ?Identifier $name = null
     ) {
-        $this->attributes = $attributes;
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->name = $name;
         $this->value = $value;
         $this->byRef = $byRef;

@@ -16,10 +16,10 @@ class Declare_ extends Node\Stmt {
      *
      * @param DeclareItem[] $declares List of declares
      * @param Node\Stmt[]|null $stmts Statements
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(array $declares, ?array $stmts = null, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(array $declares, ?array $stmts = null, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->declares = $declares;
         $this->stmts = $stmts;
     }

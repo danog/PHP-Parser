@@ -16,12 +16,12 @@ class StaticVar extends NodeAbstract {
      *
      * @param Expr\Variable $var Name
      * @param null|Node\Expr $default Default value
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(
-        Expr\Variable $var, ?Node\Expr $default = null, array $attributes = []
+        Expr\Variable $var, ?Node\Expr $default = null, \PhpParser\NodeAttributes|array $attributes = []
     ) {
-        $this->attributes = $attributes;
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->var = $var;
         $this->default = $default;
     }

@@ -39,10 +39,10 @@ class ArrowFunction extends Expr implements FunctionLike {
      *             'params'     => array() : Parameters
      *             'returnType' => null    : Return type
      *             'attrGroups' => array() : PHP attribute groups
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(array $subNodes, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(array $subNodes, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->static = $subNodes['static'] ?? false;
         $this->byRef = $subNodes['byRef'] ?? false;
         $this->params = $subNodes['params'] ?? [];

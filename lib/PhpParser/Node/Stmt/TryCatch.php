@@ -18,10 +18,10 @@ class TryCatch extends Node\Stmt {
      * @param Node\Stmt[] $stmts Statements
      * @param Catch_[] $catches Catches
      * @param null|Finally_ $finally Optional finally node
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(array $stmts, array $catches, ?Finally_ $finally = null, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(array $stmts, array $catches, ?Finally_ $finally = null, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->stmts = $stmts;
         $this->catches = $catches;
         $this->finally = $finally;

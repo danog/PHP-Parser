@@ -82,7 +82,7 @@ class NodeAbstractTest extends \PHPUnit\Framework\TestCase {
         $this->assertTrue(isset($node->subNode1));
         $this->assertTrue(isset($node->subNode2));
         $this->assertTrue(!isset($node->subNode3));
-        $this->assertSame($attributes, $node->getAttributes());
+        $this->assertEquals($attributes, $node->getAttributes()->toArray());
         $this->assertSame($attributes['comments'], $node->getComments());
 
         return $node;
@@ -96,11 +96,11 @@ class NodeAbstractTest extends \PHPUnit\Framework\TestCase {
         $comments = $node->getComments();
 
         array_splice($comments, 1, 1, []); // remove doc comment
-        $node->setAttribute('comments', $comments);
+        $node->attrs()->comments = $comments;
         $this->assertNull($node->getDocComment());
 
         // Remove all comments.
-        $node->setAttribute('comments', []);
+        $node->attrs()->comments = [];
         $this->assertNull($node->getDocComment());
     }
 
@@ -121,15 +121,15 @@ class NodeAbstractTest extends \PHPUnit\Framework\TestCase {
         $c1 = new Comment('/* foo */');
         $c2 = new Comment('/* bar */');
         $docComment = new Comment\Doc('/** baz */');
-        $node->setAttribute('comments', [$c1, $c2]);
+        $node->attrs()->comments = [$c1, $c2];
         $node->setDocComment($docComment);
-        $this->assertSame([$c1, $c2, $docComment], $node->getAttribute('comments'));
+        $this->assertSame([$c1, $c2, $docComment], $node->attrs()->comments);
 
         // Replace doc comment that is not at the end.
         $newDocComment = new Comment\Doc('/** new baz */');
-        $node->setAttribute('comments', [$c1, $docComment, $c2]);
+        $node->attrs()->comments = [$c1, $docComment, $c2];
         $node->setDocComment($newDocComment);
-        $this->assertSame([$c1, $newDocComment, $c2], $node->getAttribute('comments'));
+        $this->assertSame([$c1, $newDocComment, $c2], $node->attrs()->comments);
     }
 
     /**
@@ -179,41 +179,33 @@ class NodeAbstractTest extends \PHPUnit\Framework\TestCase {
         /** @var $node Node */
         $node = $this->getMockForAbstractClass(NodeAbstract::class);
 
-        $this->assertEmpty($node->getAttributes());
+        $this->assertEmpty($node->getAttributes()->toArray());
 
-        $node->setAttribute('key', 'value');
-        $this->assertTrue($node->hasAttribute('key'));
-        $this->assertSame('value', $node->getAttribute('key'));
+        $node->attrs()->docLabel = 'value';
+        $this->assertTrue($node->attrs()->docLabel !== null);
+        $this->assertSame('value', $node->attrs()->docLabel);
 
-        $this->assertFalse($node->hasAttribute('doesNotExist'));
-        $this->assertNull($node->getAttribute('doesNotExist'));
-        $this->assertSame('default', $node->getAttribute('doesNotExist', 'default'));
-
-        $node->setAttribute('null', null);
-        $this->assertTrue($node->hasAttribute('null'));
-        $this->assertNull($node->getAttribute('null'));
-        $this->assertNull($node->getAttribute('null', 'default'));
+        $this->assertFalse($node->attrs()->rawValue !== null);
+        $this->assertNull($node->attrs()->rawValue);
+        $this->assertSame('default', $node->attrs()->rawValue ?? 'default');
 
         $this->assertSame(
             [
-                'key'  => 'value',
-                'null' => null,
+                'docLabel' => 'value',
             ],
-            $node->getAttributes()
+            $node->getAttributes()->toArray()
         );
 
         $node->setAttributes(
             [
-                'a' => 'b',
-                'c' => null,
+                'rawValue' => 'b',
             ]
         );
         $this->assertSame(
             [
-                'a' => 'b',
-                'c' => null,
+                'rawValue' => 'b',
             ],
-            $node->getAttributes()
+            $node->getAttributes()->toArray()
         );
     }
 
@@ -428,6 +420,7 @@ JSON;
                 }
             ]
         },
+        "attrGroups": [],
         "byRef": false,
         "name": {
             "nodeType": "Identifier",
@@ -452,6 +445,8 @@ JSON;
                     "endTokenPos": 14,
                     "endFilePos": 64
                 },
+                "attrGroups": [],
+                "flags": 0,
                 "type": null,
                 "byRef": true,
                 "variadic": false,
@@ -476,13 +471,11 @@ JSON;
                         "endLine": 4,
                         "endTokenPos": 14,
                         "endFilePos": 64,
-                        "rawValue": "0",
-                        "kind": 10
+                        "kind": 10,
+                        "rawValue": "0"
                     },
                     "value": 0
                 },
-                "flags": 0,
-                "attrGroups": [],
                 "hooks": []
             },
             {
@@ -495,6 +488,8 @@ JSON;
                     "endTokenPos": 21,
                     "endFilePos": 74
                 },
+                "attrGroups": [],
+                "flags": 0,
                 "type": null,
                 "byRef": false,
                 "variadic": false,
@@ -523,8 +518,6 @@ JSON;
                     },
                     "value": 1
                 },
-                "flags": 0,
-                "attrGroups": [],
                 "hooks": []
             }
         ],
@@ -557,8 +550,7 @@ JSON;
                     }
                 ]
             }
-        ],
-        "attrGroups": []
+        ]
     }
 ]
 JSON;

@@ -15,10 +15,10 @@ class Expression extends Node\Stmt {
      * Constructs an expression statement.
      *
      * @param Node\Expr $expr Expression
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Node\Expr $expr, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Node\Expr $expr, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->expr = $expr;
     }
 

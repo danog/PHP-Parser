@@ -137,10 +137,10 @@ class Standard extends PrettyPrinterAbstract {
     }
 
     protected function pScalar_String(Scalar\String_ $node): string {
-        $kind = $node->getAttribute('kind', Scalar\String_::KIND_SINGLE_QUOTED);
+        $kind = ($node->attrs()->kind ?? Scalar\String_::KIND_SINGLE_QUOTED);
         switch ($kind) {
             case Scalar\String_::KIND_NOWDOC:
-                $label = $node->getAttribute('docLabel');
+                $label = $node->attrs()->docLabel;
                 if ($label && !$this->containsEndLabel($node->value, $label)) {
                     $shouldIdent = $this->phpVersion->supportsFlexibleHeredoc();
                     $nl = $shouldIdent ? $this->nl : $this->newline;
@@ -159,7 +159,7 @@ class Standard extends PrettyPrinterAbstract {
             case Scalar\String_::KIND_SINGLE_QUOTED:
                 return $this->pSingleQuotedString($node->value);
             case Scalar\String_::KIND_HEREDOC:
-                $label = $node->getAttribute('docLabel');
+                $label = $node->attrs()->docLabel;
                 $escaped = $this->escapeString($node->value, null);
                 if ($label && !$this->containsEndLabel($escaped, $label)) {
                     $nl = $this->phpVersion->supportsFlexibleHeredoc() ? $this->nl : $this->newline;
@@ -178,8 +178,8 @@ class Standard extends PrettyPrinterAbstract {
     }
 
     protected function pScalar_InterpolatedString(Scalar\InterpolatedString $node): string {
-        if ($node->getAttribute('kind') === Scalar\String_::KIND_HEREDOC) {
-            $label = $node->getAttribute('docLabel');
+        if ($node->attrs()->kind === Scalar\String_::KIND_HEREDOC) {
+            $label = $node->attrs()->docLabel;
             if ($label && !$this->encapsedContainsEndLabel($node->parts, $label)) {
                 $nl = $this->phpVersion->supportsFlexibleHeredoc() ? $this->nl : $this->newline;
                 if (count($node->parts) === 1
@@ -197,8 +197,8 @@ class Standard extends PrettyPrinterAbstract {
     }
 
     protected function pScalar_Int(Scalar\Int_ $node): string {
-        if ($node->getAttribute('shouldPrintRawValue') === true) {
-            return $node->getAttribute('rawValue');
+        if ($node->attrs()->shouldPrintRawValue === true) {
+            return $node->attrs()->rawValue;
         }
 
         if ($node->value === -\PHP_INT_MAX - 1) {
@@ -207,7 +207,7 @@ class Standard extends PrettyPrinterAbstract {
             return '(-' . \PHP_INT_MAX . '-1)';
         }
 
-        $kind = $node->getAttribute('kind', Scalar\Int_::KIND_DEC);
+        $kind = ($node->attrs()->kind ?? Scalar\Int_::KIND_DEC);
 
         if (Scalar\Int_::KIND_DEC === $kind) {
             return (string) $node->value;
@@ -498,7 +498,7 @@ class Standard extends PrettyPrinterAbstract {
     }
 
     protected function pExpr_Cast_Double(Cast\Double $node, int $precedence, int $lhsPrecedence): string {
-        $kind = $node->getAttribute('kind', Cast\Double::KIND_DOUBLE);
+        $kind = ($node->attrs()->kind ?? Cast\Double::KIND_DOUBLE);
         if ($kind === Cast\Double::KIND_DOUBLE) {
             $cast = '(double)';
         } elseif ($kind === Cast\Double::KIND_FLOAT) {
@@ -585,8 +585,7 @@ class Standard extends PrettyPrinterAbstract {
     }
 
     protected function pExpr_List(Expr\List_ $node): string {
-        $syntax = $node->getAttribute('kind',
-            $this->phpVersion->supportsShortArrayDestructuring() ? Expr\List_::KIND_ARRAY : Expr\List_::KIND_LIST);
+        $syntax = ($node->attrs()->kind ?? ($this->phpVersion->supportsShortArrayDestructuring() ? Expr\List_::KIND_ARRAY : Expr\List_::KIND_LIST));
         if ($syntax === Expr\List_::KIND_ARRAY) {
             return '[' . $this->pMaybeMultiline($node->items, true) . ']';
         } else {
@@ -609,8 +608,7 @@ class Standard extends PrettyPrinterAbstract {
     }
 
     protected function pExpr_Array(Expr\Array_ $node): string {
-        $syntax = $node->getAttribute('kind',
-            $this->shortArraySyntax ? Expr\Array_::KIND_SHORT : Expr\Array_::KIND_LONG);
+        $syntax = ($node->attrs()->kind ?? ($this->shortArraySyntax ? Expr\Array_::KIND_SHORT : Expr\Array_::KIND_LONG));
         if ($syntax === Expr\Array_::KIND_SHORT) {
             return '[' . $this->pMaybeMultiline($node->items, true) . ']';
         } else {
@@ -738,7 +736,7 @@ class Standard extends PrettyPrinterAbstract {
     }
 
     protected function pExpr_Exit(Expr\Exit_ $node): string {
-        $kind = $node->getAttribute('kind', Expr\Exit_::KIND_DIE);
+        $kind = ($node->attrs()->kind ?? Expr\Exit_::KIND_DIE);
         return ($kind === Expr\Exit_::KIND_EXIT ? 'exit' : 'die')
              . (null !== $node->expr ? '(' . $this->p($node->expr) . ')' : '');
     }
@@ -1030,7 +1028,7 @@ class Standard extends PrettyPrinterAbstract {
     }
 
     protected function pStmt_InlineHTML(Stmt\InlineHTML $node): string {
-        $newline = $node->getAttribute('hasLeadingNewline', true) ? $this->newline : '';
+        $newline = ($node->attrs()->hasLeadingNewline ?? true) ? $this->newline : '';
         return '?>' . $newline . $node->value . '<?php ';
     }
 

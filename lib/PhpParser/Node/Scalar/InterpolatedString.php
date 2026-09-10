@@ -14,10 +14,10 @@ class InterpolatedString extends Scalar {
      * Constructs an interpolated string node.
      *
      * @param (Expr|InterpolatedStringPart)[] $parts Interpolated string parts
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(array $parts, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(array $parts, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->parts = $parts;
     }
 

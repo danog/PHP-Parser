@@ -17,10 +17,10 @@ class NullsafePropertyFetch extends Expr {
      *
      * @param Expr $var Variable holding object
      * @param string|Identifier|Expr $name Property name
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Expr $var, $name, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Expr $var, $name, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->var = $var;
         $this->name = \is_string($name) ? new Identifier($name) : $name;
     }

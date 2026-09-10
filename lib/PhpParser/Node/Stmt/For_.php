@@ -27,10 +27,10 @@ class For_ extends Node\Stmt {
      *             'cond'  => array(): Loop conditions
      *             'loop'  => array(): Loop expressions
      *             'stmts' => array(): Statements
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(array $subNodes = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->init = $subNodes['init'] ?? [];
         $this->cond = $subNodes['cond'] ?? [];
         $this->loop = $subNodes['loop'] ?? [];

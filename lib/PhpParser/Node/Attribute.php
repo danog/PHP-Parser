@@ -15,10 +15,10 @@ class Attribute extends NodeAbstract {
     /**
      * @param Node\Name $name Attribute name
      * @param list<Arg> $args Attribute arguments
-     * @param array<string, mixed> $attributes Additional node attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional node attributes
      */
-    public function __construct(Name $name, array $args = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Name $name, array $args = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->name = $name;
         $this->args = $args;
     }

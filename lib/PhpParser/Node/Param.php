@@ -32,7 +32,7 @@ class Param extends NodeAbstract {
      * @param null|Identifier|Name|ComplexType $type Type declaration
      * @param bool $byRef Whether is passed by reference
      * @param bool $variadic Whether this is a variadic argument
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      * @param int $flags Optional visibility flags
      * @param list<AttributeGroup> $attrGroups PHP attribute groups
      * @param PropertyHook[] $hooks Property hooks for promoted properties
@@ -40,12 +40,12 @@ class Param extends NodeAbstract {
     public function __construct(
         Expr $var, ?Expr $default = null, ?Node $type = null,
         bool $byRef = false, bool $variadic = false,
-        array $attributes = [],
+        \PhpParser\NodeAttributes|array $attributes = [],
         int $flags = 0,
         array $attrGroups = [],
         array $hooks = []
     ) {
-        $this->attributes = $attributes;
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->type = $type;
         $this->byRef = $byRef;
         $this->variadic = $variadic;

@@ -16,10 +16,10 @@ class FuncCall extends CallLike {
      *
      * @param Node\Name|Expr $name Function name
      * @param array<Node\Arg|Node\VariadicPlaceholder> $args Arguments
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Node $name, array $args = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Node $name, array $args = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->name = $name;
         $this->args = $args;
     }

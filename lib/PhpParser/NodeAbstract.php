@@ -3,16 +3,15 @@
 namespace PhpParser;
 
 abstract class NodeAbstract implements Node, \JsonSerializable {
-    /** @var array<string, mixed> Attributes */
-    protected array $attributes;
+    protected NodeAttributes $attributes;
 
     /**
      * Creates a Node.
      *
-     * @param array<string, mixed> $attributes Array of attributes
+     * @param NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes
      */
-    public function __construct(array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(NodeAttributes|array $attributes = []) {
+        $this->attributes = NodeAttributes::from($attributes);
     }
 
     /**
@@ -22,7 +21,7 @@ abstract class NodeAbstract implements Node, \JsonSerializable {
      * @phpstan-return -1|positive-int
      */
     public function getLine(): int {
-        return $this->attributes['startLine'] ?? -1;
+        return $this->attributes->startLine ?? -1;
     }
 
     /**
@@ -34,7 +33,7 @@ abstract class NodeAbstract implements Node, \JsonSerializable {
      * @phpstan-return -1|positive-int
      */
     public function getStartLine(): int {
-        return $this->attributes['startLine'] ?? -1;
+        return $this->attributes->startLine ?? -1;
     }
 
     /**
@@ -46,7 +45,7 @@ abstract class NodeAbstract implements Node, \JsonSerializable {
      * @phpstan-return -1|positive-int
      */
     public function getEndLine(): int {
-        return $this->attributes['endLine'] ?? -1;
+        return $this->attributes->endLine ?? -1;
     }
 
     /**
@@ -59,7 +58,7 @@ abstract class NodeAbstract implements Node, \JsonSerializable {
      * @return int Token start position (or -1 if not available)
      */
     public function getStartTokenPos(): int {
-        return $this->attributes['startTokenPos'] ?? -1;
+        return $this->attributes->startTokenPos ?? -1;
     }
 
     /**
@@ -72,7 +71,7 @@ abstract class NodeAbstract implements Node, \JsonSerializable {
      * @return int Token end position (or -1 if not available)
      */
     public function getEndTokenPos(): int {
-        return $this->attributes['endTokenPos'] ?? -1;
+        return $this->attributes->endTokenPos ?? -1;
     }
 
     /**
@@ -83,7 +82,7 @@ abstract class NodeAbstract implements Node, \JsonSerializable {
      * @return int File start position (or -1 if not available)
      */
     public function getStartFilePos(): int {
-        return $this->attributes['startFilePos'] ?? -1;
+        return $this->attributes->startFilePos ?? -1;
     }
 
     /**
@@ -94,7 +93,7 @@ abstract class NodeAbstract implements Node, \JsonSerializable {
      * @return int File end position (or -1 if not available)
      */
     public function getEndFilePos(): int {
-        return $this->attributes['endFilePos'] ?? -1;
+        return $this->attributes->endFilePos ?? -1;
     }
 
     /**
@@ -105,7 +104,7 @@ abstract class NodeAbstract implements Node, \JsonSerializable {
      * @return Comment[]
      */
     public function getComments(): array {
-        return $this->attributes['comments'] ?? [];
+        return $this->attributes->comments ?? [];
     }
 
     /**
@@ -138,49 +137,43 @@ abstract class NodeAbstract implements Node, \JsonSerializable {
             if ($comments[$i] instanceof Comment\Doc) {
                 // Replace existing doc comment.
                 $comments[$i] = $docComment;
-                $this->setAttribute('comments', $comments);
+                $this->attributes->comments = $comments;
                 return;
             }
         }
 
         // Append new doc comment.
         $comments[] = $docComment;
-        $this->setAttribute('comments', $comments);
+        $this->attributes->comments = $comments;
     }
 
-    public function setAttribute(string $key, $value): void {
-        $this->attributes[$key] = $value;
+    public function __clone() {
+        $this->attributes = clone $this->attributes;
     }
 
-    public function hasAttribute(string $key): bool {
-        return array_key_exists($key, $this->attributes);
-    }
-
-    public function getAttribute(string $key, $default = null) {
-        if (array_key_exists($key, $this->attributes)) {
-            return $this->attributes[$key];
-        }
-
-        return $default;
-    }
-
-    public function getAttributes(): array {
+    /** The node's attributes (the live object: writes change this node). */
+    public function attrs(): NodeAttributes {
         return $this->attributes;
     }
 
-    public function setAttributes(array $attributes): void {
-        $this->attributes = $attributes;
+    /** A copy of the node's attributes (for nodes built from this one). */
+    public function getAttributes(): NodeAttributes {
+        return clone $this->attributes;
+    }
+
+    /** @param NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes */
+    public function setAttributes(NodeAttributes|array $attributes): void {
+        $this->attributes = NodeAttributes::from($attributes);
     }
 
     /**
      * @return array<string, mixed>
      */
     public function jsonSerialize(): array {
-        $result = ['nodeType' => $this->getType()];
+        $result = ['nodeType' => $this->getType(), 'attributes' => $this->attributes->toArray()];
         foreach ($this->getSubNodeNames() as $name) {
             $result[$name] = $this->getSubNode($name);
         }
-        $result['attributes'] = $this->attributes;
         return $result;
     }
 }

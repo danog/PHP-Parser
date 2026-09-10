@@ -38,10 +38,10 @@ class Function_ extends Node\Stmt implements FunctionLike {
      *             'returnType' => null   : Return type
      *             'stmts'      => array(): Statements
      *             'attrGroups' => array(): PHP attribute groups
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct($name, array $subNodes = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct($name, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->byRef = $subNodes['byRef'] ?? false;
         $this->name = \is_string($name) ? new Node\Identifier($name) : $name;
         $this->params = $subNodes['params'] ?? [];

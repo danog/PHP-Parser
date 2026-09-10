@@ -15,10 +15,10 @@ class Case_ extends Node\Stmt {
      *
      * @param null|Node\Expr $cond Condition (null for default)
      * @param Node\Stmt[] $stmts Statements
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(?Node\Expr $cond, array $stmts = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(?Node\Expr $cond, array $stmts = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->cond = $cond;
         $this->stmts = $stmts;
     }

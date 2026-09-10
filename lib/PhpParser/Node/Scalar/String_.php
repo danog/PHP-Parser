@@ -31,10 +31,10 @@ class String_ extends Scalar {
      * Constructs a string scalar node.
      *
      * @param string $value Value of the string
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(string $value, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(string $value, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->value = $value;
     }
 
@@ -59,15 +59,16 @@ class String_ extends Scalar {
     }
 
     /**
-     * @param array<string, mixed> $attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes
      * @param bool $parseUnicodeEscape Whether to parse PHP 7 \u escapes
      */
-    public static function fromString(string $str, array $attributes = [], bool $parseUnicodeEscape = true): self {
-        $attributes['kind'] = ($str[0] === "'" || ($str[1] === "'" && ($str[0] === 'b' || $str[0] === 'B')))
+    public static function fromString(string $str, \PhpParser\NodeAttributes|array $attributes = [], bool $parseUnicodeEscape = true): self {
+        $attributes = \PhpParser\NodeAttributes::from($attributes);
+        $attributes->kind = ($str[0] === "'" || ($str[1] === "'" && ($str[0] === 'b' || $str[0] === 'B')))
             ? Scalar\String_::KIND_SINGLE_QUOTED
             : Scalar\String_::KIND_DOUBLE_QUOTED;
 
-        $attributes['rawValue'] = $str;
+        $attributes->rawValue = $str;
 
         $string = self::parse($str, $parseUnicodeEscape);
 

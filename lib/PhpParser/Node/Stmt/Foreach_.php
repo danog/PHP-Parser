@@ -29,10 +29,10 @@ class Foreach_ extends Node\Stmt {
      *             'keyVar' => null   : Variable to assign key to
      *             'byRef'  => false  : Whether to assign value by reference
      *             'stmts'  => array(): Statements
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Node\Expr $expr, Node\Expr $valueVar, array $subNodes = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Node\Expr $expr, Node\Expr $valueVar, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->expr = $expr;
         $this->keyVar = $subNodes['keyVar'] ?? null;
         $this->byRef = $subNodes['byRef'] ?? false;

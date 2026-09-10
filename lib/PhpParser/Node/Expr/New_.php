@@ -18,10 +18,10 @@ class New_ extends CallLike {
      *
      * @param Node\Name|Expr|Node\Stmt\Class_ $class Class name (or class node for anonymous classes)
      * @param array<Arg|VariadicPlaceholder> $args Arguments
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Node $class, array $args = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Node $class, array $args = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->class = $class;
         $this->args = $args;
     }

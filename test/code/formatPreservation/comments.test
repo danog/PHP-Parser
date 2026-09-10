@@ -4,7 +4,7 @@ Comment changes
 // Test
 foo();
 -----
-$stmts[0]->setAttribute('comments', []);
+$stmts[0]->attrs()->comments = [];
 -----
 <?php
 foo();
@@ -18,7 +18,7 @@ $baz;
 -----
 $comments = $stmts[1]->getComments();
 $comments[] = new Comment("// foo");
-$stmts[1]->setAttribute('comments', $comments);
+$stmts[1]->attrs()->comments = $comments;
 -----
 <?php
 $foo;
@@ -39,7 +39,7 @@ class Test {
 }
 -----
 $method = $stmts[0]->stmts[0];
-$method->setAttribute('comments', [new Comment\Doc("/**\n *\n */")]);
+$method->attrs()->comments = [new Comment\Doc("/**\n *\n */")];
 -----
 <?php
 class Test {

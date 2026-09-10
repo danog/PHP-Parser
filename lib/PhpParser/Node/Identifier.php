@@ -25,14 +25,14 @@ class Identifier extends NodeAbstract {
      * Constructs an identifier node.
      *
      * @param string $name Identifier as string
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(string $name, array $attributes = []) {
+    public function __construct(string $name, \PhpParser\NodeAttributes|array $attributes = []) {
         if ($name === '') {
             throw new \InvalidArgumentException('Identifier name cannot be empty');
         }
 
-        $this->attributes = $attributes;
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->name = $name;
     }
 

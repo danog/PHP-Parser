@@ -29,10 +29,10 @@ class Use_ extends Stmt {
      *
      * @param UseItem[] $uses Aliases
      * @param Stmt\Use_::TYPE_* $type Type of alias
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(array $uses, int $type = self::TYPE_NORMAL, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(array $uses, int $type = self::TYPE_NORMAL, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->type = $type;
         $this->uses = $uses;
     }

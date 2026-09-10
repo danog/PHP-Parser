@@ -10,9 +10,9 @@ use PhpParser\NodeVisitorAbstract;
  * as well as its sibling nodes.
  *
  * With <code>$weakReferences=false</code> on the child node, the parent node can be accessed through
- * <code>$node->getAttribute('parent')</code>, the previous
- * node can be accessed through <code>$node->getAttribute('previous')</code>,
- * and the next node can be accessed through <code>$node->getAttribute('next')</code>.
+ * <code>$node->attrs()->parent</code>, the previous
+ * node can be accessed through <code>$node->attrs()->previous</code>,
+ * and the next node can be accessed through <code>$node->attrs()->next</code>.
  *
  * With <code>$weakReferences=true</code> attribute names are prefixed by "weak_", e.g. "weak_parent".
  */
@@ -42,9 +42,9 @@ final class NodeConnectingVisitor extends NodeVisitorAbstract {
         if (!empty($this->stack)) {
             $parent = $this->stack[count($this->stack) - 1];
             if ($this->weakReferences) {
-                $node->setAttribute('weak_parent', \WeakReference::create($parent));
+                $node->attrs()->weak_parent = \WeakReference::create($parent);
             } else {
-                $node->setAttribute('parent', $parent);
+                $node->attrs()->parent = $parent;
             }
         }
 
@@ -52,13 +52,13 @@ final class NodeConnectingVisitor extends NodeVisitorAbstract {
             if (
                 $this->weakReferences
             ) {
-                if ($this->previous->getAttribute('weak_parent') === $node->getAttribute('weak_parent')) {
-                    $node->setAttribute('weak_previous', \WeakReference::create($this->previous));
-                    $this->previous->setAttribute('weak_next', \WeakReference::create($node));
+                if ($this->previous->attrs()->weak_parent === $node->attrs()->weak_parent) {
+                    $node->attrs()->weak_previous = \WeakReference::create($this->previous);
+                    $this->previous->attrs()->weak_next = \WeakReference::create($node);
                 }
-            } elseif ($this->previous->getAttribute('parent') === $node->getAttribute('parent')) {
-                $node->setAttribute('previous', $this->previous);
-                $this->previous->setAttribute('next', $node);
+            } elseif ($this->previous->attrs()->parent === $node->attrs()->parent) {
+                $node->attrs()->previous = $this->previous;
+                $this->previous->attrs()->next = $node;
             }
         }
 

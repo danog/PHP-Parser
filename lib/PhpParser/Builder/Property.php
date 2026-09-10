@@ -17,7 +17,7 @@ class Property implements PhpParser\Builder {
     protected int $flags = 0;
 
     protected ?Node\Expr $default = null;
-    /** @var array<string, mixed> */
+    /** @var \PhpParser\NodeAttributes::AttributeArray */
     protected array $attributes = [];
     /** @var null|Identifier|Name|ComplexType */
     protected ?Node $type = null;

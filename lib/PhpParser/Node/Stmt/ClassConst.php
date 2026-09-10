@@ -20,18 +20,18 @@ class ClassConst extends Node\Stmt {
      *
      * @param Node\Const_[] $consts Constant declarations
      * @param int $flags Modifiers
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      * @param list<Node\AttributeGroup> $attrGroups PHP attribute groups
      * @param null|Node\Identifier|Node\Name|Node\ComplexType $type Type declaration
      */
     public function __construct(
         array $consts,
         int $flags = 0,
-        array $attributes = [],
+        \PhpParser\NodeAttributes|array $attributes = [],
         array $attrGroups = [],
         ?Node $type = null
     ) {
-        $this->attributes = $attributes;
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->flags = $flags;
         $this->consts = $consts;
         $this->attrGroups = $attrGroups;

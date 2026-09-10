@@ -22,9 +22,9 @@ class Enum_ extends ClassLike {
      *             'implements'  => array() : Names of implemented interfaces
      *             'stmts'       => array() : Statements
      *             'attrGroups'  => array() : PHP attribute groups
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct($name, array $subNodes = [], array $attributes = []) {
+    public function __construct($name, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->name = \is_string($name) ? new Node\Identifier($name) : $name;
         $this->scalarType = $subNodes['scalarType'] ?? null;
         $this->implements = $subNodes['implements'] ?? [];

@@ -15,10 +15,10 @@ class TraitUse extends Node\Stmt {
      *
      * @param Node\Name[] $traits Traits
      * @param TraitUseAdaptation[] $adaptations Adaptations
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(array $traits, array $adaptations = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(array $traits, array $adaptations = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->traits = $traits;
         $this->adaptations = $adaptations;
     }

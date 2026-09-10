@@ -246,15 +246,15 @@ top_statement:
           { $$ = Stmt\HaltCompiler[$this->handleHaltCompiler()]; }
     | T_NAMESPACE namespace_declaration_name semi
           { $$ = Stmt\Namespace_[$2, null];
-            $$->setAttribute('kind', Stmt\Namespace_::KIND_SEMICOLON);
+            $$->attrs()->kind = Stmt\Namespace_::KIND_SEMICOLON;
             $this->checkNamespace($$); }
     | T_NAMESPACE namespace_declaration_name '{' top_statement_list '}'
           { $$ = Stmt\Namespace_[$2, $4];
-            $$->setAttribute('kind', Stmt\Namespace_::KIND_BRACED);
+            $$->attrs()->kind = Stmt\Namespace_::KIND_BRACED;
             $this->checkNamespace($$); }
     | T_NAMESPACE '{' top_statement_list '}'
           { $$ = Stmt\Namespace_[null, $3];
-            $$->setAttribute('kind', Stmt\Namespace_::KIND_BRACED);
+            $$->attrs()->kind = Stmt\Namespace_::KIND_BRACED;
             $this->checkNamespace($$); }
     | T_USE use_declarations semi                           { $$ = Stmt\Use_[$2, Stmt\Use_::TYPE_NORMAL]; }
     | T_USE use_type use_declarations semi                  { $$ = Stmt\Use_[$3, $2]; }
@@ -1113,21 +1113,21 @@ expr:
     | T_REQUIRE_ONCE expr                                   { $$ = Expr\Include_[$2, Expr\Include_::TYPE_REQUIRE_ONCE]; }
     | T_INT_CAST expr
           { $attrs = attributes();
-            $attrs['kind'] = $this->getIntCastKind($1);
+            $attrs->kind = $this->getIntCastKind($1);
             $$ = new Expr\Cast\Int_($2, $attrs); }
     | T_DOUBLE_CAST expr
           { $attrs = attributes();
-            $attrs['kind'] = $this->getFloatCastKind($1);
+            $attrs->kind = $this->getFloatCastKind($1);
             $$ = new Expr\Cast\Double($2, $attrs); }
     | T_STRING_CAST expr
           { $attrs = attributes();
-            $attrs['kind'] = $this->getStringCastKind($1);
+            $attrs->kind = $this->getStringCastKind($1);
             $$ = new Expr\Cast\String_($2, $attrs); }
     | T_ARRAY_CAST expr                                     { $$ = Expr\Cast\Array_  [$2]; }
     | T_OBJECT_CAST expr                                    { $$ = Expr\Cast\Object_ [$2]; }
     | T_BOOL_CAST expr
           { $attrs = attributes();
-            $attrs['kind'] = $this->getBoolCastKind($1);
+            $attrs->kind = $this->getBoolCastKind($1);
             $$ = new Expr\Cast\Bool_($2, $attrs); }
     | T_UNSET_CAST expr                                     { $$ = Expr\Cast\Unset_  [$2]; }
     | T_VOID_CAST expr                                      { $$ = Expr\Cast\Void_   [$2]; }
@@ -1275,13 +1275,13 @@ class_constant:
 
 array_short_syntax:
       '[' array_pair_list ']'
-          { $attrs = attributes(); $attrs['kind'] = Expr\Array_::KIND_SHORT;
+          { $attrs = attributes(); $attrs->kind = Expr\Array_::KIND_SHORT;
             $$ = new Expr\Array_($2, $attrs); }
 ;
 
 dereferenceable_scalar:
       T_ARRAY '(' array_pair_list ')'
-          { $attrs = attributes(); $attrs['kind'] = Expr\Array_::KIND_LONG;
+          { $attrs = attributes(); $attrs->kind = Expr\Array_::KIND_LONG;
             $$ = new Expr\Array_($3, $attrs);
             $this->createdArrays->offsetSet($$); }
     | array_short_syntax
@@ -1289,7 +1289,7 @@ dereferenceable_scalar:
     | T_CONSTANT_ENCAPSED_STRING
           { $$ = Scalar\String_::fromString($1, attributes(), $this->phpVersion->supportsUnicodeEscapes()); }
     | '"' encaps_list '"'
-          { $attrs = attributes(); $attrs['kind'] = Scalar\String_::KIND_DOUBLE_QUOTED;
+          { $attrs = attributes(); $attrs->kind = Scalar\String_::KIND_DOUBLE_QUOTED;
             parseEncapsed($2, '"', $this->phpVersion->supportsUnicodeEscapes()); $$ = new Scalar\InterpolatedString($2, $attrs); }
 ;
 
@@ -1406,7 +1406,7 @@ property_name:
 
 list_expr:
       T_LIST '(' inner_array_pair_list ')'
-          { $$ = Expr\List_[$3]; $$->setAttribute('kind', Expr\List_::KIND_LIST);
+          { $$ = Expr\List_[$3]; $$->attrs()->kind = Expr\List_::KIND_LIST;
             $this->postprocessList($$); }
 ;
 
@@ -1450,7 +1450,7 @@ encaps_list:
 
 encaps_string_part:
       T_ENCAPSED_AND_WHITESPACE
-          { $attrs = attributes(); $attrs['rawValue'] = $1; $$ = new Node\InterpolatedStringPart($1, $attrs); }
+          { $attrs = attributes(); $attrs->rawValue = $1; $$ = new Node\InterpolatedStringPart($1, $attrs); }
 ;
 
 encaps_str_varname:

@@ -616,7 +616,7 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
         }
 
         /** @var Node|null $origNode */
-        $origNode = $node->getAttribute('origNode');
+        $origNode = $node->attrs()->origNode;
         if (null === $origNode) {
             return $this->pFallback($node, $precedence, $lhsPrecedence);
         }
@@ -757,7 +757,7 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
                 // need fixup. It's important to check this here, because our fixup checks are more
                 // conservative than strictly necessary.
                 if (isset($fixupInfo[$subNodeName])
-                    && $subNode->getAttribute('origNode') !== $origSubNode
+                    && $subNode->attrs()->origNode !== $origSubNode
                 ) {
                     $fixup = $fixupInfo[$subNodeName];
                     $res = $this->pFixup($fixup, $subNode, $class, $subStartPos, $subEndPos);
@@ -992,7 +992,7 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
                 throw new \Exception("Shouldn't happen");
             }
 
-            if (null !== $fixup && $arrItem->getAttribute('origNode') !== $origArrItem) {
+            if (null !== $fixup && $arrItem->attrs()->origNode !== $origArrItem) {
                 $res = $this->pFixup($fixup, $arrItem, null, $itemStartPos, $itemEndPos);
             } else {
                 $res = $this->p($arrItem, self::MAX_PRECEDENCE, self::MAX_PRECEDENCE, true);
@@ -1338,7 +1338,7 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
 
         $this->nodeListDiffer = new Internal\Differ(function ($a, $b) {
             if ($a instanceof Node && $b instanceof Node) {
-                return $a === $b->getAttribute('origNode');
+                return $a === $b->attrs()->origNode;
             }
             // Can happen for array destructuring
             return $a === null && $b === null;

@@ -22,10 +22,10 @@ class StaticCall extends CallLike {
      * @param Node\Name|Expr $class Class name
      * @param string|Identifier|Expr $name Method name
      * @param array<Arg|VariadicPlaceholder> $args Arguments
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Node $class, $name, array $args = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Node $class, $name, array $args = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->class = $class;
         $this->name = \is_string($name) ? new Identifier($name) : $name;
         $this->args = $args;

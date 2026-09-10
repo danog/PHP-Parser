@@ -14,15 +14,15 @@ class Const_ extends Node\Stmt {
      * Constructs a const list node.
      *
      * @param Node\Const_[] $consts Constant declarations
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      * @param list<Node\AttributeGroup> $attrGroups PHP attribute groups
      */
     public function __construct(
         array $consts,
-        array $attributes = [],
+        \PhpParser\NodeAttributes|array $attributes = [],
         array $attrGroups = []
     ) {
-        $this->attributes = $attributes;
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->attrGroups = $attrGroups;
         $this->consts = $consts;
     }

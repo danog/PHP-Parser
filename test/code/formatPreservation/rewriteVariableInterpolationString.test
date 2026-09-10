@@ -3,7 +3,7 @@ Rewrite string with variable interpolation
 <?php
 "{$e}";
 -----
-$stmts[0]->expr->parts[0]->setAttribute('origNode', null);
+$stmts[0]->expr->parts[0]->attrs()->origNode = null;
 -----
 <?php
 "{$e}";

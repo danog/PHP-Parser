@@ -17,10 +17,10 @@ class List_ extends Expr {
      * Constructs a list() destructuring node.
      *
      * @param (ArrayItem|null)[] $items List of items to assign to
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(array $items, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(array $items, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->items = $items;
     }
 

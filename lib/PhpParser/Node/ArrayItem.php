@@ -20,10 +20,10 @@ class ArrayItem extends NodeAbstract {
      * @param Expr $value Value
      * @param null|Expr $key Key
      * @param bool $byRef Whether to assign by reference
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Expr $value, ?Expr $key = null, bool $byRef = false, array $attributes = [], bool $unpack = false) {
-        $this->attributes = $attributes;
+    public function __construct(Expr $value, ?Expr $key = null, bool $byRef = false, \PhpParser\NodeAttributes|array $attributes = [], bool $unpack = false) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->key = $key;
         $this->value = $value;
         $this->byRef = $byRef;

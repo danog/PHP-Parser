@@ -186,10 +186,10 @@ class EmulativeTest extends LexerTest {
         $attrs = $error->getAttributes();
         $expPos = strlen('<?php ' . $code);
         $expLine = 1 + substr_count('<?php ' . $code, "\n");
-        $this->assertSame($expPos, $attrs['startFilePos']);
-        $this->assertSame($expPos, $attrs['endFilePos']);
-        $this->assertSame($expLine, $attrs['startLine']);
-        $this->assertSame($expLine, $attrs['endLine']);
+        $this->assertSame($expPos, $attrs->startFilePos);
+        $this->assertSame($expPos, $attrs->endFilePos);
+        $this->assertSame($expLine, $attrs->startLine);
+        $this->assertSame($expLine, $attrs->endLine);
     }
 
     public static function provideTestLexNewFeatures() {

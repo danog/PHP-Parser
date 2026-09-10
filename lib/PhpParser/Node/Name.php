@@ -22,10 +22,10 @@ class Name extends NodeAbstract {
      * Constructs a name node.
      *
      * @param string|string[]|self $name Name as string, part array or Name instance (copy ctor)
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    final public function __construct($name, array $attributes = []) {
-        $this->attributes = $attributes;
+    final public function __construct($name, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->name = self::prepareName($name);
     }
 
@@ -235,11 +235,11 @@ class Name extends NodeAbstract {
      *
      * @param string|string[]|self|null $name1 The first name
      * @param string|string[]|self|null $name2 The second name
-     * @param array<string, mixed> $attributes Attributes to assign to concatenated name
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Attributes to assign to concatenated name
      *
      * @return static|null Concatenated name
      */
-    public static function concat($name1, $name2, array $attributes = []) {
+    public static function concat($name1, $name2, \PhpParser\NodeAttributes|array $attributes = []) {
         if (null === $name1 && null === $name2) {
             return null;
         }

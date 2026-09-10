@@ -17,10 +17,10 @@ class Instanceof_ extends Expr {
      *
      * @param Expr $expr Expression
      * @param Name|Expr $class Class name
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Expr $expr, Node $class, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Expr $expr, Node $class, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->expr = $expr;
         $this->class = $class;
     }

@@ -16,10 +16,10 @@ class Exit_ extends Expr {
      * Constructs an exit() node.
      *
      * @param null|Expr $expr Expression
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(?Expr $expr = null, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(?Expr $expr = null, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->expr = $expr;
     }
 

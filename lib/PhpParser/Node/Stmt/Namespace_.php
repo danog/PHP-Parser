@@ -19,10 +19,10 @@ class Namespace_ extends Node\Stmt {
      *
      * @param null|Node\Name $name Name
      * @param null|Node\Stmt[] $stmts Statements
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(?Node\Name $name = null, ?array $stmts = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(?Node\Name $name = null, ?array $stmts = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->name = $name;
         $this->stmts = $stmts;
     }

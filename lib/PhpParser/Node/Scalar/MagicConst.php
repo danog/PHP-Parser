@@ -8,10 +8,10 @@ abstract class MagicConst extends Scalar {
     /**
      * Constructs a magic constant node.
      *
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(\PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
     }
 
     public function getSubNodeNames(): array {

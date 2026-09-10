@@ -12,10 +12,10 @@ class Continue_ extends Node\Stmt {
      * Constructs a continue node.
      *
      * @param null|Node\Expr $num Number of loops to continue
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(?Node\Expr $num = null, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(?Node\Expr $num = null, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->num = $num;
     }
 

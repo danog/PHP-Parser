@@ -6,7 +6,7 @@ function test() {
     ?>Foo<?php
 }
 -----
-$stmts[0]->setAttribute('origNode', null);
+$stmts[0]->attrs()->origNode = null;
 -----
 <?php
 

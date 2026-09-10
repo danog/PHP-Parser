@@ -12,10 +12,10 @@ class HaltCompiler extends Stmt {
      * Constructs a __halt_compiler node.
      *
      * @param string $remaining Remaining text after halt compiler statement.
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(string $remaining, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(string $remaining, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->remaining = $remaining;
     }
 

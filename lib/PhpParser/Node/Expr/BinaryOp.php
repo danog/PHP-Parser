@@ -15,10 +15,10 @@ abstract class BinaryOp extends Expr {
      *
      * @param Expr $left The left hand side expression
      * @param Expr $right The right hand side expression
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Expr $left, Expr $right, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Expr $left, Expr $right, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->left = $left;
         $this->right = $right;
     }

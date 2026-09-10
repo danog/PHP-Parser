@@ -46,7 +46,7 @@ class Foo {
     }
 }
 -----
-$stmts[0]->stmts[0]->stmts[0]->setAttribute('comments', [new Comment("/* I'm a new comment */")]);
+$stmts[0]->stmts[0]->stmts[0]->attrs()->comments = [new Comment("/* I'm a new comment */")];
 -----
 <?php
 class Foo {
@@ -65,7 +65,7 @@ class Foo {
     }
 }
 -----
-$stmts[0]->stmts[0]->stmts[0]->setAttribute('comments', [new Comment("// I'm a new comment")]);
+$stmts[0]->stmts[0]->stmts[0]->attrs()->comments = [new Comment("// I'm a new comment")];
 -----
 <?php
 class Foo {

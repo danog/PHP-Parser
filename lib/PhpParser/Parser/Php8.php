@@ -1416,17 +1416,17 @@ class Php8 extends \PhpParser\ParserAbstract
             },
             116 => static function (self $self, int $stackPos) {
                  $self->semValue = new Stmt\Namespace_($self->semStack[$stackPos-(3-2)], null, $self->getAttributes($self->tokenStartStack[$stackPos-(3-1)], $self->tokenEndStack[$stackPos]));
-            $self->semValue->setAttribute('kind', Stmt\Namespace_::KIND_SEMICOLON);
+            $self->semValue->attrs()->kind = Stmt\Namespace_::KIND_SEMICOLON;
             $self->checkNamespace($self->semValue);
             },
             117 => static function (self $self, int $stackPos) {
                  $self->semValue = new Stmt\Namespace_($self->semStack[$stackPos-(5-2)], $self->semStack[$stackPos-(5-4)], $self->getAttributes($self->tokenStartStack[$stackPos-(5-1)], $self->tokenEndStack[$stackPos]));
-            $self->semValue->setAttribute('kind', Stmt\Namespace_::KIND_BRACED);
+            $self->semValue->attrs()->kind = Stmt\Namespace_::KIND_BRACED;
             $self->checkNamespace($self->semValue);
             },
             118 => static function (self $self, int $stackPos) {
                  $self->semValue = new Stmt\Namespace_(null, $self->semStack[$stackPos-(4-3)], $self->getAttributes($self->tokenStartStack[$stackPos-(4-1)], $self->tokenEndStack[$stackPos]));
-            $self->semValue->setAttribute('kind', Stmt\Namespace_::KIND_BRACED);
+            $self->semValue->attrs()->kind = Stmt\Namespace_::KIND_BRACED;
             $self->checkNamespace($self->semValue);
             },
             119 => static function (self $self, int $stackPos) {
@@ -1575,7 +1575,7 @@ class Php8 extends \PhpParser\ParserAbstract
             172 => static function (self $self, int $stackPos) {
 
         $self->semValue = new Stmt\InlineHTML($self->semStack[$stackPos-(1-1)], $self->getAttributes($self->tokenStartStack[$stackPos-(1-1)], $self->tokenEndStack[$stackPos]));
-        $self->semValue->setAttribute('hasLeadingNewline', $self->inlineHtmlHasLeadingNewline($stackPos-(1-1)));
+        $self->semValue->attrs()->hasLeadingNewline = $self->inlineHtmlHasLeadingNewline($stackPos-(1-1));
 
             },
             173 => static function (self $self, int $stackPos) {
@@ -2488,17 +2488,17 @@ class Php8 extends \PhpParser\ParserAbstract
             },
             490 => static function (self $self, int $stackPos) {
                  $attrs = $self->getAttributes($self->tokenStartStack[$stackPos-(2-1)], $self->tokenEndStack[$stackPos]);
-            $attrs['kind'] = $self->getIntCastKind($self->semStack[$stackPos-(2-1)]);
+            $attrs->kind = $self->getIntCastKind($self->semStack[$stackPos-(2-1)]);
             $self->semValue = new Expr\Cast\Int_($self->semStack[$stackPos-(2-2)], $attrs);
             },
             491 => static function (self $self, int $stackPos) {
                  $attrs = $self->getAttributes($self->tokenStartStack[$stackPos-(2-1)], $self->tokenEndStack[$stackPos]);
-            $attrs['kind'] = $self->getFloatCastKind($self->semStack[$stackPos-(2-1)]);
+            $attrs->kind = $self->getFloatCastKind($self->semStack[$stackPos-(2-1)]);
             $self->semValue = new Expr\Cast\Double($self->semStack[$stackPos-(2-2)], $attrs);
             },
             492 => static function (self $self, int $stackPos) {
                  $attrs = $self->getAttributes($self->tokenStartStack[$stackPos-(2-1)], $self->tokenEndStack[$stackPos]);
-            $attrs['kind'] = $self->getStringCastKind($self->semStack[$stackPos-(2-1)]);
+            $attrs->kind = $self->getStringCastKind($self->semStack[$stackPos-(2-1)]);
             $self->semValue = new Expr\Cast\String_($self->semStack[$stackPos-(2-2)], $attrs);
             },
             493 => static function (self $self, int $stackPos) {
@@ -2509,7 +2509,7 @@ class Php8 extends \PhpParser\ParserAbstract
             },
             495 => static function (self $self, int $stackPos) {
                  $attrs = $self->getAttributes($self->tokenStartStack[$stackPos-(2-1)], $self->tokenEndStack[$stackPos]);
-            $attrs['kind'] = $self->getBoolCastKind($self->semStack[$stackPos-(2-1)]);
+            $attrs->kind = $self->getBoolCastKind($self->semStack[$stackPos-(2-1)]);
             $self->semValue = new Expr\Cast\Bool_($self->semStack[$stackPos-(2-2)], $attrs);
             },
             496 => static function (self $self, int $stackPos) {
@@ -2695,11 +2695,11 @@ class Php8 extends \PhpParser\ParserAbstract
                  $self->semValue = new Expr\ClassConstFetch($self->semStack[$stackPos-(3-1)], new Expr\Error($self->getAttributes($self->tokenStartStack[$stackPos-(3-3)],  $self->tokenEndStack[$stackPos-(3-3)])), $self->getAttributes($self->tokenStartStack[$stackPos-(3-1)], $self->tokenEndStack[$stackPos])); $self->errorState = 2;
             },
             563 => static function (self $self, int $stackPos) {
-                 $attrs = $self->getAttributes($self->tokenStartStack[$stackPos-(3-1)], $self->tokenEndStack[$stackPos]); $attrs['kind'] = Expr\Array_::KIND_SHORT;
+                 $attrs = $self->getAttributes($self->tokenStartStack[$stackPos-(3-1)], $self->tokenEndStack[$stackPos]); $attrs->kind = Expr\Array_::KIND_SHORT;
             $self->semValue = new Expr\Array_($self->semStack[$stackPos-(3-2)], $attrs);
             },
             564 => static function (self $self, int $stackPos) {
-                 $attrs = $self->getAttributes($self->tokenStartStack[$stackPos-(4-1)], $self->tokenEndStack[$stackPos]); $attrs['kind'] = Expr\Array_::KIND_LONG;
+                 $attrs = $self->getAttributes($self->tokenStartStack[$stackPos-(4-1)], $self->tokenEndStack[$stackPos]); $attrs->kind = Expr\Array_::KIND_LONG;
             $self->semValue = new Expr\Array_($self->semStack[$stackPos-(4-3)], $attrs);
             $self->createdArrays->offsetSet($self->semValue);
             },
@@ -2710,7 +2710,7 @@ class Php8 extends \PhpParser\ParserAbstract
                  $self->semValue = Scalar\String_::fromString($self->semStack[$stackPos-(1-1)], $self->getAttributes($self->tokenStartStack[$stackPos-(1-1)], $self->tokenEndStack[$stackPos]), $self->phpVersion->supportsUnicodeEscapes());
             },
             567 => static function (self $self, int $stackPos) {
-                 $attrs = $self->getAttributes($self->tokenStartStack[$stackPos-(3-1)], $self->tokenEndStack[$stackPos]); $attrs['kind'] = Scalar\String_::KIND_DOUBLE_QUOTED;
+                 $attrs = $self->getAttributes($self->tokenStartStack[$stackPos-(3-1)], $self->tokenEndStack[$stackPos]); $attrs->kind = Scalar\String_::KIND_DOUBLE_QUOTED;
             foreach ($self->semStack[$stackPos-(3-2)] as $s) { if ($s instanceof Node\InterpolatedStringPart) { $s->value = Node\Scalar\String_::parseEscapeSequences($s->value, '"', $self->phpVersion->supportsUnicodeEscapes()); } }; $self->semValue = new Scalar\InterpolatedString($self->semStack[$stackPos-(3-2)], $attrs);
             },
             568 => static function (self $self, int $stackPos) {
@@ -2819,7 +2819,7 @@ class Php8 extends \PhpParser\ParserAbstract
                  $self->semValue = new Expr\Error($self->getAttributes($self->tokenStartStack[$stackPos-(1-1)], $self->tokenEndStack[$stackPos])); $self->errorState = 2;
             },
             619 => static function (self $self, int $stackPos) {
-                 $self->semValue = new Expr\List_($self->semStack[$stackPos-(4-3)], $self->getAttributes($self->tokenStartStack[$stackPos-(4-1)], $self->tokenEndStack[$stackPos])); $self->semValue->setAttribute('kind', Expr\List_::KIND_LIST);
+                 $self->semValue = new Expr\List_($self->semStack[$stackPos-(4-3)], $self->getAttributes($self->tokenStartStack[$stackPos-(4-1)], $self->tokenEndStack[$stackPos])); $self->semValue->attrs()->kind = Expr\List_::KIND_LIST;
             $self->postprocessList($self->semValue);
             },
             620 => static function (self $self, int $stackPos) {
@@ -2875,7 +2875,7 @@ class Php8 extends \PhpParser\ParserAbstract
                  $self->semValue = array($self->semStack[$stackPos-(2-1)], $self->semStack[$stackPos-(2-2)]);
             },
             637 => static function (self $self, int $stackPos) {
-                 $attrs = $self->getAttributes($self->tokenStartStack[$stackPos-(1-1)], $self->tokenEndStack[$stackPos]); $attrs['rawValue'] = $self->semStack[$stackPos-(1-1)]; $self->semValue = new Node\InterpolatedStringPart($self->semStack[$stackPos-(1-1)], $attrs);
+                 $attrs = $self->getAttributes($self->tokenStartStack[$stackPos-(1-1)], $self->tokenEndStack[$stackPos]); $attrs->rawValue = $self->semStack[$stackPos-(1-1)]; $self->semValue = new Node\InterpolatedStringPart($self->semStack[$stackPos-(1-1)], $attrs);
             },
             638 => static function (self $self, int $stackPos) {
                  $self->semValue = new Expr\Variable($self->semStack[$stackPos-(1-1)], $self->getAttributes($self->tokenStartStack[$stackPos-(1-1)], $self->tokenEndStack[$stackPos]));

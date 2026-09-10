@@ -14,10 +14,10 @@ class Match_ extends Node\Expr {
     /**
      * @param Node\Expr $cond Condition
      * @param MatchArm[] $arms
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Node\Expr $cond, array $arms = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Node\Expr $cond, array $arms = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->cond = $cond;
         $this->arms = $arms;
     }

@@ -105,7 +105,7 @@ class NodeDumper {
             }
 
             if ($this->dumpOtherAttributes) {
-                foreach ($node->getAttributes() as $key => $value) {
+                foreach ($node->getAttributes()->toArray() as $key => $value) {
                     if (isset(self::IGNORE_ATTRIBUTES[$key])) {
                         continue;
                     }
@@ -268,13 +268,13 @@ class NodeDumper {
      * @return string|null Dump of position, or null if position information not available
      */
     protected function dumpPosition(Node $node): ?string {
-        if (!$node->hasAttribute('startLine') || !$node->hasAttribute('endLine')) {
+        if ($node->attrs()->startLine === null || $node->attrs()->endLine === null) {
             return null;
         }
 
         $start = $node->getStartLine();
         $end = $node->getEndLine();
-        if ($node->hasAttribute('startFilePos') && $node->hasAttribute('endFilePos')
+        if ($node->attrs()->startFilePos !== null && $node->attrs()->endFilePos !== null
             && null !== $this->code
         ) {
             $start .= ':' . $this->toColumn($this->code, $node->getStartFilePos());

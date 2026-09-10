@@ -12,10 +12,10 @@ class Float_ extends Scalar {
      * Constructs a float number scalar node.
      *
      * @param float $value Value of the number
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(float $value, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(float $value, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->value = $value;
     }
 
@@ -40,10 +40,11 @@ class Float_ extends Scalar {
     }
 
     /**
-     * @param mixed[] $attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes
      */
-    public static function fromString(string $str, array $attributes = []): Float_ {
-        $attributes['rawValue'] = $str;
+    public static function fromString(string $str, \PhpParser\NodeAttributes|array $attributes = []): Float_ {
+        $attributes = \PhpParser\NodeAttributes::from($attributes);
+        $attributes->rawValue = $str;
         $float = self::parse($str);
 
         return new Float_($float, $attributes);

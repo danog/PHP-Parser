@@ -223,10 +223,10 @@ class NameResolver extends NodeVisitorAbstract {
         if (!$this->replaceNodes) {
             $resolvedName = $this->nameContext->getResolvedName($name, $type);
             if (null !== $resolvedName) {
-                $name->setAttribute('resolvedName', $resolvedName);
+                $name->attrs()->resolvedName = $resolvedName;
             } else {
-                $name->setAttribute('namespacedName', FullyQualified::concat(
-                    $this->nameContext->getNamespace(), $name, $name->getAttributes()));
+                $name->attrs()->namespacedName = FullyQualified::concat(
+                    $this->nameContext->getNamespace(), $name, $name->getAttributes());
             }
             return $name;
         }
@@ -235,7 +235,7 @@ class NameResolver extends NodeVisitorAbstract {
             // Save the original name
             $originalName = $name;
             $name = clone $originalName;
-            $name->setAttribute('originalName', $originalName);
+            $name->attrs()->originalName = $originalName;
         }
 
         $resolvedName = $this->nameContext->getResolvedName($name, $type);
@@ -245,8 +245,8 @@ class NameResolver extends NodeVisitorAbstract {
 
         // unqualified names inside a namespace cannot be resolved at compile-time
         // add the namespaced version of the name as an attribute
-        $name->setAttribute('namespacedName', FullyQualified::concat(
-            $this->nameContext->getNamespace(), $name, $name->getAttributes()));
+        $name->attrs()->namespacedName = FullyQualified::concat(
+            $this->nameContext->getNamespace(), $name, $name->getAttributes());
         return $name;
     }
 

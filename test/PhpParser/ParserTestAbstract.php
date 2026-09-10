@@ -63,7 +63,7 @@ EOC;
             'endTokenPos' => 21,
             'startFilePos' => 25,
             'endFilePos' => 86,
-        ], $fn->getAttributes());
+        ], $fn->getAttributes()->toArray());
 
         $param = $fn->params[0];
         $this->assertInstanceOf(Node\Param::class, $param);
@@ -74,7 +74,7 @@ EOC;
             'endTokenPos' => 7,
             'startFilePos' => 39,
             'endFilePos' => 40,
-        ], $param->getAttributes());
+        ], $param->getAttributes()->toArray());
 
         /** @var Stmt\Echo_ $echo */
         $echo = $fn->stmts[0];
@@ -92,7 +92,7 @@ EOC;
             'endTokenPos' => 19,
             'startFilePos' => 77,
             'endFilePos' => 84,
-        ], $echo->getAttributes());
+        ], $echo->getAttributes()->toArray());
 
         /** @var \PhpParser\Node\Expr\Variable $var */
         $var = $echo->exprs[0];
@@ -104,7 +104,7 @@ EOC;
             'endTokenPos' => 18,
             'startFilePos' => 82,
             'endFilePos' => 83,
-        ], $var->getAttributes());
+        ], $var->getAttributes()->toArray());
     }
 
     public function testInvalidToken(): void {
@@ -122,7 +122,7 @@ EOC;
         $parser = $this->getParser(new Lexer\Emulative());
         $stmts = $parser->parse("<?php $code;");
         $node = $stmts[0] instanceof Stmt\Expression ? $stmts[0]->expr : $stmts[0];
-        $attributes = $node->getAttributes();
+        $attributes = $node->getAttributes()->toArray();
         foreach ($expectedAttributes as $name => $value) {
             $this->assertSame($value, $attributes[$name]);
         }
@@ -183,10 +183,10 @@ EOC;
     public function testListKindAttribute(): void {
         $parser = $this->getParser(new Lexer\Emulative());
         $stmts = $parser->parse('<?php list(list($x)) = $y; [[$x]] = $y;');
-        $this->assertSame($stmts[0]->expr->var->getAttribute('kind'), Expr\List_::KIND_LIST);
-        $this->assertSame($stmts[0]->expr->var->items[0]->value->getAttribute('kind'), Expr\List_::KIND_LIST);
-        $this->assertSame($stmts[1]->expr->var->getAttribute('kind'), Expr\List_::KIND_ARRAY);
-        $this->assertSame($stmts[1]->expr->var->items[0]->value->getAttribute('kind'), Expr\List_::KIND_ARRAY);
+        $this->assertSame($stmts[0]->expr->var->attrs()->kind, Expr\List_::KIND_LIST);
+        $this->assertSame($stmts[0]->expr->var->items[0]->value->attrs()->kind, Expr\List_::KIND_LIST);
+        $this->assertSame($stmts[1]->expr->var->attrs()->kind, Expr\List_::KIND_ARRAY);
+        $this->assertSame($stmts[1]->expr->var->items[0]->value->attrs()->kind, Expr\List_::KIND_ARRAY);
     }
 
     public function testGetTokens(): void {

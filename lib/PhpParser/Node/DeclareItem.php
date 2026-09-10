@@ -16,10 +16,10 @@ class DeclareItem extends NodeAbstract {
      *
      * @param string|Node\Identifier $key Key
      * @param Node\Expr $value Value
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct($key, Node\Expr $value, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct($key, Node\Expr $value, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->key = \is_string($key) ? new Node\Identifier($key) : $key;
         $this->value = $value;
     }

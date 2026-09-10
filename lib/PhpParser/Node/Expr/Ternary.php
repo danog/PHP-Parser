@@ -18,10 +18,10 @@ class Ternary extends Expr {
      * @param Expr $cond Condition
      * @param null|Expr $if Expression for true
      * @param Expr $else Expression for false
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Expr $cond, ?Expr $if, Expr $else, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Expr $cond, ?Expr $if, Expr $else, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->cond = $cond;
         $this->if = $if;
         $this->else = $else;

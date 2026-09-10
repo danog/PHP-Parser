@@ -20,6 +20,6 @@ class DNumberTest extends \PHPUnit\Framework\TestCase {
 
         /** @var Float_ $dnumber */
         $this->assertSame(1234.56, $dnumber->value);
-        $this->assertSame('1_234.56', $dnumber->getAttribute('rawValue'));
+        $this->assertSame('1_234.56', $dnumber->attrs()->rawValue);
     }
 }

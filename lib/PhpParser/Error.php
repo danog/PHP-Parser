@@ -4,18 +4,17 @@ namespace PhpParser;
 
 class Error extends \RuntimeException {
     protected string $rawMessage;
-    /** @var array<string, mixed> */
-    protected array $attributes;
+    protected NodeAttributes $attributes;
 
     /**
      * Creates an Exception signifying a parse error.
      *
      * @param string $message Error message
-     * @param array<string, mixed> $attributes Attributes of node/token where error occurred
+     * @param NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Attributes of node/token where error occurred
      */
-    public function __construct(string $message, array $attributes = []) {
+    public function __construct(string $message, NodeAttributes|array $attributes = []) {
         $this->rawMessage = $message;
-        $this->attributes = $attributes;
+        $this->attributes = NodeAttributes::from($attributes);
         $this->updateMessage();
     }
 
@@ -35,7 +34,7 @@ class Error extends \RuntimeException {
      * @phpstan-return -1|positive-int
      */
     public function getStartLine(): int {
-        return $this->attributes['startLine'] ?? -1;
+        return $this->attributes->startLine ?? -1;
     }
 
     /**
@@ -45,25 +44,24 @@ class Error extends \RuntimeException {
      * @phpstan-return -1|positive-int
      */
     public function getEndLine(): int {
-        return $this->attributes['endLine'] ?? -1;
+        return $this->attributes->endLine ?? -1;
     }
 
     /**
      * Gets the attributes of the node/token the error occurred at.
      *
-     * @return array<string, mixed>
      */
-    public function getAttributes(): array {
+    public function getAttributes(): NodeAttributes {
         return $this->attributes;
     }
 
     /**
      * Sets the attributes of the node/token the error occurred at.
      *
-     * @param array<string, mixed> $attributes
+     * @param NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes
      */
-    public function setAttributes(array $attributes): void {
-        $this->attributes = $attributes;
+    public function setAttributes(NodeAttributes|array $attributes): void {
+        $this->attributes = NodeAttributes::from($attributes);
         $this->updateMessage();
     }
 
@@ -83,7 +81,7 @@ class Error extends \RuntimeException {
      * @param int $line Error start line
      */
     public function setStartLine(int $line): void {
-        $this->attributes['startLine'] = $line;
+        $this->attributes->startLine = $line;
         $this->updateMessage();
     }
 
@@ -93,7 +91,7 @@ class Error extends \RuntimeException {
      * For column information enable the startFilePos and endFilePos in the lexer options.
      */
     public function hasColumnInfo(): bool {
-        return isset($this->attributes['startFilePos'], $this->attributes['endFilePos']);
+        return $this->attributes->startFilePos !== null && $this->attributes->endFilePos !== null;
     }
 
     /**
@@ -106,7 +104,7 @@ class Error extends \RuntimeException {
             throw new \RuntimeException('Error does not have column information');
         }
 
-        return $this->toColumn($code, $this->attributes['startFilePos']);
+        return $this->toColumn($code, $this->attributes->startFilePos ?? -1);
     }
 
     /**
@@ -119,7 +117,7 @@ class Error extends \RuntimeException {
             throw new \RuntimeException('Error does not have column information');
         }
 
-        return $this->toColumn($code, $this->attributes['endFilePos']);
+        return $this->toColumn($code, $this->attributes->endFilePos ?? -1);
     }
 
     /**

@@ -123,38 +123,12 @@ interface Node {
      */
     public function setDocComment(Comment\Doc $docComment): void;
 
-    /**
-     * Sets an attribute on a node.
-     *
-     * @param mixed $value
-     */
-    public function setAttribute(string $key, $value): void;
+    /** The node's attributes (the live object: writes change this node). */
+    public function attrs(): NodeAttributes;
 
-    /**
-     * Returns whether an attribute exists.
-     */
-    public function hasAttribute(string $key): bool;
+    /** A copy of the node's attributes. */
+    public function getAttributes(): NodeAttributes;
 
-    /**
-     * Returns the value of an attribute.
-     *
-     * @param mixed $default
-     *
-     * @return mixed
-     */
-    public function getAttribute(string $key, $default = null);
-
-    /**
-     * Returns all the attributes of this node.
-     *
-     * @return array<string, mixed>
-     */
-    public function getAttributes(): array;
-
-    /**
-     * Replaces all the attributes of this node.
-     *
-     * @param array<string, mixed> $attributes
-     */
-    public function setAttributes(array $attributes): void;
+    /** @param NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes */
+    public function setAttributes(NodeAttributes|array $attributes): void;
 }

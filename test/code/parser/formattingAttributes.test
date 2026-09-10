@@ -55,36 +55,36 @@ array(
     0: Stmt_Expression(
         expr: Scalar_Int(
             value: 12
-            rawValue: 0b1100
             kind: KIND_BIN (2)
+            rawValue: 0b1100
         )
     )
     1: Stmt_Expression(
         expr: Scalar_Int(
             value: 12
-            rawValue: 0o14
             kind: KIND_OCT (8)
+            rawValue: 0o14
         )
     )
     2: Stmt_Expression(
         expr: Scalar_Int(
             value: 12
-            rawValue: 12
             kind: KIND_DEC (10)
+            rawValue: 12
         )
     )
     3: Stmt_Expression(
         expr: Scalar_Int(
             value: 12
-            rawValue: 0xc
             kind: KIND_HEX (16)
+            rawValue: 0xc
         )
     )
     4: Stmt_Expression(
         expr: Scalar_Int(
             value: 123456
-            rawValue: 1_2_3_4_5_6
             kind: KIND_DEC (10)
+            rawValue: 1_2_3_4_5_6
         )
     )
     5: Stmt_Expression(

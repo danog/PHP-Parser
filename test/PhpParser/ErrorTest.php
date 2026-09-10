@@ -11,7 +11,7 @@ class ErrorTest extends \PHPUnit\Framework\TestCase {
         $error = new Error('Some error', $attributes);
 
         $this->assertSame('Some error', $error->getRawMessage());
-        $this->assertSame($attributes, $error->getAttributes());
+        $this->assertSame($attributes, $error->getAttributes()->toArray());
         $this->assertSame(10, $error->getStartLine());
         $this->assertSame(11, $error->getEndLine());
         $this->assertSame('Some error on line 10', $error->getMessage());

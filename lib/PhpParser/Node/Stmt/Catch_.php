@@ -19,12 +19,12 @@ class Catch_ extends Node\Stmt {
      * @param Node\Name[] $types Types of exceptions to catch
      * @param Expr\Variable|null $var Variable for exception
      * @param Node\Stmt[] $stmts Statements
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(
-        array $types, ?Expr\Variable $var = null, array $stmts = [], array $attributes = []
+        array $types, ?Expr\Variable $var = null, array $stmts = [], \PhpParser\NodeAttributes|array $attributes = []
     ) {
-        $this->attributes = $attributes;
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->types = $types;
         $this->var = $var;
         $this->stmts = $stmts;

@@ -208,7 +208,7 @@ class Emulative extends Lexer {
             $lineDelta = 0;
             foreach ($this->patches as $patch) {
                 list($patchPos, $patchType, $patchText) = $patch;
-                if ($patchPos >= $attrs['startFilePos']) {
+                if ($patchPos >= ($attrs->startFilePos ?? 0)) {
                     // No longer relevant
                     break;
                 }
@@ -222,11 +222,18 @@ class Emulative extends Lexer {
                 }
             }
 
-            $attrs['startFilePos'] += $posDelta;
-            $attrs['endFilePos'] += $posDelta;
-            $attrs['startLine'] += $lineDelta;
-            $attrs['endLine'] += $lineDelta;
-            $error->setAttributes($attrs);
+            if ($attrs->startFilePos !== null) {
+                $attrs->startFilePos += $posDelta;
+            }
+            if ($attrs->endFilePos !== null) {
+                $attrs->endFilePos += $posDelta;
+            }
+            if ($attrs->startLine !== null) {
+                $attrs->startLine += $lineDelta;
+            }
+            if ($attrs->endLine !== null) {
+                $attrs->endLine += $lineDelta;
+            }
         }
     }
 }

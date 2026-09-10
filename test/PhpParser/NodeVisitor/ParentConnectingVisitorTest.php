@@ -21,7 +21,7 @@ final class ParentConnectingVisitorTest extends \PHPUnit\Framework\TestCase {
 
         $node = (new NodeFinder())->findFirstInstanceof($ast, ClassMethod::class);
 
-        $this->assertSame('C', $node->getAttribute('parent')->name->toString());
+        $this->assertSame('C', $node->attrs()->parent->name->toString());
     }
 
     public function testWeakReferences(): void {
@@ -37,7 +37,7 @@ final class ParentConnectingVisitorTest extends \PHPUnit\Framework\TestCase {
 
         $node = (new NodeFinder())->findFirstInstanceof($ast, ClassMethod::class);
 
-        $weakReference = $node->getAttribute('weak_parent');
+        $weakReference = $node->attrs()->weak_parent;
         $this->assertInstanceOf(\WeakReference::class, $weakReference);
         $this->assertSame('C', $weakReference->get()->name->toString());
     }

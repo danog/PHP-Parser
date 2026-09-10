@@ -426,11 +426,11 @@ EOC;
         $traverser->addVisitor(new NameResolver());
         $stmts = $traverser->traverse($stmts);
 
-        $this->assertSame('NS\\foo', (string) $stmts[0]->stmts[0]->name->getAttribute('namespacedName'));
-        $this->assertSame('NS\\FOO', (string) $stmts[0]->stmts[1]->name->getAttribute('namespacedName'));
+        $this->assertSame('NS\\foo', (string) $stmts[0]->stmts[0]->name->attrs()->namespacedName);
+        $this->assertSame('NS\\FOO', (string) $stmts[0]->stmts[1]->name->attrs()->namespacedName);
 
-        $this->assertFalse($stmts[1]->stmts[0]->name->hasAttribute('namespacedName'));
-        $this->assertFalse($stmts[1]->stmts[1]->name->hasAttribute('namespacedName'));
+        $this->assertFalse($stmts[1]->stmts[0]->name->attrs()->namespacedName !== null);
+        $this->assertFalse($stmts[1]->stmts[1]->name->attrs()->namespacedName !== null);
     }
 
     /**
@@ -554,8 +554,8 @@ EOC;
 
         $stmts = $traverser->traverse($origStmts);
 
-        $this->assertSame($n1, $stmts[0]->stmts[0]->class->getAttribute('originalName'));
-        $this->assertSame($n2, $stmts[0]->stmts[1]->name->getAttribute('originalName'));
+        $this->assertSame($n1, $stmts[0]->stmts[0]->class->attrs()->originalName);
+        $this->assertSame($n2, $stmts[0]->stmts[1]->name->attrs()->originalName);
     }
 
     public function testAttributeOnlyMode(): void {
@@ -574,10 +574,10 @@ EOC;
         $traverser->traverse($origStmts);
 
         $this->assertEquals(
-            new Name\FullyQualified('Foo\Bar'), $n1->getAttribute('resolvedName'));
-        $this->assertFalse($n2->hasAttribute('resolvedName'));
+            new Name\FullyQualified('Foo\Bar'), $n1->attrs()->resolvedName);
+        $this->assertFalse($n2->attrs()->resolvedName !== null);
         $this->assertEquals(
-            new Name\FullyQualified('Foo\bar'), $n2->getAttribute('namespacedName'));
+            new Name\FullyQualified('Foo\bar'), $n2->attrs()->namespacedName);
     }
 
     private function parseAndResolve(string $code): array {

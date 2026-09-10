@@ -12,10 +12,10 @@ class Finally_ extends Node\Stmt {
      * Constructs a finally node.
      *
      * @param Node\Stmt[] $stmts Statements
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(array $stmts = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(array $stmts = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->stmts = $stmts;
     }
 

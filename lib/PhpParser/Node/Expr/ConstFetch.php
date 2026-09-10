@@ -13,10 +13,10 @@ class ConstFetch extends Expr {
      * Constructs a const fetch node.
      *
      * @param Name $name Constant name
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Name $name, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Name $name, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->name = $name;
     }
 

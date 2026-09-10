@@ -26,13 +26,13 @@ class Property extends Node\Stmt {
      *
      * @param int $flags Modifiers
      * @param PropertyItem[] $props Properties
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      * @param null|Identifier|Name|ComplexType $type Type declaration
      * @param Node\AttributeGroup[] $attrGroups PHP attribute groups
      * @param Node\PropertyHook[] $hooks Property hooks
      */
-    public function __construct(int $flags, array $props, array $attributes = [], ?Node $type = null, array $attrGroups = [], array $hooks = []) {
-        $this->attributes = $attributes;
+    public function __construct(int $flags, array $props, \PhpParser\NodeAttributes|array $attributes = [], ?Node $type = null, array $attrGroups = [], array $hooks = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->flags = $flags;
         $this->props = $props;
         $this->type = $type;

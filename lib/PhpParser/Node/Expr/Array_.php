@@ -17,10 +17,10 @@ class Array_ extends Expr {
      * Constructs an array node.
      *
      * @param ArrayItem[] $items Items of the array
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(array $items = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(array $items = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->items = $items;
     }
 

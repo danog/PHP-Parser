@@ -15,10 +15,10 @@ class Switch_ extends Node\Stmt {
      *
      * @param Node\Expr $cond Condition
      * @param Case_[] $cases Case list
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Node\Expr $cond, array $cases, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Node\Expr $cond, array $cases, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->cond = $cond;
         $this->cases = $cases;
     }

@@ -12,10 +12,10 @@ class Throw_ extends Node\Expr {
      * Constructs a throw expression node.
      *
      * @param Node\Expr $expr Expression
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Node\Expr $expr, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Node\Expr $expr, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->expr = $expr;
     }
 

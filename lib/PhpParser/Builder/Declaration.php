@@ -6,7 +6,7 @@ use PhpParser;
 use PhpParser\BuilderHelpers;
 
 abstract class Declaration implements PhpParser\Builder {
-    /** @var array<string, mixed> */
+    /** @var \PhpParser\NodeAttributes::AttributeArray */
     protected array $attributes = [];
 
     /**

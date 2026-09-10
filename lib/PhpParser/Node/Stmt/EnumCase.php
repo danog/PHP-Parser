@@ -17,9 +17,9 @@ class EnumCase extends Node\Stmt {
      * @param string|Node\Identifier $name Enum case name
      * @param Node\Expr|null $expr Enum case expression
      * @param list<AttributeGroup> $attrGroups PHP attribute groups
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct($name, ?Node\Expr $expr = null, array $attrGroups = [], array $attributes = []) {
+    public function __construct($name, ?Node\Expr $expr = null, array $attrGroups = [], \PhpParser\NodeAttributes|array $attributes = []) {
         parent::__construct($attributes);
         $this->name = \is_string($name) ? new Node\Identifier($name) : $name;
         $this->expr = $expr;

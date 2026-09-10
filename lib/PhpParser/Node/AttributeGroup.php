@@ -10,10 +10,10 @@ class AttributeGroup extends NodeAbstract {
 
     /**
      * @param Attribute[] $attrs PHP attributes
-     * @param array<string, mixed> $attributes Additional node attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional node attributes
      */
-    public function __construct(array $attrs, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(array $attrs, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->attrs = $attrs;
     }
 

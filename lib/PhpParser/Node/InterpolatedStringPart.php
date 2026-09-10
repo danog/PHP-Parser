@@ -12,10 +12,10 @@ class InterpolatedStringPart extends NodeAbstract {
      * Constructs a node representing a string part of an interpolated string.
      *
      * @param string $value String value
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(string $value, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(string $value, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->value = $value;
     }
 

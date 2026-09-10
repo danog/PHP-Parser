@@ -12,10 +12,10 @@ class NullableType extends ComplexType {
      * Constructs a nullable type (wrapping another type).
      *
      * @param Identifier|Name $type Type
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Node $type, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Node $type, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->type = $type;
     }
 

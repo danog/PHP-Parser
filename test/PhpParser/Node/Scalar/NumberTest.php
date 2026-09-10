@@ -19,6 +19,6 @@ class NumberTest extends \PHPUnit\Framework\TestCase {
 
         /** @var Int_ $lnumber */
         $this->assertSame(1234, $lnumber->value);
-        $this->assertSame('1_234', $lnumber->getAttribute('rawValue'));
+        $this->assertSame('1_234', $lnumber->attrs()->rawValue);
     }
 }

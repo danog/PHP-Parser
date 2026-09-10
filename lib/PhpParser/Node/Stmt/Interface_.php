@@ -20,10 +20,10 @@ class Interface_ extends ClassLike {
      *             'extends'    => array(): Name of extended interfaces
      *             'stmts'      => array(): Statements
      *             'attrGroups' => array(): PHP attribute groups
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct($name, array $subNodes = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct($name, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->name = \is_string($name) ? new Node\Identifier($name) : $name;
         $this->extends = $subNodes['extends'] ?? [];
         $this->stmts = $subNodes['stmts'] ?? [];

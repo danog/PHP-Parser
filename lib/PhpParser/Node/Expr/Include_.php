@@ -20,10 +20,10 @@ class Include_ extends Expr {
      *
      * @param Expr $expr Expression
      * @param int $type Type of include
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Expr $expr, int $type, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Expr $expr, int $type, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->expr = $expr;
         $this->type = $type;
     }

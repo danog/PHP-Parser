@@ -19,10 +19,10 @@ class Int_ extends Scalar {
      * Constructs an integer number scalar node.
      *
      * @param int $value Value of the number
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(int $value, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(int $value, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->value = $value;
     }
 
@@ -50,28 +50,29 @@ class Int_ extends Scalar {
      * Constructs an Int node from a string number literal.
      *
      * @param string $str String number literal (decimal, octal, hex or binary)
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      * @param bool $allowInvalidOctal Whether to allow invalid octal numbers (PHP 5)
      *
      * @return Int_ The constructed LNumber, including kind attribute
      */
-    public static function fromString(string $str, array $attributes = [], bool $allowInvalidOctal = false): Int_ {
-        $attributes['rawValue'] = $str;
+    public static function fromString(string $str, \PhpParser\NodeAttributes|array $attributes = [], bool $allowInvalidOctal = false): Int_ {
+        $attributes = \PhpParser\NodeAttributes::from($attributes);
+        $attributes->rawValue = $str;
 
         $str = str_replace('_', '', $str);
 
         if ('0' !== $str[0] || '0' === $str) {
-            $attributes['kind'] = Int_::KIND_DEC;
+            $attributes->kind = Int_::KIND_DEC;
             return new Int_((int) $str, $attributes);
         }
 
         if ('x' === $str[1] || 'X' === $str[1]) {
-            $attributes['kind'] = Int_::KIND_HEX;
+            $attributes->kind = Int_::KIND_HEX;
             return new Int_(hexdec($str), $attributes);
         }
 
         if ('b' === $str[1] || 'B' === $str[1]) {
-            $attributes['kind'] = Int_::KIND_BIN;
+            $attributes->kind = Int_::KIND_BIN;
             return new Int_(bindec($str), $attributes);
         }
 
@@ -85,7 +86,7 @@ class Int_ extends Scalar {
         }
 
         // use intval instead of octdec to get proper cutting behavior with malformed numbers
-        $attributes['kind'] = Int_::KIND_OCT;
+        $attributes->kind = Int_::KIND_OCT;
         return new Int_(intval($str, 8), $attributes);
     }
 

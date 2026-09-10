@@ -12,10 +12,10 @@ class Isset_ extends Expr {
      * Constructs an array node.
      *
      * @param Expr[] $vars Variables
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(array $vars, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(array $vars, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->vars = $vars;
     }
 

@@ -13,10 +13,10 @@ class MatchArm extends NodeAbstract {
     /**
      * @param null|list<Node\Expr> $conds
      */
-    public function __construct(?array $conds, Node\Expr $body, array $attributes = []) {
+    public function __construct(?array $conds, Node\Expr $body, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->conds = $conds;
         $this->body = $body;
-        $this->attributes = $attributes;
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
     }
 
     public function getSubNodeNames(): array {

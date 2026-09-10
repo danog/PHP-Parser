@@ -53,7 +53,9 @@ class JsonDecoder {
                 throw new \RuntimeException('Attributes must be an array');
             }
 
-            $node->setAttributes($this->decodeArray($value['attributes']));
+            /** @var \PhpParser\NodeAttributes::AttributeArray $attributes */
+            $attributes = $this->decodeArray($value['attributes']);
+            $node->setAttributes($attributes);
         }
 
         foreach ($value as $name => $subNode) {

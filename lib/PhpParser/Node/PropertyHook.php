@@ -39,10 +39,10 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
      *             'byRef'      => false  : Whether hook returns by reference
      *             'params'     => array(): Parameters
      *             'attrGroups' => array(): PHP attribute groups
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct($name, $body, array $subNodes = [], array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct($name, $body, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->name = \is_string($name) ? new Identifier($name) : $name;
         $this->body = $body;
         $this->flags = $subNodes['flags'] ?? 0;
@@ -77,12 +77,12 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
                 return [new Return_($this->body)];
             }
             if ($name === 'set') {
-                if (!$this->hasAttribute('propertyName')) {
+                if ($this->attrs()->propertyName === null) {
                     throw new \LogicException(
                         'Can only use getStmts() on a "set" hook if the "propertyName" attribute is set');
                 }
 
-                $propName = $this->getAttribute('propertyName');
+                $propName = $this->attrs()->propertyName;
                 $prop = new PropertyFetch(new Variable('this'), (string) $propName);
                 return [new Expression(new Assign($prop, $this->body))];
             }

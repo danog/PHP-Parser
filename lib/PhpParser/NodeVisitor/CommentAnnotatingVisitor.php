@@ -62,7 +62,7 @@ class CommentAnnotatingVisitor extends NodeVisitorAbstract {
                 }
             }
             if (!empty($comments)) {
-                $node->setAttribute('comments', array_reverse($comments));
+                $node->attrs()->comments = array_reverse($comments);
             }
 
             do {

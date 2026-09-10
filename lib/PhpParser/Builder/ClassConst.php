@@ -14,7 +14,7 @@ use PhpParser\Node\Stmt;
 
 class ClassConst implements PhpParser\Builder {
     protected int $flags = 0;
-    /** @var array<string, mixed> */
+    /** @var \PhpParser\NodeAttributes::AttributeArray */
     protected array $attributes = [];
     /** @var list<Const_> */
     protected array $constants = [];

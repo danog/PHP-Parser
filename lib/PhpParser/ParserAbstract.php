@@ -483,41 +483,39 @@ abstract class ParserAbstract implements Parser {
      *
      * @param int $tokenStartPos Token position the node starts at
      * @param int $tokenEndPos Token position the node ends at
-     * @return array<string, mixed> Attributes
      */
-    protected function getAttributes(int $tokenStartPos, int $tokenEndPos): array {
+    protected function getAttributes(int $tokenStartPos, int $tokenEndPos): NodeAttributes {
         $startToken = $this->tokens[$tokenStartPos];
         $afterEndToken = $this->tokens[$tokenEndPos + 1];
-        return [
-            'startLine' => $startToken->line,
-            'startTokenPos' => $tokenStartPos,
-            'startFilePos' => $startToken->pos,
-            'endLine' => $afterEndToken->line,
-            'endTokenPos' => $tokenEndPos,
-            'endFilePos' => $afterEndToken->pos - 1,
-        ];
+        $attrs = new NodeAttributes();
+        $attrs->startLine = $startToken->line;
+        $attrs->startTokenPos = $tokenStartPos;
+        $attrs->startFilePos = $startToken->pos;
+        $attrs->endLine = $afterEndToken->line;
+        $attrs->endTokenPos = $tokenEndPos;
+        $attrs->endFilePos = $afterEndToken->pos - 1;
+        return $attrs;
     }
 
     /**
      * Get attributes for a single token at the given token position.
      *
-     * @return array<string, mixed> Attributes
      */
-    protected function getAttributesForToken(int $tokenPos): array {
+    protected function getAttributesForToken(int $tokenPos): NodeAttributes {
         if ($tokenPos < \count($this->tokens) - 1) {
             return $this->getAttributes($tokenPos, $tokenPos);
         }
 
         // Get attributes for the sentinel token.
         $token = $this->tokens[$tokenPos];
-        return [
-            'startLine' => $token->line,
-            'startTokenPos' => $tokenPos,
-            'startFilePos' => $token->pos,
-            'endLine' => $token->line,
-            'endTokenPos' => $tokenPos,
-            'endFilePos' => $token->pos,
-        ];
+        $attrs = new NodeAttributes();
+        $attrs->startLine = $token->line;
+        $attrs->startTokenPos = $tokenPos;
+        $attrs->startFilePos = $token->pos;
+        $attrs->endLine = $token->line;
+        $attrs->endTokenPos = $tokenPos;
+        $attrs->endFilePos = $token->pos;
+        return $attrs;
     }
 
     /*
@@ -630,27 +628,31 @@ abstract class ParserAbstract implements Parser {
 
         // We only move the builtin end attributes here. This is the best we can do with the
         // knowledge we have.
-        $endAttributes = ['endLine', 'endFilePos', 'endTokenPos'];
         $lastStmt = $stmt->stmts[count($stmt->stmts) - 1];
-        foreach ($endAttributes as $endAttribute) {
-            if ($lastStmt->hasAttribute($endAttribute)) {
-                $stmt->setAttribute($endAttribute, $lastStmt->getAttribute($endAttribute));
-            }
+        $last = $lastStmt->attrs();
+        $attrs = $stmt->attrs();
+        if ($last->endLine !== null) {
+            $attrs->endLine = $last->endLine;
+        }
+        if ($last->endFilePos !== null) {
+            $attrs->endFilePos = $last->endFilePos;
+        }
+        if ($last->endTokenPos !== null) {
+            $attrs->endTokenPos = $last->endTokenPos;
         }
     }
 
-    /** @return array<string, mixed> */
-    private function getNamespaceErrorAttributes(Namespace_ $node): array {
+    private function getNamespaceErrorAttributes(Namespace_ $node): NodeAttributes {
         $attrs = $node->getAttributes();
         // Adjust end attributes to only cover the "namespace" keyword, not the whole namespace.
-        if (isset($attrs['startLine'])) {
-            $attrs['endLine'] = $attrs['startLine'];
+        if ($attrs->startLine !== null) {
+            $attrs->endLine = $attrs->startLine;
         }
-        if (isset($attrs['startTokenPos'])) {
-            $attrs['endTokenPos'] = $attrs['startTokenPos'];
+        if ($attrs->startTokenPos !== null) {
+            $attrs->endTokenPos = $attrs->startTokenPos;
         }
-        if (isset($attrs['startFilePos'])) {
-            $attrs['endFilePos'] = $attrs['startFilePos'] + \strlen('namespace') - 1;
+        if ($attrs->startFilePos !== null) {
+            $attrs->endFilePos = $attrs->startFilePos + \strlen('namespace') - 1;
         }
         return $attrs;
     }
@@ -724,9 +726,8 @@ abstract class ParserAbstract implements Parser {
      *
      * @param int $stackPos Stack location
      *
-     * @return array<string, mixed> Combined start and end attributes
      */
-    protected function getAttributesAt(int $stackPos): array {
+    protected function getAttributesAt(int $stackPos): NodeAttributes {
         return $this->getAttributes($this->tokenStartStack[$stackPos], $this->tokenEndStack[$stackPos]);
     }
 
@@ -771,7 +772,7 @@ abstract class ParserAbstract implements Parser {
     }
 
     /** @param array<string, mixed> $attributes */
-    protected function parseLNumber(string $str, array $attributes, bool $allowInvalidOctal = false): Int_ {
+    protected function parseLNumber(string $str, NodeAttributes $attributes, bool $allowInvalidOctal = false): Int_ {
         try {
             return Int_::fromString($str, $attributes, $allowInvalidOctal);
         } catch (Error $error) {
@@ -785,11 +786,11 @@ abstract class ParserAbstract implements Parser {
      * Parse a T_NUM_STRING token into either an integer or string node.
      *
      * @param string $str Number string
-     * @param array<string, mixed> $attributes Attributes
+     * @param NodeAttributes $attributes
      *
      * @return Int_|String_ Integer or string node.
      */
-    protected function parseNumString(string $str, array $attributes) {
+    protected function parseNumString(string $str, NodeAttributes $attributes) {
         if (!preg_match('/^(?:0|-?[1-9][0-9]*)$/', $str)) {
             return new String_($str, $attributes);
         }
@@ -805,7 +806,7 @@ abstract class ParserAbstract implements Parser {
     /** @param array<string, mixed> $attributes */
     protected function stripIndentation(
         string $string, int $indentLen, string $indentChar,
-        bool $newlineAtStart, bool $newlineAtEnd, array $attributes
+        bool $newlineAtStart, bool $newlineAtEnd, NodeAttributes $attributes
     ): string {
         if ($indentLen === 0) {
             return $string;
@@ -837,12 +838,12 @@ abstract class ParserAbstract implements Parser {
 
     /**
      * @param string|(Expr|InterpolatedStringPart)[] $contents
-     * @param array<string, mixed> $attributes
-     * @param array<string, mixed> $endTokenAttributes
+     * @param NodeAttributes $attributes
+     * @param NodeAttributes $endTokenAttributes
      */
     protected function parseDocString(
         string $startToken, $contents, string $endToken,
-        array $attributes, array $endTokenAttributes, bool $parseUnicodeEscape
+        NodeAttributes $attributes, NodeAttributes $endTokenAttributes, bool $parseUnicodeEscape
     ): Expr {
         $kind = strpos($startToken, "'") === false
             ? String_::KIND_HEREDOC : String_::KIND_NOWDOC;
@@ -856,9 +857,9 @@ abstract class ParserAbstract implements Parser {
         assert($result === 1);
         $indentation = $matches[0];
 
-        $attributes['kind'] = $kind;
-        $attributes['docLabel'] = $label;
-        $attributes['docIndentation'] = $indentation;
+        $attributes->kind = $kind;
+        $attributes->docLabel = $label;
+        $attributes->docIndentation = $indentation;
 
         $indentHasSpaces = false !== strpos($indentation, " ");
         $indentHasTabs = false !== strpos($indentation, "\t");
@@ -877,7 +878,7 @@ abstract class ParserAbstract implements Parser {
 
         if (\is_string($contents)) {
             if ($contents === '') {
-                $attributes['rawValue'] = $contents;
+                $attributes->rawValue = $contents;
                 return new String_('', $attributes);
             }
 
@@ -885,7 +886,7 @@ abstract class ParserAbstract implements Parser {
                 $contents, $indentLen, $indentChar, true, true, $attributes
             );
             $contents = preg_replace('~(\r\n|\n|\r)\z~', '', $contents);
-            $attributes['rawValue'] = $contents;
+            $attributes->rawValue = $contents;
 
             if ($kind === String_::KIND_HEREDOC) {
                 $contents = String_::parseEscapeSequences($contents, null, $parseUnicodeEscape);
@@ -912,7 +913,7 @@ abstract class ParserAbstract implements Parser {
                     if ($isLast) {
                         $part->value = preg_replace('~(\r\n|\n|\r)\z~', '', $part->value);
                     }
-                    $part->setAttribute('rawValue', $part->value);
+                    $part->attrs()->rawValue = $part->value;
                     $part->value = String_::parseEscapeSequences($part->value, null, $parseUnicodeEscape);
                     if ('' === $part->value) {
                         continue;
@@ -1002,15 +1003,14 @@ abstract class ParserAbstract implements Parser {
         return true;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    protected function createEmptyElemAttributes(int $tokenPos): array {
+    protected function createEmptyElemAttributes(int $tokenPos): NodeAttributes {
         return $this->getAttributesForToken($tokenPos);
     }
 
     protected function fixupArrayDestructuring(Array_ $node): Expr\List_ {
         $this->createdArrays->offsetUnset($node);
+        $listAttrs = $node->getAttributes();
+        $listAttrs->kind = Expr\List_::KIND_ARRAY;
         return new Expr\List_(array_map(function (Node\ArrayItem $item) {
             if ($item->value instanceof Expr\Error) {
                 // We used Error as a placeholder for empty elements, which are legal for destructuring.
@@ -1022,7 +1022,7 @@ abstract class ParserAbstract implements Parser {
                     $item->key, $item->byRef, $item->getAttributes());
             }
             return $item;
-        }, $node->items), ['kind' => Expr\List_::KIND_ARRAY] + $node->getAttributes());
+        }, $node->items), $listAttrs);
     }
 
     protected function postprocessList(Expr\List_ $node): void {
@@ -1039,15 +1039,15 @@ abstract class ParserAbstract implements Parser {
         // Make sure a trailing nop statement carrying comments is part of the node.
         $numStmts = \count($node->stmts);
         if ($numStmts !== 0 && $node->stmts[$numStmts - 1] instanceof Nop) {
-            $nopAttrs = $node->stmts[$numStmts - 1]->getAttributes();
-            if (isset($nopAttrs['endLine'])) {
-                $node->setAttribute('endLine', $nopAttrs['endLine']);
+            $nopAttrs = $node->stmts[$numStmts - 1]->attrs();
+            if ($nopAttrs->endLine !== null) {
+                $node->attrs()->endLine = $nopAttrs->endLine;
             }
-            if (isset($nopAttrs['endFilePos'])) {
-                $node->setAttribute('endFilePos', $nopAttrs['endFilePos']);
+            if ($nopAttrs->endFilePos !== null) {
+                $node->attrs()->endFilePos = $nopAttrs->endFilePos;
             }
-            if (isset($nopAttrs['endTokenPos'])) {
-                $node->setAttribute('endTokenPos', $nopAttrs['endTokenPos']);
+            if ($nopAttrs->endTokenPos !== null) {
+                $node->attrs()->endTokenPos = $nopAttrs->endTokenPos;
             }
         }
     }
@@ -1268,7 +1268,7 @@ abstract class ParserAbstract implements Parser {
             $name = $node->var->name;
         }
         foreach ($node->hooks as $hook) {
-            $hook->setAttribute('propertyName', $name);
+            $hook->attrs()->propertyName = $name;
         }
     }
 
@@ -1287,12 +1287,11 @@ abstract class ParserAbstract implements Parser {
 
     /**
      * @param array<Node\Arg|Node\VariadicPlaceholder> $args
-     * @param array<string, mixed> $attrs
      */
-    protected function createExitExpr(string $name, int $namePos, array $args, array $attrs): Expr {
+    protected function createExitExpr(string $name, int $namePos, array $args, NodeAttributes $attrs): Expr {
         if ($this->isSimpleExit($args)) {
             // Create Exit node for backwards compatibility.
-            $attrs['kind'] = strtolower($name) === 'exit' ? Expr\Exit_::KIND_EXIT : Expr\Exit_::KIND_DIE;
+            $attrs->kind = strtolower($name) === 'exit' ? Expr\Exit_::KIND_EXIT : Expr\Exit_::KIND_DIE;
             return new Expr\Exit_(\count($args) === 1 ? $args[0]->value : null, $attrs);
         }
         return new Expr\FuncCall(new Name($name, $this->getAttributesAt($namePos)), $args, $attrs);

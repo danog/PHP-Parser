@@ -35,11 +35,11 @@ class PrintableNewAnonClassNode extends Expr {
      * @param Node\Name|null $extends Name of extended class
      * @param Node\Name[] $implements Names of implemented interfaces
      * @param Node\Stmt[] $stmts Statements
-     * @param array<string, mixed> $attributes Attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Attributes
      */
     public function __construct(
         array $attrGroups, int $flags, array $args, ?Node\Name $extends, array $implements,
-        array $stmts, array $attributes
+        array $stmts, \PhpParser\NodeAttributes|array $attributes
     ) {
         parent::__construct($attributes);
         $this->attrGroups = $attrGroups;

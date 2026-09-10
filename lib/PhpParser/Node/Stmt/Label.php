@@ -13,10 +13,10 @@ class Label extends Stmt {
      * Constructs a label node.
      *
      * @param string|Identifier $name Name
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct($name, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct($name, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->name = \is_string($name) ? new Identifier($name) : $name;
     }
 

@@ -12,7 +12,7 @@ use function count;
  * Visitor that connects a child node to its parent node.
  *
  * With <code>$weakReferences=false</code> on the child node, the parent node can be accessed through
- * <code>$node->getAttribute('parent')</code>.
+ * <code>$node->attrs()->parent</code>.
  *
  * With <code>$weakReferences=true</code> the attribute name is "weak_parent" instead.
  */
@@ -36,9 +36,9 @@ final class ParentConnectingVisitor extends NodeVisitorAbstract {
         if (!empty($this->stack)) {
             $parent = $this->stack[count($this->stack) - 1];
             if ($this->weakReferences) {
-                $node->setAttribute('weak_parent', \WeakReference::create($parent));
+                $node->attrs()->weak_parent = \WeakReference::create($parent);
             } else {
-                $node->setAttribute('parent', $parent);
+                $node->attrs()->parent = $parent;
             }
         }
 

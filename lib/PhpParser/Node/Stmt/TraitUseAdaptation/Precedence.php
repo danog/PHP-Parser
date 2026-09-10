@@ -14,10 +14,10 @@ class Precedence extends Node\Stmt\TraitUseAdaptation {
      * @param Node\Name $trait Trait name
      * @param string|Node\Identifier $method Method name
      * @param Node\Name[] $insteadof Overwritten traits
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Node\Name $trait, $method, array $insteadof, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Node\Name $trait, $method, array $insteadof, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->trait = $trait;
         $this->method = \is_string($method) ? new Node\Identifier($method) : $method;
         $this->insteadof = $insteadof;

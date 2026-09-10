@@ -22,10 +22,10 @@ class GroupUse extends Stmt {
      * @param Name $prefix Prefix for uses
      * @param UseItem[] $uses Uses
      * @param Use_::TYPE_* $type Type of group use
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct(Name $prefix, array $uses, int $type = Use_::TYPE_NORMAL, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct(Name $prefix, array $uses, int $type = Use_::TYPE_NORMAL, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->type = $type;
         $this->prefix = $prefix;
         $this->uses = $uses;

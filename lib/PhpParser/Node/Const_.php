@@ -18,10 +18,10 @@ class Const_ extends NodeAbstract {
      *
      * @param string|Identifier $name Name
      * @param Expr $value Value
-     * @param array<string, mixed> $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
-    public function __construct($name, Expr $value, array $attributes = []) {
-        $this->attributes = $attributes;
+    public function __construct($name, Expr $value, \PhpParser\NodeAttributes|array $attributes = []) {
+        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->name = \is_string($name) ? new Identifier($name) : $name;
         $this->value = $value;
     }
