@@ -3,9 +3,6 @@
 namespace PhpParser;
 
 class JsonDecoder {
-    /** @var \ReflectionClass<Node>[] Node type to reflection class map */
-    private array $reflectionClassCache;
-
     /** @return mixed */
     public function decode(string $json) {
         $value = json_decode($json, true);
@@ -83,27 +80,4 @@ class JsonDecoder {
         );
     }
 
-    /** @return \ReflectionClass<Node> */
-    private function reflectionClassFromNodeType(string $nodeType): \ReflectionClass {
-        if (!isset($this->reflectionClassCache[$nodeType])) {
-            $className = $this->classNameFromNodeType($nodeType);
-            $this->reflectionClassCache[$nodeType] = new \ReflectionClass($className);
-        }
-        return $this->reflectionClassCache[$nodeType];
-    }
-
-    /** @return class-string<Node> */
-    private function classNameFromNodeType(string $nodeType): string {
-        $className = 'PhpParser\\Node\\' . strtr($nodeType, '_', '\\');
-        if (class_exists($className)) {
-            return $className;
-        }
-
-        $className .= '_';
-        if (class_exists($className)) {
-            return $className;
-        }
-
-        throw new \RuntimeException("Unknown node type \"$nodeType\"");
-    }
 }

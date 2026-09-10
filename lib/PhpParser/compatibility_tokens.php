@@ -4,6 +4,9 @@ namespace PhpParser;
 
 if (!\function_exists('PhpParser\defineCompatibilityTokens')) {
     function defineCompatibilityTokens(): void {
+        // The compiled program runs with every token of the newest supported PHP version defined;
+        // nothing to emulate.
+        return;
         $compatTokens = [
             // PHP 8.0
             'T_NAME_QUALIFIED',
