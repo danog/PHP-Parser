@@ -14,7 +14,13 @@ class PropertyTest extends \PHPUnit\Framework\TestCase {
             [] // invalid
         );
 
-        $this->assertTrue($node->{'is' . $modifier}());
+        $this->assertTrue(match ($modifier) {
+            'public' => $node->isPublic(),
+            'protected' => $node->isProtected(),
+            'private' => $node->isPrivate(),
+            'static' => $node->isStatic(),
+            'readonly' => $node->isReadonly(),
+        });
     }
 
     public function testNoModifiers(): void {

@@ -14,7 +14,12 @@ class ClassConstTest extends \PHPUnit\Framework\TestCase {
             constant(Modifiers::class . '::' . strtoupper($modifier))
         );
 
-        $this->assertTrue($node->{'is' . $modifier}());
+        $this->assertTrue(match ($modifier) {
+            'public' => $node->isPublic(),
+            'protected' => $node->isProtected(),
+            'private' => $node->isPrivate(),
+            'final' => $node->isFinal(),
+        });
     }
 
     public function testNoModifiers(): void {

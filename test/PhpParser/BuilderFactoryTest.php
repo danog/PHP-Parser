@@ -17,7 +17,21 @@ class BuilderFactoryTest extends \PHPUnit\Framework\TestCase {
      */
     public function testFactory($methodName, $className): void {
         $factory = new BuilderFactory();
-        $this->assertInstanceOf($className, $factory->$methodName('test'));
+        $this->assertInstanceOf($className, match ($methodName) {
+            'namespace' => $factory->namespace('test'),
+            'class' => $factory->class('test'),
+            'interface' => $factory->interface('test'),
+            'trait' => $factory->trait('test'),
+            'enum' => $factory->enum('test'),
+            'method' => $factory->method('test'),
+            'function' => $factory->function('test'),
+            'property' => $factory->property('test'),
+            'param' => $factory->param('test'),
+            'use' => $factory->use('test'),
+            'useFunction' => $factory->useFunction('test'),
+            'useConst' => $factory->useConst('test'),
+            'enumCase' => $factory->enumCase('test'),
+        });
     }
 
     public static function provideTestFactory() {

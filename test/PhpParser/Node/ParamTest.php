@@ -26,7 +26,13 @@ class ParamTest extends \PHPUnit\Framework\TestCase {
         $node = new Param(new Variable('foo'));
         $node->flags = constant(Modifiers::class . '::' . strtoupper($modifier));
         $this->assertTrue($node->isPromoted());
-        $this->assertTrue($node->{'is' . $modifier}());
+        $this->assertTrue(match ($modifier) {
+            'public' => $node->isPublic(),
+            'protected' => $node->isProtected(),
+            'private' => $node->isPrivate(),
+            'readonly' => $node->isReadonly(),
+            'final' => $node->isFinal(),
+        });
     }
 
     public static function provideModifiers() {

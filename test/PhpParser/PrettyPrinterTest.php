@@ -30,7 +30,11 @@ class PrettyPrinterTest extends CodeTestAbstract {
 
     protected function doTestPrettyPrintMethod($method, $name, $code, $expected, $modeLine) {
         [$parser, $prettyPrinter] = $this->createParserAndPrinter($this->parseModeLine($modeLine));
-        $output = canonicalize($prettyPrinter->$method($parser->parse($code)));
+        $stmts = $parser->parse($code);
+        $output = canonicalize(match ($method) {
+            'prettyPrint' => $prettyPrinter->prettyPrint($stmts),
+            'prettyPrintFile' => $prettyPrinter->prettyPrintFile($stmts),
+        });
         $this->assertSame($expected, $output, $name);
     }
 

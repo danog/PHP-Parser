@@ -18,6 +18,22 @@ class DummyNode extends NodeAbstract {
         return ['subNode1', 'subNode2'];
     }
 
+    public function getSubNode(string $name): mixed {
+        return match ($name) {
+            'subNode1' => $this->subNode1,
+            'subNode2' => $this->subNode2,
+            default => throw new \LogicException("Unknown sub node $name"),
+        };
+    }
+
+    public function setSubNode(string $name, mixed $value): void {
+        match ($name) {
+            'subNode1' => $this->subNode1 = $value,
+            'subNode2' => $this->subNode2 = $value,
+            default => throw new \LogicException("Unknown sub node $name"),
+        };
+    }
+
     // This method is only overwritten because the node is located in an unusual namespace
     public function getType(): string {
         return 'Dummy';

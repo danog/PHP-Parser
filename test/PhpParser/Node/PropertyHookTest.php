@@ -25,7 +25,9 @@ class PropertyHookTest extends \PHPUnit\Framework\TestCase {
             ]
         );
 
-        $this->assertTrue($node->{'is' . $modifier}());
+        $this->assertTrue(match ($modifier) {
+            'final' => $node->isFinal(),
+        });
     }
 
     public function testNoModifiers(): void {
