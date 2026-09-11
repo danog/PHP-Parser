@@ -121,7 +121,7 @@ abstract class ParserAbstract implements Parser {
 
     /** @var SemValue Temporary value containing the result of last semantic action (reduction) */
     protected mixed $semValue = null;
-    /** @var list<SemValue> Semantic value stack (contains values of tokens and semantic action results) */
+    /** @var array<int, SemValue> Semantic value stack (contains values of tokens and semantic action results) */
     protected array $semStack;
     /** @var int[] Token start position stack */
     protected array $tokenStartStack;
