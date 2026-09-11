@@ -14,6 +14,7 @@ abstract class MagicConst extends Scalar {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return [];
     }

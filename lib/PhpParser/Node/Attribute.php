@@ -23,6 +23,7 @@ class Attribute extends NodeAbstract {
         $this->args = $args;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['name', 'args'];
     }

@@ -38,6 +38,7 @@ class ClassConst extends Node\Stmt {
         $this->type = $type;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrGroups', 'flags', 'type', 'consts'];
     }

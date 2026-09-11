@@ -30,6 +30,7 @@ class Interface_ extends ClassLike {
         $this->attrGroups = $subNodes['attrGroups'] ?? [];
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrGroups', 'name', 'extends', 'stmts'];
     }

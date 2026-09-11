@@ -19,6 +19,7 @@ class Continue_ extends Node\Stmt {
         $this->num = $num;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['num'];
     }

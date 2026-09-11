@@ -23,6 +23,7 @@ class Assign extends Expr {
         $this->expr = $expr;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['var', 'expr'];
     }

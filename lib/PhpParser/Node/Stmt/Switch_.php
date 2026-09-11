@@ -23,6 +23,7 @@ class Switch_ extends Node\Stmt {
         $this->cases = $cases;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['cond', 'cases'];
     }

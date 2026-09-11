@@ -19,6 +19,7 @@ class Throw_ extends Node\Expr {
         $this->expr = $expr;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['expr'];
     }

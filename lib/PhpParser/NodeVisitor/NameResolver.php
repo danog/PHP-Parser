@@ -47,6 +47,7 @@ class NameResolver extends NodeVisitorAbstract {
         return $this->nameContext;
     }
 
+    /** @return list<\PhpParser\Node>|null */
     public function beforeTraverse(array $nodes): ?array {
         $this->nameContext->startNamespace();
         return null;

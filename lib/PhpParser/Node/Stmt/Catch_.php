@@ -30,6 +30,7 @@ class Catch_ extends Node\Stmt {
         $this->stmts = $stmts;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['types', 'var', 'stmts'];
     }

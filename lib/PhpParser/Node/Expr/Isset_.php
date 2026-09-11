@@ -19,6 +19,7 @@ class Isset_ extends Expr {
         $this->vars = $vars;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['vars'];
     }

@@ -19,6 +19,7 @@ class NullableType extends ComplexType {
         $this->type = $type;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['type'];
     }

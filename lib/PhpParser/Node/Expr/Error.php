@@ -20,6 +20,7 @@ class Error extends Expr {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return [];
     }

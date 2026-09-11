@@ -30,6 +30,7 @@ class FindingVisitor extends NodeVisitorAbstract {
         return $this->foundNodes;
     }
 
+    /** @return list<\PhpParser\Node>|null */
     public function beforeTraverse(array $nodes): ?array {
         $this->foundNodes = [];
 

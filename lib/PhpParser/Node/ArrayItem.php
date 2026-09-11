@@ -30,6 +30,7 @@ class ArrayItem extends NodeAbstract {
         $this->unpack = $unpack;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['key', 'value', 'byRef', 'unpack'];
     }

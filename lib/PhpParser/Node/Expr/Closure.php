@@ -55,6 +55,7 @@ class Closure extends Expr implements FunctionLike {
         $this->attrGroups = $subNodes['attrGroups'] ?? [];
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrGroups', 'static', 'byRef', 'params', 'uses', 'returnType', 'stmts'];
     }
@@ -105,6 +106,7 @@ class Closure extends Expr implements FunctionLike {
         return $this->byRef;
     }
 
+    /** @return list<\PhpParser\Node\Param> */
     public function getParams(): array {
         return $this->params;
     }
@@ -118,6 +120,7 @@ class Closure extends Expr implements FunctionLike {
         return $this->stmts;
     }
 
+    /** @return list<\PhpParser\Node\AttributeGroup> */
     public function getAttrGroups(): array {
         return $this->attrGroups;
     }

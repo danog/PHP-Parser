@@ -22,6 +22,7 @@ class Match_ extends Node\Expr {
         $this->arms = $arms;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['cond', 'arms'];
     }

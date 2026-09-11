@@ -20,6 +20,7 @@ class MatchArm extends NodeAbstract {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['conds', 'body'];
     }

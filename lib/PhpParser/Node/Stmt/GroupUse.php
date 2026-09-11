@@ -31,6 +31,7 @@ class GroupUse extends Stmt {
         $this->uses = $uses;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['type', 'prefix', 'uses'];
     }

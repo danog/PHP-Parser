@@ -20,6 +20,7 @@ class Static_ extends Stmt {
         $this->vars = $vars;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['vars'];
     }

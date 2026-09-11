@@ -27,6 +27,7 @@ class Alias extends Node\Stmt\TraitUseAdaptation {
         $this->newName = \is_string($newName) ? new Node\Identifier($newName) : $newName;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['trait', 'method', 'newModifier', 'newName'];
     }

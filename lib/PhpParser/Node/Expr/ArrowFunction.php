@@ -51,6 +51,7 @@ class ArrowFunction extends Expr implements FunctionLike {
         $this->attrGroups = $subNodes['attrGroups'] ?? [];
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrGroups', 'static', 'byRef', 'params', 'returnType', 'expr'];
     }
@@ -97,6 +98,7 @@ class ArrowFunction extends Expr implements FunctionLike {
         return $this->byRef;
     }
 
+    /** @return list<\PhpParser\Node\Param> */
     public function getParams(): array {
         return $this->params;
     }
@@ -105,6 +107,7 @@ class ArrowFunction extends Expr implements FunctionLike {
         return $this->returnType;
     }
 
+    /** @return list<\PhpParser\Node\AttributeGroup> */
     public function getAttrGroups(): array {
         return $this->attrGroups;
     }

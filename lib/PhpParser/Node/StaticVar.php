@@ -26,6 +26,7 @@ class StaticVar extends NodeAbstract {
         $this->default = $default;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['var', 'default'];
     }

@@ -25,6 +25,7 @@ class Instanceof_ extends Expr {
         $this->class = $class;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['expr', 'class'];
     }

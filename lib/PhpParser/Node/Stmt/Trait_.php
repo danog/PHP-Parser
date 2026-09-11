@@ -24,6 +24,7 @@ class Trait_ extends ClassLike {
         $this->attrGroups = $subNodes['attrGroups'] ?? [];
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrGroups', 'name', 'stmts'];
     }

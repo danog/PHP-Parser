@@ -19,6 +19,7 @@ class Unset_ extends Node\Stmt {
         $this->vars = $vars;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['vars'];
     }

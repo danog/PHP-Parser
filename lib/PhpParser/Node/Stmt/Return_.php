@@ -19,6 +19,7 @@ class Return_ extends Node\Stmt {
         $this->expr = $expr;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['expr'];
     }

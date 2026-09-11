@@ -19,6 +19,7 @@ class Else_ extends Node\Stmt {
         $this->stmts = $stmts;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['stmts'];
     }

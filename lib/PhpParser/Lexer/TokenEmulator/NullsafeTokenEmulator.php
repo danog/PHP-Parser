@@ -59,6 +59,7 @@ final class NullsafeTokenEmulator extends TokenEmulator {
         return $tokens;
     }
 
+    /** @return list<\PhpParser\Token> */
     public function reverseEmulate(string $code, array $tokens): array {
         // ?-> was not valid code previously, don't bother.
         return $tokens;

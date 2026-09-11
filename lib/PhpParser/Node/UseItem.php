@@ -31,6 +31,7 @@ class UseItem extends NodeAbstract {
         $this->alias = \is_string($alias) ? new Identifier($alias) : $alias;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['type', 'name', 'alias'];
     }

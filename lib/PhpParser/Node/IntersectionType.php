@@ -17,6 +17,7 @@ class IntersectionType extends ComplexType {
         $this->types = $types;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['types'];
     }

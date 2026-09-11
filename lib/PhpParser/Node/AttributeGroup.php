@@ -17,6 +17,7 @@ class AttributeGroup extends NodeAbstract {
         $this->attrs = $attrs;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrs'];
     }

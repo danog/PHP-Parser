@@ -26,6 +26,7 @@ class EnumCase extends Node\Stmt {
         $this->attrGroups = $attrGroups;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrGroups', 'name', 'expr'];
     }

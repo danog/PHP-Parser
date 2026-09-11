@@ -24,6 +24,7 @@ class List_ extends Expr {
         $this->items = $items;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['items'];
     }

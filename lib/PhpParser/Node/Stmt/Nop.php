@@ -6,6 +6,7 @@ use PhpParser\Node;
 
 /** Nop/empty statement (;). */
 class Nop extends Node\Stmt {
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return [];
     }

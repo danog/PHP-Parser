@@ -23,6 +23,7 @@ class ElseIf_ extends Node\Stmt {
         $this->stmts = $stmts;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['cond', 'stmts'];
     }

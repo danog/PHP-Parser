@@ -34,6 +34,7 @@ class Enum_ extends ClassLike {
         parent::__construct($attributes);
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrGroups', 'name', 'scalarType', 'implements', 'stmts'];
     }

@@ -28,6 +28,7 @@ class Include_ extends Expr {
         $this->type = $type;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['expr', 'type'];
     }

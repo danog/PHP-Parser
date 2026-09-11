@@ -27,6 +27,7 @@ class TryCatch extends Node\Stmt {
         $this->finally = $finally;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['stmts', 'catches', 'finally'];
     }

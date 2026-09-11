@@ -23,6 +23,7 @@ abstract class BinaryOp extends Expr {
         $this->right = $right;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['left', 'right'];
     }

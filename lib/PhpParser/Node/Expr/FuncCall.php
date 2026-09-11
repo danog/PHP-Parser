@@ -24,6 +24,7 @@ class FuncCall extends CallLike {
         $this->args = $args;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['name', 'args'];
     }
@@ -54,6 +55,7 @@ class FuncCall extends CallLike {
         return 'Expr_FuncCall';
     }
 
+    /** @return list<\PhpParser\Node\Arg|\PhpParser\Node\VariadicPlaceholder> */
     public function getRawArgs(): array {
         return $this->args;
     }

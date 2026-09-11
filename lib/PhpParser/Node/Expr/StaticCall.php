@@ -31,6 +31,7 @@ class StaticCall extends CallLike {
         $this->args = $args;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['class', 'name', 'args'];
     }
@@ -65,6 +66,7 @@ class StaticCall extends CallLike {
         return 'Expr_StaticCall';
     }
 
+    /** @return list<\PhpParser\Node\Arg|\PhpParser\Node\VariadicPlaceholder> */
     public function getRawArgs(): array {
         return $this->args;
     }

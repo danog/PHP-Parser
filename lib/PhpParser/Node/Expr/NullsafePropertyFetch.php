@@ -25,6 +25,7 @@ class NullsafePropertyFetch extends Expr {
         $this->name = \is_string($name) ? new Identifier($name) : $name;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['var', 'name'];
     }

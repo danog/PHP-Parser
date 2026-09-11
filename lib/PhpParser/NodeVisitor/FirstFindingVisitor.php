@@ -31,6 +31,7 @@ class FirstFindingVisitor extends NodeVisitorAbstract {
         return $this->foundNode;
     }
 
+    /** @return list<\PhpParser\Node>|null */
     public function beforeTraverse(array $nodes): ?array {
         $this->foundNode = null;
 

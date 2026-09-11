@@ -19,6 +19,7 @@ class Variable extends Expr {
         $this->name = $name;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['name'];
     }

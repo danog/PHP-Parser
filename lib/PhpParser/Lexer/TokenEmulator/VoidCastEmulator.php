@@ -14,6 +14,7 @@ class VoidCastEmulator extends TokenEmulator {
         return (bool)\preg_match('/\([ \t]*void[ \t]*\)/i', $code);
     }
 
+    /** @return list<\PhpParser\Token> */
     public function emulate(string $code, array $tokens): array {
         for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
             $token = $tokens[$i];
@@ -57,6 +58,7 @@ class VoidCastEmulator extends TokenEmulator {
         return $tokens;
     }
 
+    /** @return list<\PhpParser\Token> */
     public function reverseEmulate(string $code, array $tokens): array {
         for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
             $token = $tokens[$i];

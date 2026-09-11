@@ -60,6 +60,7 @@ class Class_ extends ClassLike {
         $this->attrGroups = $subNodes['attrGroups'] ?? [];
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrGroups', 'flags', 'name', 'extends', 'implements', 'stmts'];
     }

@@ -24,6 +24,7 @@ class ReadonlyFunctionTokenEmulator extends KeywordEmulator {
         return PhpVersion::fromComponents(8, 2);
     }
 
+    /** @return list<\PhpParser\Token> */
     public function reverseEmulate(string $code, array $tokens): array {
         // Don't bother
         return $tokens;

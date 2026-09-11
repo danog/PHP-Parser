@@ -19,6 +19,7 @@ class PostDec extends Expr {
         $this->var = $var;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['var'];
     }

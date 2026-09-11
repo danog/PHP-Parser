@@ -34,6 +34,7 @@ class Arg extends NodeAbstract {
         $this->unpack = $unpack;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['name', 'value', 'byRef', 'unpack'];
     }

@@ -19,6 +19,7 @@ class InlineHTML extends Stmt {
         $this->value = $value;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['value'];
     }

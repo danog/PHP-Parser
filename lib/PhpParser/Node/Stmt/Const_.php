@@ -27,6 +27,7 @@ class Const_ extends Node\Stmt {
         $this->consts = $consts;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrGroups', 'consts'];
     }

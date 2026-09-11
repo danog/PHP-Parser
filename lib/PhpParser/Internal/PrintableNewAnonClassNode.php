@@ -65,6 +65,7 @@ class PrintableNewAnonClassNode extends Expr {
         return 'Expr_PrintableNewAnonClass';
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrGroups', 'flags', 'args', 'extends', 'implements', 'stmts'];
     }

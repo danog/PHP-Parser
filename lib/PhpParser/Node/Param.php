@@ -56,6 +56,7 @@ class Param extends NodeAbstract {
         $this->hooks = $hooks;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrGroups', 'flags', 'type', 'byRef', 'variadic', 'var', 'default', 'hooks'];
     }

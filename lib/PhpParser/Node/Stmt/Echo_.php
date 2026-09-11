@@ -19,6 +19,7 @@ class Echo_ extends Node\Stmt {
         $this->exprs = $exprs;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['exprs'];
     }

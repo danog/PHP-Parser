@@ -40,6 +40,7 @@ class Property extends Node\Stmt {
         $this->hooks = $hooks;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrGroups', 'flags', 'type', 'props', 'hooks'];
     }

@@ -225,6 +225,7 @@ abstract class ParserAbstract implements Parser {
         return $result;
     }
 
+    /** @return list<\PhpParser\Token> */
     public function getTokens(): array {
         return $this->tokens;
     }

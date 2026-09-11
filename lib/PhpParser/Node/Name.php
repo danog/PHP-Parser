@@ -29,6 +29,7 @@ class Name extends NodeAbstract {
         $this->name = self::prepareName($name);
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['name'];
     }

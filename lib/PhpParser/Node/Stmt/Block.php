@@ -23,6 +23,7 @@ class Block extends Stmt {
         return 'Stmt_Block';
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['stmts'];
     }

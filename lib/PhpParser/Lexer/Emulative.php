@@ -68,6 +68,7 @@ class Emulative extends Lexer {
         }
     }
 
+    /** @return list<\PhpParser\Token> */
     public function tokenize(string $code, ?ErrorHandler $errorHandler = null): array {
         $emulators = array_filter($this->emulators, function ($emulator) use ($code) {
             return $emulator->isEmulationNeeded($code);

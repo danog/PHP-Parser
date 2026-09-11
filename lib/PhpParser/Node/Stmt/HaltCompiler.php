@@ -19,6 +19,7 @@ class HaltCompiler extends Stmt {
         $this->remaining = $remaining;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['remaining'];
     }

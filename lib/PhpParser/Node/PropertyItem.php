@@ -24,6 +24,7 @@ class PropertyItem extends NodeAbstract {
         $this->default = $default;
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['name', 'default'];
     }

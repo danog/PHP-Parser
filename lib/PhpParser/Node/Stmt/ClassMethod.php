@@ -75,6 +75,7 @@ class ClassMethod extends Node\Stmt implements FunctionLike {
         $this->attrGroups = $subNodes['attrGroups'] ?? [];
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrGroups', 'flags', 'byRef', 'name', 'params', 'returnType', 'stmts'];
     }
@@ -125,6 +126,7 @@ class ClassMethod extends Node\Stmt implements FunctionLike {
         return $this->byRef;
     }
 
+    /** @return list<\PhpParser\Node\Param> */
     public function getParams(): array {
         return $this->params;
     }
@@ -133,10 +135,12 @@ class ClassMethod extends Node\Stmt implements FunctionLike {
         return $this->returnType;
     }
 
+    /** @return list<\PhpParser\Node\Stmt>|null */
     public function getStmts(): ?array {
         return $this->stmts;
     }
 
+    /** @return list<\PhpParser\Node\AttributeGroup> */
     public function getAttrGroups(): array {
         return $this->attrGroups;
     }

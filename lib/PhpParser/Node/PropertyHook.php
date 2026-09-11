@@ -55,6 +55,7 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
         return $this->byRef;
     }
 
+    /** @return list<\PhpParser\Node\Param> */
     public function getParams(): array {
         return $this->params;
     }
@@ -70,6 +71,7 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
         return (bool) ($this->flags & Modifiers::FINAL);
     }
 
+    /** @return list<\PhpParser\Node\Stmt>|null */
     public function getStmts(): ?array {
         if ($this->body instanceof Expr) {
             $name = $this->name->toLowerString();
@@ -91,6 +93,7 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
         return $this->body;
     }
 
+    /** @return list<\PhpParser\Node\AttributeGroup> */
     public function getAttrGroups(): array {
         return $this->attrGroups;
     }
@@ -99,6 +102,7 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
         return 'PropertyHook';
     }
 
+    /** @return list<string> */
     public function getSubNodeNames(): array {
         return ['attrGroups', 'flags', 'byRef', 'name', 'params', 'body'];
     }
