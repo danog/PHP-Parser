@@ -94,7 +94,7 @@ abstract class ParserAbstract implements Parser {
     protected array $actionCheck;
     /** @var list<int> Map of states to their default action */
     protected array $actionDefault;
-    /** @var list<callable|null> Semantic action callbacks */
+    /** @var list<(\Closure(self, int): void)|null> Semantic action callbacks (a typed closure: called without boxing its arguments) */
     protected array $reduceCallbacks;
 
     /** @var list<int> Map of non-terminals to a displacement into the $goto table. The corresponding goto state for this

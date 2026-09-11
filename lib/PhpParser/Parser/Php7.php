@@ -1249,6 +1249,7 @@ class Php7 extends \PhpParser\ParserAbstract
     );
 
     protected function initReduceCallbacks(): void {
+        /** @psalm-suppress InvalidPropertyAssignmentValue the callbacks take this parser class, which is fine for its own stack */
         $this->reduceCallbacks = [
             0 => null,
             1 => static function (self $self, int $stackPos) {
