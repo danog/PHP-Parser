@@ -76,42 +76,42 @@ abstract class ParserAbstract implements Parser {
     protected array $phpTokenToSymbol;
     /** @var array<int, bool> Map of PHP token IDs to drop */
     protected array $dropTokens;
-    /** @var int[] Map of external symbols (static::T_*) to internal symbols */
+    /** @var list<int> Map of external symbols (static::T_*) to internal symbols */
     protected array $tokenToSymbol;
     /** @var list<string> Map of symbols to their names */
     protected array $symbolToName;
     /** @var array<int, string> Names of the production rules (only necessary for debugging) */
     protected array $productions;
 
-    /** @var int[] Map of states to a displacement into the $action table. The corresponding action for this
+    /** @var list<int> Map of states to a displacement into the $action table. The corresponding action for this
      *             state/symbol pair is $action[$actionBase[$state] + $symbol]. If $actionBase[$state] is 0, the
      *             action is defaulted, i.e. $actionDefault[$state] should be used instead. */
     protected array $actionBase;
-    /** @var int[] Table of actions. Indexed according to $actionBase comment. */
+    /** @var list<int> Table of actions. Indexed according to $actionBase comment. */
     protected array $action;
-    /** @var int[] Table indexed analogously to $action. If $actionCheck[$actionBase[$state] + $symbol] != $symbol
+    /** @var list<int> Table indexed analogously to $action. If $actionCheck[$actionBase[$state] + $symbol] != $symbol
      *             then the action is defaulted, i.e. $actionDefault[$state] should be used instead. */
     protected array $actionCheck;
-    /** @var int[] Map of states to their default action */
+    /** @var list<int> Map of states to their default action */
     protected array $actionDefault;
-    /** @var callable[] Semantic action callbacks */
+    /** @var list<callable|null> Semantic action callbacks */
     protected array $reduceCallbacks;
 
-    /** @var int[] Map of non-terminals to a displacement into the $goto table. The corresponding goto state for this
+    /** @var list<int> Map of non-terminals to a displacement into the $goto table. The corresponding goto state for this
      *             non-terminal/state pair is $goto[$gotoBase[$nonTerminal] + $state] (unless defaulted) */
     protected array $gotoBase;
-    /** @var int[] Table of states to goto after reduction. Indexed according to $gotoBase comment. */
+    /** @var list<int> Table of states to goto after reduction. Indexed according to $gotoBase comment. */
     protected array $goto;
-    /** @var int[] Table indexed analogously to $goto. If $gotoCheck[$gotoBase[$nonTerminal] + $state] != $nonTerminal
+    /** @var list<int> Table indexed analogously to $goto. If $gotoCheck[$gotoBase[$nonTerminal] + $state] != $nonTerminal
      *             then the goto state is defaulted, i.e. $gotoDefault[$nonTerminal] should be used. */
     protected array $gotoCheck;
-    /** @var int[] Map of non-terminals to the default state to goto after their reduction */
+    /** @var list<int> Map of non-terminals to the default state to goto after their reduction */
     protected array $gotoDefault;
 
-    /** @var int[] Map of rules to the non-terminal on their left-hand side, i.e. the non-terminal to use for
+    /** @var list<int> Map of rules to the non-terminal on their left-hand side, i.e. the non-terminal to use for
      *             determining the state to goto after reduction. */
     protected array $ruleToNonTerminal;
-    /** @var int[] Map of rules to the length of their right-hand side, which is the number of elements that have to
+    /** @var list<int> Map of rules to the length of their right-hand side, which is the number of elements that have to
      *             be popped from the stack(s) on reduction. */
     protected array $ruleToLength;
 
