@@ -6,6 +6,7 @@ namespace PhpParser;
  * @codeCoverageIgnore
  */
 abstract class NodeVisitorAbstract implements NodeVisitor {
+    /** @param list<Node> $nodes */
     public function beforeTraverse(array $nodes) {
         return null;
     }
@@ -18,6 +19,7 @@ abstract class NodeVisitorAbstract implements NodeVisitor {
         return null;
     }
 
+    /** @param list<Node> $nodes */
     public function afterTraverse(array $nodes) {
         return null;
     }
