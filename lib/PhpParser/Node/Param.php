@@ -19,9 +19,9 @@ class Param extends NodeAbstract {
     public ?Expr $default;
     /** @var int Optional visibility flags */
     public int $flags;
-    /** @var AttributeGroup[] PHP attribute groups */
+    /** @var list<AttributeGroup> PHP attribute groups */
     public array $attrGroups;
-    /** @var PropertyHook[] Property hooks for promoted properties */
+    /** @var list<PropertyHook> Property hooks for promoted properties */
     public array $hooks;
 
     /**
@@ -35,7 +35,7 @@ class Param extends NodeAbstract {
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      * @param int $flags Optional visibility flags
      * @param list<AttributeGroup> $attrGroups PHP attribute groups
-     * @param PropertyHook[] $hooks Property hooks for promoted properties
+     * @param list<PropertyHook> $hooks Property hooks for promoted properties
      */
     public function __construct(
         Expr $var, ?Expr $default = null, ?Node $type = null,

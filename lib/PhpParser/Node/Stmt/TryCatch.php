@@ -5,9 +5,9 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node;
 
 class TryCatch extends Node\Stmt {
-    /** @var Node\Stmt[] Statements */
+    /** @var list<Node\Stmt> Statements */
     public array $stmts;
-    /** @var Catch_[] Catches */
+    /** @var list<Catch_> Catches */
     public array $catches;
     /** @var null|Finally_ Optional finally node */
     public ?Finally_ $finally;
@@ -15,8 +15,8 @@ class TryCatch extends Node\Stmt {
     /**
      * Constructs a try catch node.
      *
-     * @param Node\Stmt[] $stmts Statements
-     * @param Catch_[] $catches Catches
+     * @param list<Node\Stmt> $stmts Statements
+     * @param list<Catch_> $catches Catches
      * @param null|Finally_ $finally Optional finally node
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */

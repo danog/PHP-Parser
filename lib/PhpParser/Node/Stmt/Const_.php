@@ -5,15 +5,15 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node;
 
 class Const_ extends Node\Stmt {
-    /** @var Node\Const_[] Constant declarations */
+    /** @var list<Node\Const_> Constant declarations */
     public array $consts;
-    /** @var Node\AttributeGroup[] PHP attribute groups */
+    /** @var list<Node\AttributeGroup> PHP attribute groups */
     public array $attrGroups;
 
     /**
      * Constructs a const list node.
      *
-     * @param Node\Const_[] $consts Constant declarations
+     * @param list<Node\Const_> $consts Constant declarations
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      * @param list<Node\AttributeGroup> $attrGroups PHP attribute groups
      */

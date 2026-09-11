@@ -5,13 +5,13 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt;
 
 class Block extends Stmt {
-    /** @var Stmt[] Statements */
+    /** @var list<Stmt> Statements */
     public array $stmts;
 
     /**
      * A block of statements.
      *
-     * @param Stmt[] $stmts Statements
+     * @param list<Stmt> $stmts Statements
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $stmts, \PhpParser\NodeAttributes|array $attributes = []) {

@@ -6,13 +6,13 @@ use PhpParser\Node\Expr;
 use PhpParser\Node\InterpolatedStringPart;
 
 class ShellExec extends Expr {
-    /** @var (Expr|InterpolatedStringPart)[] Interpolated string array */
+    /** @var list<Expr|InterpolatedStringPart> Interpolated string array */
     public array $parts;
 
     /**
      * Constructs a shell exec (backtick) node.
      *
-     * @param (Expr|InterpolatedStringPart)[] $parts Interpolated string array
+     * @param list<Expr|InterpolatedStringPart> $parts Interpolated string array
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $parts, \PhpParser\NodeAttributes|array $attributes = []) {

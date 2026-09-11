@@ -5,13 +5,13 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node;
 
 class Finally_ extends Node\Stmt {
-    /** @var Node\Stmt[] Statements */
+    /** @var list<Node\Stmt> Statements */
     public array $stmts;
 
     /**
      * Constructs a finally node.
      *
-     * @param Node\Stmt[] $stmts Statements
+     * @param list<Node\Stmt> $stmts Statements
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $stmts = [], \PhpParser\NodeAttributes|array $attributes = []) {

@@ -9,10 +9,10 @@ class NodeFinder {
     /**
      * Find all nodes satisfying a filter callback.
      *
-     * @param Node|Node[] $nodes Single node or array of nodes to search in
+     * @param Node|list<Node> $nodes Single node or array of nodes to search in
      * @param callable $filter Filter callback: function(Node $node) : bool
      *
-     * @return Node[] Found nodes satisfying the filter callback
+     * @return list<Node> Found nodes satisfying the filter callback
      */
     public function find($nodes, callable $filter): array {
         if ($nodes === []) {
@@ -36,10 +36,10 @@ class NodeFinder {
 
      * @template TNode as Node
      *
-     * @param Node|Node[] $nodes Single node or array of nodes to search in
+     * @param Node|list<Node> $nodes Single node or array of nodes to search in
      * @param class-string<TNode> $class Class name
      *
-     * @return TNode[] Found nodes (all instances of $class)
+     * @return list<TNode> Found nodes (all instances of $class)
      */
     public function findInstanceOf($nodes, string $class): array {
         return $this->find($nodes, function ($node) use ($class) {
@@ -50,7 +50,7 @@ class NodeFinder {
     /**
      * Find first node satisfying a filter callback.
      *
-     * @param Node|Node[] $nodes Single node or array of nodes to search in
+     * @param Node|list<Node> $nodes Single node or array of nodes to search in
      * @param callable $filter Filter callback: function(Node $node) : bool
      *
      * @return null|Node Found node (or null if none found)
@@ -77,7 +77,7 @@ class NodeFinder {
      *
      * @template TNode as Node
      *
-     * @param Node|Node[] $nodes Single node or array of nodes to search in
+     * @param Node|list<Node> $nodes Single node or array of nodes to search in
      * @param class-string<TNode> $class Class name
      *
      * @return null|TNode Found node, which is an instance of $class (or null if none found)

@@ -5,13 +5,13 @@ namespace PhpParser\Node\Expr;
 use PhpParser\Node\Expr;
 
 class Isset_ extends Expr {
-    /** @var Expr[] Variables */
+    /** @var list<Expr> Variables */
     public array $vars;
 
     /**
      * Constructs an array node.
      *
-     * @param Expr[] $vars Variables
+     * @param list<Expr> $vars Variables
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $vars, \PhpParser\NodeAttributes|array $attributes = []) {

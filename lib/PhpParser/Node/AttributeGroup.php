@@ -5,11 +5,11 @@ namespace PhpParser\Node;
 use PhpParser\NodeAbstract;
 
 class AttributeGroup extends NodeAbstract {
-    /** @var Attribute[] Attributes */
+    /** @var list<Attribute> Attributes */
     public array $attrs;
 
     /**
-     * @param Attribute[] $attrs PHP attributes
+     * @param list<Attribute> $attrs PHP attributes
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional node attributes
      */
     public function __construct(array $attrs, \PhpParser\NodeAttributes|array $attributes = []) {

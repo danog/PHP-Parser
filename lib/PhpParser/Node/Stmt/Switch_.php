@@ -7,14 +7,14 @@ use PhpParser\Node;
 class Switch_ extends Node\Stmt {
     /** @var Node\Expr Condition */
     public Node\Expr $cond;
-    /** @var Case_[] Case list */
+    /** @var list<Case_> Case list */
     public array $cases;
 
     /**
      * Constructs a case node.
      *
      * @param Node\Expr $cond Condition
-     * @param Case_[] $cases Case list
+     * @param list<Case_> $cases Case list
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(Node\Expr $cond, array $cases, \PhpParser\NodeAttributes|array $attributes = []) {

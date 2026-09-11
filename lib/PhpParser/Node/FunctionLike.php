@@ -13,7 +13,7 @@ interface FunctionLike extends Node {
     /**
      * List of parameters
      *
-     * @return Param[]
+     * @return list<Param>
      */
     public function getParams(): array;
 
@@ -27,14 +27,14 @@ interface FunctionLike extends Node {
     /**
      * The function body
      *
-     * @return Stmt[]|null
+     * @return list<Stmt>|null
      */
     public function getStmts(): ?array;
 
     /**
      * Get PHP attribute groups.
      *
-     * @return AttributeGroup[]
+     * @return list<AttributeGroup>
      */
     public function getAttrGroups(): array;
 }

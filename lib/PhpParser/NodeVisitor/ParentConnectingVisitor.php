@@ -18,7 +18,7 @@ use function count;
  */
 final class ParentConnectingVisitor extends NodeVisitorAbstract {
     /**
-     * @var Node[]
+     * @var list<Node>
      */
     private array $stack = [];
 

@@ -5,23 +5,23 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node;
 
 class For_ extends Node\Stmt {
-    /** @var Node\Expr[] Init expressions */
+    /** @var list<Node\Expr> Init expressions */
     public array $init;
-    /** @var Node\Expr[] Loop conditions */
+    /** @var list<Node\Expr> Loop conditions */
     public array $cond;
-    /** @var Node\Expr[] Loop expressions */
+    /** @var list<Node\Expr> Loop expressions */
     public array $loop;
-    /** @var Node\Stmt[] Statements */
+    /** @var list<Node\Stmt> Statements */
     public array $stmts;
 
     /**
      * Constructs a for loop node.
      *
      * @param array{
-     *     init?: Node\Expr[],
-     *     cond?: Node\Expr[],
-     *     loop?: Node\Expr[],
-     *     stmts?: Node\Stmt[],
+     *     init?: list<Node\Expr>,
+     *     cond?: list<Node\Expr>,
+     *     loop?: list<Node\Expr>,
+     *     stmts?: list<Node\Stmt>,
      * } $subNodes Array of the following optional subnodes:
      *             'init'  => array(): Init expressions
      *             'cond'  => array(): Loop conditions

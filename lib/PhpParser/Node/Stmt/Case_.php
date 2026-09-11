@@ -7,14 +7,14 @@ use PhpParser\Node;
 class Case_ extends Node\Stmt {
     /** @var null|Node\Expr Condition (null for default) */
     public ?Node\Expr $cond;
-    /** @var Node\Stmt[] Statements */
+    /** @var list<Node\Stmt> Statements */
     public array $stmts;
 
     /**
      * Constructs a case node.
      *
      * @param null|Node\Expr $cond Condition (null for default)
-     * @param Node\Stmt[] $stmts Statements
+     * @param list<Node\Stmt> $stmts Statements
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(?Node\Expr $cond, array $stmts = [], \PhpParser\NodeAttributes|array $attributes = []) {

@@ -6,13 +6,13 @@ use PhpParser\Node\StaticVar;
 use PhpParser\Node\Stmt;
 
 class Static_ extends Stmt {
-    /** @var StaticVar[] Variable definitions */
+    /** @var list<StaticVar> Variable definitions */
     public array $vars;
 
     /**
      * Constructs a static variables list node.
      *
-     * @param StaticVar[] $vars Variable definitions
+     * @param list<StaticVar> $vars Variable definitions
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $vars, \PhpParser\NodeAttributes|array $attributes = []) {

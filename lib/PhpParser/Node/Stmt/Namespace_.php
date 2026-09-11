@@ -11,14 +11,14 @@ class Namespace_ extends Node\Stmt {
 
     /** @var null|Node\Name Name */
     public ?Node\Name $name;
-    /** @var Node\Stmt[] Statements */
+    /** @var list<Node\Stmt> Statements */
     public $stmts;
 
     /**
      * Constructs a namespace node.
      *
      * @param null|Node\Name $name Name
-     * @param null|Node\Stmt[] $stmts Statements
+     * @param null|list<Node\Stmt> $stmts Statements
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(?Node\Name $name = null, ?array $stmts = [], \PhpParser\NodeAttributes|array $attributes = []) {

@@ -64,7 +64,7 @@ class TokenPolyfill {
      * the token ID, a string that matches the token text, or an array of integers/strings. In the
      * latter case, the function returns true if any of the kinds in the array match.
      *
-     * @param int|string|(int|string)[] $kind
+     * @param int|string|list<int|string> $kind
      */
     public function is($kind): bool {
         if (\is_int($kind)) {
@@ -119,7 +119,7 @@ class TokenPolyfill {
      *    T_WHITESPACE token.
      *  * Namespaced names are represented using T_NAME_* tokens.
      *
-     * @return static[]
+     * @return list<static>
      */
     public static function tokenize(string $code, int $flags = 0): array {
         self::init();

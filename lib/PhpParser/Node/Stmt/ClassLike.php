@@ -8,9 +8,9 @@ use PhpParser\Node\PropertyItem;
 abstract class ClassLike extends Node\Stmt {
     /** @var Node\Identifier|null Name */
     public ?Node\Identifier $name;
-    /** @var Node\Stmt[] Statements */
+    /** @var list<Node\Stmt> Statements */
     public array $stmts;
-    /** @var Node\AttributeGroup[] PHP attribute groups */
+    /** @var list<Node\AttributeGroup> PHP attribute groups */
     public array $attrGroups;
 
     /** @var Node\Name|null Namespaced name (if using NameResolver) */

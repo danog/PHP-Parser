@@ -101,7 +101,7 @@ abstract class NodeAbstract implements Node, \JsonSerializable {
      *
      * The comments are also available through the "comments" attribute.
      *
-     * @return Comment[]
+     * @return list<Comment>
      */
     public function getComments(): array {
         return $this->attributes->comments ?? [];

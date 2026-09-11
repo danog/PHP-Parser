@@ -10,7 +10,7 @@ use PhpParser\Token;
  * @internal
  */
 class TokenStream {
-    /** @var Token[] Tokens (in PhpToken::tokenize() format) */
+    /** @var list<Token> Tokens (in PhpToken::tokenize() format) */
     private array $tokens;
     /** @var int[] Map from position to indentation */
     private array $indentMap;
@@ -18,7 +18,7 @@ class TokenStream {
     /**
      * Create token stream instance.
      *
-     * @param Token[] $tokens Tokens in PhpToken::tokenize() format
+     * @param list<Token> $tokens Tokens in PhpToken::tokenize() format
      */
     public function __construct(array $tokens, int $tabWidth) {
         $this->tokens = $tokens;
@@ -98,7 +98,7 @@ class TokenStream {
         return false;
     }
 
-    /** @param int|string|(int|string)[] $skipTokenType */
+    /** @param int|string|list<int|string> $skipTokenType */
     public function skipLeft(int $pos, $skipTokenType): int {
         $tokens = $this->tokens;
 
@@ -116,7 +116,7 @@ class TokenStream {
         return $this->skipLeftWhitespace($pos);
     }
 
-    /** @param int|string|(int|string)[] $skipTokenType */
+    /** @param int|string|list<int|string> $skipTokenType */
     public function skipRight(int $pos, $skipTokenType): int {
         $tokens = $this->tokens;
 
@@ -166,7 +166,7 @@ class TokenStream {
         return $pos;
     }
 
-    /** @param int|string|(int|string)[] $findTokenType */
+    /** @param int|string|list<int|string> $findTokenType */
     public function findRight(int $pos, $findTokenType): int {
         $tokens = $this->tokens;
         for ($count = \count($tokens); $pos < $count; $pos++) {

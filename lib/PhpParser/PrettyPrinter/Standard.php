@@ -1065,7 +1065,7 @@ class Standard extends PrettyPrinterAbstract {
         }
     }
 
-    /** @param (Expr|Node\InterpolatedStringPart)[] $encapsList */
+    /** @param list<Expr|Node\InterpolatedStringPart> $encapsList */
     protected function pEncapsList(array $encapsList, ?string $quote): string {
         $return = '';
         foreach ($encapsList as $element) {
@@ -1132,7 +1132,7 @@ class Standard extends PrettyPrinterAbstract {
             && preg_match('/' . $start . $label . '(?:$|[^_A-Za-z0-9\x80-\xff])/', $string);
     }
 
-    /** @param (Expr|Node\InterpolatedStringPart)[] $parts */
+    /** @param list<Expr|Node\InterpolatedStringPart> $parts */
     protected function encapsedContainsEndLabel(array $parts, string $label): bool {
         foreach ($parts as $i => $part) {
             if ($part instanceof Node\InterpolatedStringPart
@@ -1177,7 +1177,7 @@ class Standard extends PrettyPrinterAbstract {
     }
 
     /**
-     * @param Node[] $nodes
+     * @param list<Node> $nodes
      */
     protected function hasNodeWithComments(array $nodes): bool {
         foreach ($nodes as $node) {
@@ -1188,7 +1188,7 @@ class Standard extends PrettyPrinterAbstract {
         return false;
     }
 
-    /** @param Node[] $nodes */
+    /** @param list<Node> $nodes */
     protected function pMaybeMultiline(array $nodes, bool $trailingComma = false): string {
         if (!$this->hasNodeWithComments($nodes)) {
             return $this->pCommaSeparated($nodes);
@@ -1197,7 +1197,7 @@ class Standard extends PrettyPrinterAbstract {
         }
     }
 
-    /** @param Node\Param[] $params
+    /** @param list<Node\Param> $params
      */
     private function hasParamWithAttributes(array $params): bool {
         foreach ($params as $param) {
@@ -1208,7 +1208,7 @@ class Standard extends PrettyPrinterAbstract {
         return false;
     }
 
-    /** @param Node\Param[] $params */
+    /** @param list<Node\Param> $params */
     protected function pParams(array $params): string {
         if ($this->hasNodeWithComments($params) ||
             ($this->hasParamWithAttributes($params) && !$this->phpVersion->supportsAttributes())
@@ -1218,7 +1218,7 @@ class Standard extends PrettyPrinterAbstract {
         return $this->pCommaSeparated($params);
     }
 
-    /** @param Node\AttributeGroup[] $nodes */
+    /** @param list<Node\AttributeGroup> $nodes */
     protected function pAttrGroups(array $nodes, bool $inline = false): string {
         $result = '';
         $sep = $inline ? ' ' : $this->nl;

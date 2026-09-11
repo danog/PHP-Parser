@@ -10,7 +10,7 @@ class EnumCase extends Node\Stmt {
     public Node\Identifier $name;
     /** @var Node\Expr|null Enum case expression */
     public ?Node\Expr $expr;
-    /** @var Node\AttributeGroup[] PHP attribute groups */
+    /** @var list<Node\AttributeGroup> PHP attribute groups */
     public array $attrGroups;
 
     /**

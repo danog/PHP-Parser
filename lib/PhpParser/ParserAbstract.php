@@ -78,7 +78,7 @@ abstract class ParserAbstract implements Parser {
     protected array $dropTokens;
     /** @var int[] Map of external symbols (static::T_*) to internal symbols */
     protected array $tokenToSymbol;
-    /** @var string[] Map of symbols to their names */
+    /** @var list<string> Map of symbols to their names */
     protected array $symbolToName;
     /** @var array<int, string> Names of the production rules (only necessary for debugging) */
     protected array $productions;
@@ -141,7 +141,7 @@ abstract class ParserAbstract implements Parser {
      */
     protected ?\SplObjectStorage $parenthesizedArrowFunctions;
 
-    /** @var Token[] Tokens for the current parse */
+    /** @var list<Token> Tokens for the current parse */
     protected array $tokens;
     /** @var int Current position in token array */
     protected int $tokenPos;
@@ -185,7 +185,7 @@ abstract class ParserAbstract implements Parser {
      * @param ErrorHandler|null $errorHandler Error handler to use for lexer/parser errors, defaults
      *                                        to ErrorHandler\Throwing.
      *
-     * @return Node\Stmt[]|null Array of statements (or null non-throwing error handler is used and
+     * @return list<Node\Stmt>|null Array of statements (or null non-throwing error handler is used and
      *                          the parser was unable to recover from an error).
      */
     public function parse(string $code, ?ErrorHandler $errorHandler = null): ?array {
@@ -229,7 +229,7 @@ abstract class ParserAbstract implements Parser {
         return $this->tokens;
     }
 
-    /** @return Stmt[]|null */
+    /** @return list<Stmt>|null */
     protected function doParse(): ?array {
         // We start off with no lookahead-token
         $symbol = self::SYMBOL_NONE;
@@ -455,7 +455,7 @@ abstract class ParserAbstract implements Parser {
      *
      * @param int $state State
      *
-     * @return string[] Expected tokens. If too many, an empty array is returned.
+     * @return list<string> Expected tokens. If too many, an empty array is returned.
      */
     protected function getExpectedTokens(int $state): array {
         $expected = [];
@@ -567,8 +567,8 @@ abstract class ParserAbstract implements Parser {
     /**
      * Moves statements of semicolon-style namespaces into $ns->stmts and checks various error conditions.
      *
-     * @param Node\Stmt[] $stmts
-     * @return Node\Stmt[]
+     * @param list<Node\Stmt> $stmts
+     * @return list<Node\Stmt>
      */
     protected function handleNamespaces(array $stmts): array {
         $hasErrored = false;
@@ -667,7 +667,7 @@ abstract class ParserAbstract implements Parser {
     /**
      * Determine namespacing style (semicolon or brace)
      *
-     * @param Node[] $stmts Top-level statements.
+     * @param list<Node> $stmts Top-level statements.
      *
      * @return null|string One of "semicolon", "brace" or null (no namespaces)
      */
@@ -844,7 +844,7 @@ abstract class ParserAbstract implements Parser {
     }
 
     /**
-     * @param string|(Expr|InterpolatedStringPart)[] $contents
+     * @param string|list<Expr|InterpolatedStringPart> $contents
      * @param NodeAttributes $attributes
      * @param NodeAttributes $endTokenAttributes
      */
@@ -1123,7 +1123,7 @@ abstract class ParserAbstract implements Parser {
         }
     }
 
-    /** @param Name[] $interfaces */
+    /** @param list<Name> $interfaces */
     private function checkImplementedInterfaces(array $interfaces): void {
         foreach ($interfaces as $interface) {
             if ($interface->isSpecialClassName()) {
@@ -1215,7 +1215,7 @@ abstract class ParserAbstract implements Parser {
         }
     }
 
-    /** @param PropertyHook[] $hooks */
+    /** @param list<PropertyHook> $hooks */
     protected function checkEmptyPropertyHookList(array $hooks, int $hookPos): void {
         if (empty($hooks)) {
             $this->emitError(new Error(

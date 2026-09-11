@@ -68,7 +68,7 @@ final class AsymmetricVisibilityTokenEmulator extends TokenEmulator {
         return $tokens;
     }
 
-    /** @param Token[] $tokens */
+    /** @param list<Token> $tokens */
     protected function isKeywordContext(array $tokens, int $pos): bool {
         $prevToken = $this->getPreviousNonSpaceToken($tokens, $pos);
         if ($prevToken === null) {
@@ -78,7 +78,7 @@ final class AsymmetricVisibilityTokenEmulator extends TokenEmulator {
             && $prevToken->id !== \T_NULLSAFE_OBJECT_OPERATOR;
     }
 
-    /** @param Token[] $tokens */
+    /** @param list<Token> $tokens */
     private function getPreviousNonSpaceToken(array $tokens, int $start): ?Token {
         for ($i = $start - 1; $i >= 0; --$i) {
             if ($tokens[$i]->id === T_WHITESPACE) {

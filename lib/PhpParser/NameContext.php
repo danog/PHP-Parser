@@ -151,7 +151,7 @@ class NameContext {
      * @param string $name Fully-qualified name (without leading namespace separator)
      * @param Stmt\Use_::TYPE_* $type One of Stmt\Use_::TYPE_*
      *
-     * @return Name[] Possible representations of the name
+     * @return list<Name> Possible representations of the name
      */
     public function getPossibleNames(string $name, int $type): array {
         $lcName = strtolower($name);

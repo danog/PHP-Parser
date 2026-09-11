@@ -13,7 +13,7 @@ class ArrowFunction extends Expr implements FunctionLike {
     /** @var bool Whether to return by reference */
     public bool $byRef;
 
-    /** @var Node\Param[] */
+    /** @var list<Node\Param> */
     public array $params = [];
 
     /** @var null|Node\Identifier|Node\Name|Node\ComplexType */
@@ -21,7 +21,7 @@ class ArrowFunction extends Expr implements FunctionLike {
 
     /** @var Expr Expression body */
     public Expr $expr;
-    /** @var Node\AttributeGroup[] */
+    /** @var list<Node\AttributeGroup> */
     public array $attrGroups;
 
     /**
@@ -29,9 +29,9 @@ class ArrowFunction extends Expr implements FunctionLike {
      *     expr: Expr,
      *     static?: bool,
      *     byRef?: bool,
-     *     params?: Node\Param[],
+     *     params?: list<Node\Param>,
      *     returnType?: null|Node\Identifier|Node\Name|Node\ComplexType,
-     *     attrGroups?: Node\AttributeGroup[]
+     *     attrGroups?: list<Node\AttributeGroup>
      * } $subNodes Array of the following subnodes:
      *             'expr'                  : Expression body
      *             'static'     => false   : Whether the closure is static
@@ -110,7 +110,7 @@ class ArrowFunction extends Expr implements FunctionLike {
     }
 
     /**
-     * @return Node\Stmt\Return_[]
+     * @return list<Node\Stmt\Return_>
      */
     public function getStmts(): array {
         return [new Node\Stmt\Return_($this->expr)];

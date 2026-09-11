@@ -21,7 +21,7 @@ class Name extends NodeAbstract {
     /**
      * Constructs a name node.
      *
-     * @param string|string[]|self $name Name as string, part array or Name instance (copy ctor)
+     * @param string|list<string>|self $name Name as string, part array or Name instance (copy ctor)
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     final public function __construct($name, \PhpParser\NodeAttributes|array $attributes = []) {
@@ -55,7 +55,7 @@ class Name extends NodeAbstract {
      * Get parts of name (split by the namespace separator).
      *
      * @psalm-return non-empty-list<string>
-     * @return string[] Parts of name
+     * @return list<string> Parts of name
      */
     public function getParts(): array {
         return \explode('\\', $this->name);
@@ -235,8 +235,8 @@ class Name extends NodeAbstract {
      *     Name::concat($namespace, $shortName)
      * where $namespace is a Name node or null will work as expected.
      *
-     * @param string|string[]|self|null $name1 The first name
-     * @param string|string[]|self|null $name2 The second name
+     * @param string|list<string>|self|null $name1 The first name
+     * @param string|list<string>|self|null $name2 The second name
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Attributes to assign to concatenated name
      *
      * @return static|null Concatenated name
@@ -261,7 +261,7 @@ class Name extends NodeAbstract {
      * Prepares a (string, array or Name node) name for use in name changing methods by converting
      * it to a string.
      *
-     * @param string|string[]|self $name Name to prepare
+     * @param string|list<string>|self $name Name to prepare
      *
      * @psalm-return non-empty-string
      * @return string Prepared name

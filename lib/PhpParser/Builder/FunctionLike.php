@@ -7,7 +7,7 @@ use PhpParser\Node;
 
 abstract class FunctionLike extends Declaration {
     protected bool $returnByRef = false;
-    /** @var Node\Param[] */
+    /** @var list<Node\Param> */
     protected array $params = [];
 
     /** @var Node\Identifier|Node\Name|Node\ComplexType|null */
@@ -46,7 +46,7 @@ abstract class FunctionLike extends Declaration {
     /**
      * Adds multiple parameters.
      *
-     * @param (Node\Param|Param)[] $params The parameters to add
+     * @param list<Node\Param|Param> $params The parameters to add
      *
      * @return $this The builder instance (for fluid interface)
      */

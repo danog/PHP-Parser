@@ -5,7 +5,7 @@ namespace PhpParser\Node\Stmt\TraitUseAdaptation;
 use PhpParser\Node;
 
 class Precedence extends Node\Stmt\TraitUseAdaptation {
-    /** @var Node\Name[] Overwritten traits */
+    /** @var list<Node\Name> Overwritten traits */
     public array $insteadof;
 
     /**
@@ -13,7 +13,7 @@ class Precedence extends Node\Stmt\TraitUseAdaptation {
      *
      * @param Node\Name $trait Trait name
      * @param string|Node\Identifier $method Method name
-     * @param Node\Name[] $insteadof Overwritten traits
+     * @param list<Node\Name> $insteadof Overwritten traits
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(Node\Name $trait, $method, array $insteadof, \PhpParser\NodeAttributes|array $attributes = []) {

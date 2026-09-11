@@ -3,13 +3,13 @@
 namespace PhpParser\Node;
 
 class IntersectionType extends ComplexType {
-    /** @var (Identifier|Name)[] Types */
+    /** @var list<Identifier|Name> Types */
     public array $types;
 
     /**
      * Constructs an intersection type.
      *
-     * @param (Identifier|Name)[] $types Types
+     * @param list<Identifier|Name> $types Types
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $types, \PhpParser\NodeAttributes|array $attributes = []) {

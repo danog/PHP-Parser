@@ -21,13 +21,13 @@ class Use_ extends Stmt {
 
     /** @var self::TYPE_* Type of alias */
     public int $type;
-    /** @var UseItem[] Aliases */
+    /** @var list<UseItem> Aliases */
     public array $uses;
 
     /**
      * Constructs an alias (use) list node.
      *
-     * @param UseItem[] $uses Aliases
+     * @param list<UseItem> $uses Aliases
      * @param Stmt\Use_::TYPE_* $type Type of alias
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */

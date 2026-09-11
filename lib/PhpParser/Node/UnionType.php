@@ -3,13 +3,13 @@
 namespace PhpParser\Node;
 
 class UnionType extends ComplexType {
-    /** @var (Identifier|Name|IntersectionType)[] Types */
+    /** @var list<Identifier|Name|IntersectionType> Types */
     public array $types;
 
     /**
      * Constructs a union type.
      *
-     * @param (Identifier|Name|IntersectionType)[] $types Types
+     * @param list<Identifier|Name|IntersectionType> $types Types
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $types, \PhpParser\NodeAttributes|array $attributes = []) {

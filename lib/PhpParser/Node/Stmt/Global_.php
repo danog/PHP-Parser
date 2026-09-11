@@ -5,13 +5,13 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node;
 
 class Global_ extends Node\Stmt {
-    /** @var Node\Expr[] Variables */
+    /** @var list<Node\Expr> Variables */
     public array $vars;
 
     /**
      * Constructs a global variables list node.
      *
-     * @param Node\Expr[] $vars Variables to unset
+     * @param list<Node\Expr> $vars Variables to unset
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $vars, \PhpParser\NodeAttributes|array $attributes = []) {

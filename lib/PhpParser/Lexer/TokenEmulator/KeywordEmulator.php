@@ -12,7 +12,7 @@ abstract class KeywordEmulator extends TokenEmulator {
         return strpos(strtolower($code), $this->getKeywordString()) !== false;
     }
 
-    /** @param Token[] $tokens */
+    /** @param list<Token> $tokens */
     protected function isKeywordContext(array $tokens, int $pos): bool {
         $prevToken = $this->getPreviousNonIgnorableToken($tokens, $pos);
         if ($prevToken === null) {
@@ -34,7 +34,7 @@ abstract class KeywordEmulator extends TokenEmulator {
         return $tokens;
     }
 
-    /** @param Token[] $tokens */
+    /** @param list<Token> $tokens */
     private function getPreviousNonIgnorableToken(array $tokens, int $start): ?Token {
         for ($i = $start - 1; $i >= 0; --$i) {
             $token = $tokens[$i];

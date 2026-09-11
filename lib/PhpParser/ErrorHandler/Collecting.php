@@ -11,7 +11,7 @@ use PhpParser\ErrorHandler;
  * This allows graceful handling of errors.
  */
 class Collecting implements ErrorHandler {
-    /** @var Error[] Collected errors */
+    /** @var list<Error> Collected errors */
     private array $errors = [];
 
     public function handleError(Error $error): void {
@@ -21,7 +21,7 @@ class Collecting implements ErrorHandler {
     /**
      * Get collected errors.
      *
-     * @return Error[]
+     * @return list<Error>
      */
     public function getErrors(): array {
         return $this->errors;

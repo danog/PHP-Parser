@@ -10,13 +10,13 @@ class Array_ extends Expr {
     public const KIND_LONG = 1;  // array() syntax
     public const KIND_SHORT = 2; // [] syntax
 
-    /** @var ArrayItem[] Items */
+    /** @var list<ArrayItem> Items */
     public array $items;
 
     /**
      * Constructs an array node.
      *
-     * @param ArrayItem[] $items Items of the array
+     * @param list<ArrayItem> $items Items of the array
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $items = [], \PhpParser\NodeAttributes|array $attributes = []) {

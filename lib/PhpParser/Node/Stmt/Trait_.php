@@ -10,8 +10,8 @@ class Trait_ extends ClassLike {
      *
      * @param string|Node\Identifier $name Name
      * @param array{
-     *     stmts?: Node\Stmt[],
-     *     attrGroups?: Node\AttributeGroup[],
+     *     stmts?: list<Node\Stmt>,
+     *     attrGroups?: list<Node\AttributeGroup>,
      * } $subNodes Array of the following optional subnodes:
      *             'stmts'      => array(): Statements
      *             'attrGroups' => array(): PHP attribute groups

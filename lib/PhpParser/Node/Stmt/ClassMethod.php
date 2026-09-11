@@ -13,13 +13,13 @@ class ClassMethod extends Node\Stmt implements FunctionLike {
     public bool $byRef;
     /** @var Node\Identifier Name */
     public Node\Identifier $name;
-    /** @var Node\Param[] Parameters */
+    /** @var list<Node\Param> Parameters */
     public array $params;
     /** @var null|Node\Identifier|Node\Name|Node\ComplexType Return type */
     public ?Node $returnType;
-    /** @var Node\Stmt[]|null Statements */
+    /** @var list<Node\Stmt>|null Statements */
     public ?array $stmts;
-    /** @var Node\AttributeGroup[] PHP attribute groups */
+    /** @var list<Node\AttributeGroup> PHP attribute groups */
     public array $attrGroups;
 
     /** @var array<string, bool> */
@@ -51,10 +51,10 @@ class ClassMethod extends Node\Stmt implements FunctionLike {
      *     flags?: int,
      *     type?: int,
      *     byRef?: bool,
-     *     params?: Node\Param[],
+     *     params?: list<Node\Param>,
      *     returnType?: null|Node\Identifier|Node\Name|Node\ComplexType,
-     *     stmts?: Node\Stmt[]|null,
-     *     attrGroups?: Node\AttributeGroup[],
+     *     stmts?: list<Node\Stmt>|null,
+     *     attrGroups?: list<Node\AttributeGroup>,
      * } $subNodes Array of the following optional subnodes:
      *             'flags       => 0              : Flags
      *             'byRef'      => false          : Whether to return by reference

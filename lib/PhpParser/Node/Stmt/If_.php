@@ -7,9 +7,9 @@ use PhpParser\Node;
 class If_ extends Node\Stmt {
     /** @var Node\Expr Condition expression */
     public Node\Expr $cond;
-    /** @var Node\Stmt[] Statements */
+    /** @var list<Node\Stmt> Statements */
     public array $stmts;
-    /** @var ElseIf_[] Elseif clauses */
+    /** @var list<ElseIf_> Elseif clauses */
     public array $elseifs;
     /** @var null|Else_ Else clause */
     public ?Else_ $else;
@@ -19,8 +19,8 @@ class If_ extends Node\Stmt {
      *
      * @param Node\Expr $cond Condition
      * @param array{
-     *     stmts?: Node\Stmt[],
-     *     elseifs?: ElseIf_[],
+     *     stmts?: list<Node\Stmt>,
+     *     elseifs?: list<ElseIf_>,
      *     else?: Else_|null,
      * } $subNodes Array of the following optional subnodes:
      *             'stmts'   => array(): Statements

@@ -5,13 +5,13 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node;
 
 class Echo_ extends Node\Stmt {
-    /** @var Node\Expr[] Expressions */
+    /** @var list<Node\Expr> Expressions */
     public array $exprs;
 
     /**
      * Constructs an echo node.
      *
-     * @param Node\Expr[] $exprs Expressions
+     * @param list<Node\Expr> $exprs Expressions
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $exprs, \PhpParser\NodeAttributes|array $attributes = []) {

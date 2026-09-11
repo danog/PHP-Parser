@@ -200,7 +200,7 @@ class Emulative extends Lexer {
     /**
      * Fixup line and position information in errors.
      *
-     * @param Error[] $errors
+     * @param list<Error> $errors
      */
     private function fixupErrors(array $errors): void {
         foreach ($errors as $error) {

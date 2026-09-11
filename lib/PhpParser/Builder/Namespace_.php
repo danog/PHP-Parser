@@ -9,7 +9,7 @@ use PhpParser\Node\Stmt;
 
 class Namespace_ extends Declaration {
     private ?Node\Name $name;
-    /** @var Stmt[] */
+    /** @var list<Stmt> */
     private array $stmts = [];
 
     /**

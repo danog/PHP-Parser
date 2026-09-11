@@ -13,14 +13,14 @@ class GroupUse extends Stmt {
     public int $type;
     /** @var Name Prefix for uses */
     public Name $prefix;
-    /** @var UseItem[] Uses */
+    /** @var list<UseItem> Uses */
     public array $uses;
 
     /**
      * Constructs a group use node.
      *
      * @param Name $prefix Prefix for uses
-     * @param UseItem[] $uses Uses
+     * @param list<UseItem> $uses Uses
      * @param Use_::TYPE_* $type Type of group use
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */

@@ -6,16 +6,16 @@ use PhpParser\Node;
 use PhpParser\Node\DeclareItem;
 
 class Declare_ extends Node\Stmt {
-    /** @var DeclareItem[] List of declares */
+    /** @var list<DeclareItem> List of declares */
     public array $declares;
-    /** @var Node\Stmt[]|null Statements */
+    /** @var list<Node\Stmt>|null Statements */
     public ?array $stmts;
 
     /**
      * Constructs a declare node.
      *
-     * @param DeclareItem[] $declares List of declares
-     * @param Node\Stmt[]|null $stmts Statements
+     * @param list<DeclareItem> $declares List of declares
+     * @param list<Node\Stmt>|null $stmts Statements
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $declares, ?array $stmts = null, \PhpParser\NodeAttributes|array $attributes = []) {

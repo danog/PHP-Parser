@@ -12,15 +12,15 @@ class Closure extends Expr implements FunctionLike {
     public bool $static;
     /** @var bool Whether to return by reference */
     public bool $byRef;
-    /** @var Node\Param[] Parameters */
+    /** @var list<Node\Param> Parameters */
     public array $params;
-    /** @var ClosureUse[] use()s */
+    /** @var list<ClosureUse> use()s */
     public array $uses;
     /** @var null|Node\Identifier|Node\Name|Node\ComplexType Return type */
     public ?Node $returnType;
-    /** @var Node\Stmt[] Statements */
+    /** @var list<Node\Stmt> Statements */
     public array $stmts;
-    /** @var Node\AttributeGroup[] PHP attribute groups */
+    /** @var list<Node\AttributeGroup> PHP attribute groups */
     public array $attrGroups;
 
     /**
@@ -29,11 +29,11 @@ class Closure extends Expr implements FunctionLike {
      * @param array{
      *     static?: bool,
      *     byRef?: bool,
-     *     params?: Node\Param[],
-     *     uses?: ClosureUse[],
+     *     params?: list<Node\Param>,
+     *     uses?: list<ClosureUse>,
      *     returnType?: null|Node\Identifier|Node\Name|Node\ComplexType,
-     *     stmts?: Node\Stmt[],
-     *     attrGroups?: Node\AttributeGroup[],
+     *     stmts?: list<Node\Stmt>,
+     *     attrGroups?: list<Node\AttributeGroup>,
      * } $subNodes Array of the following optional subnodes:
      *             'static'     => false  : Whether the closure is static
      *             'byRef'      => false  : Whether to return by reference
@@ -113,7 +113,7 @@ class Closure extends Expr implements FunctionLike {
         return $this->returnType;
     }
 
-    /** @return Node\Stmt[] */
+    /** @return list<Node\Stmt> */
     public function getStmts(): array {
         return $this->stmts;
     }

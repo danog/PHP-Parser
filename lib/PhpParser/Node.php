@@ -14,8 +14,9 @@ interface Node {
     /**
      * Gets the names of the sub nodes.
      *
-     * @return string[] Names of sub nodes
+     * @return list<string> Names of sub nodes
      */
+    /** @return list<string> */
     public function getSubNodeNames(): array;
 
     /**
@@ -105,7 +106,7 @@ interface Node {
      *
      * The comments are also available through the "comments" attribute.
      *
-     * @return Comment[]
+     * @return list<Comment>
      */
     public function getComments(): array;
 

@@ -10,13 +10,13 @@ class Function_ extends Node\Stmt implements FunctionLike {
     public bool $byRef;
     /** @var Node\Identifier Name */
     public Node\Identifier $name;
-    /** @var Node\Param[] Parameters */
+    /** @var list<Node\Param> Parameters */
     public array $params;
     /** @var null|Node\Identifier|Node\Name|Node\ComplexType Return type */
     public ?Node $returnType;
-    /** @var Node\Stmt[] Statements */
+    /** @var list<Node\Stmt> Statements */
     public array $stmts;
-    /** @var Node\AttributeGroup[] PHP attribute groups */
+    /** @var list<Node\AttributeGroup> PHP attribute groups */
     public array $attrGroups;
 
     /** @var Node\Name|null Namespaced name (if using NameResolver) */
@@ -28,10 +28,10 @@ class Function_ extends Node\Stmt implements FunctionLike {
      * @param string|Node\Identifier $name Name
      * @param array{
      *     byRef?: bool,
-     *     params?: Node\Param[],
+     *     params?: list<Node\Param>,
      *     returnType?: null|Node\Identifier|Node\Name|Node\ComplexType,
-     *     stmts?: Node\Stmt[],
-     *     attrGroups?: Node\AttributeGroup[],
+     *     stmts?: list<Node\Stmt>,
+     *     attrGroups?: list<Node\AttributeGroup>,
      * } $subNodes Array of the following optional subnodes:
      *             'byRef'      => false  : Whether to return by reference
      *             'params'     => array(): Parameters
@@ -108,7 +108,7 @@ class Function_ extends Node\Stmt implements FunctionLike {
         return $this->attrGroups;
     }
 
-    /** @return Node\Stmt[] */
+    /** @return list<Node\Stmt> */
     public function getStmts(): array {
         return $this->stmts;
     }

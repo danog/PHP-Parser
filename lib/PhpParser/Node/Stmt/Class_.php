@@ -28,7 +28,7 @@ class Class_ extends ClassLike {
     public int $flags;
     /** @var null|Node\Name Name of extended class */
     public ?Node\Name $extends;
-    /** @var Node\Name[] Names of implemented interfaces */
+    /** @var list<Node\Name> Names of implemented interfaces */
     public array $implements;
 
     /**
@@ -39,9 +39,9 @@ class Class_ extends ClassLike {
      *     flags?: int,
      *     type?: int,
      *     extends?: Node\Name|null,
-     *     implements?: Node\Name[],
-     *     stmts?: Node\Stmt[],
-     *     attrGroups?: Node\AttributeGroup[],
+     *     implements?: list<Node\Name>,
+     *     stmts?: list<Node\Stmt>,
+     *     attrGroups?: list<Node\AttributeGroup>,
      * } $subNodes Array of the following optional subnodes:
      *             'flags'       => 0      : Flags
      *             'extends'     => null   : Name of extended class

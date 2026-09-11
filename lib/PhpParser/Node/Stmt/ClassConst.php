@@ -8,9 +8,9 @@ use PhpParser\Node;
 class ClassConst extends Node\Stmt {
     /** @var int Modifiers */
     public int $flags;
-    /** @var Node\Const_[] Constant declarations */
+    /** @var list<Node\Const_> Constant declarations */
     public array $consts;
-    /** @var Node\AttributeGroup[] PHP attribute groups */
+    /** @var list<Node\AttributeGroup> PHP attribute groups */
     public array $attrGroups;
     /** @var Node\Identifier|Node\Name|Node\ComplexType|null Type declaration */
     public ?Node $type;
@@ -18,7 +18,7 @@ class ClassConst extends Node\Stmt {
     /**
      * Constructs a class const list node.
      *
-     * @param Node\Const_[] $consts Constant declarations
+     * @param list<Node\Const_> $consts Constant declarations
      * @param int $flags Modifiers
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      * @param list<Node\AttributeGroup> $attrGroups PHP attribute groups

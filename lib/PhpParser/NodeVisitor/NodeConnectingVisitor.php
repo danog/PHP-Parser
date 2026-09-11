@@ -18,7 +18,7 @@ use PhpParser\NodeVisitorAbstract;
  */
 final class NodeConnectingVisitor extends NodeVisitorAbstract {
     /**
-     * @var Node[]
+     * @var list<Node>
      */
     private array $stack = [];
 

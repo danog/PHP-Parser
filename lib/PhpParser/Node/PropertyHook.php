@@ -11,7 +11,7 @@ use PhpParser\Node\Stmt\Return_;
 use PhpParser\NodeAbstract;
 
 class PropertyHook extends NodeAbstract implements FunctionLike {
-    /** @var AttributeGroup[] PHP attribute groups */
+    /** @var list<AttributeGroup> PHP attribute groups */
     public array $attrGroups;
     /** @var int Modifiers */
     public int $flags;
@@ -19,21 +19,21 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
     public bool $byRef;
     /** @var Identifier Hook name */
     public Identifier $name;
-    /** @var Param[] Parameters */
+    /** @var list<Param> Parameters */
     public array $params;
-    /** @var null|Expr|Stmt[] Hook body */
+    /** @var null|Expr|list<Stmt> Hook body */
     public $body;
 
     /**
      * Constructs a property hook node.
      *
      * @param string|Identifier $name Hook name
-     * @param null|Expr|Stmt[] $body Hook body
+     * @param null|Expr|list<Stmt> $body Hook body
      * @param array{
      *     flags?: int,
      *     byRef?: bool,
-     *     params?: Param[],
-     *     attrGroups?: AttributeGroup[],
+     *     params?: list<Param>,
+     *     attrGroups?: list<AttributeGroup>,
      * } $subNodes Array of the following optional subnodes:
      *             'flags       => 0      : Flags
      *             'byRef'      => false  : Whether hook returns by reference

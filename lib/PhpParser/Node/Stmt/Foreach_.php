@@ -13,7 +13,7 @@ class Foreach_ extends Node\Stmt {
     public bool $byRef;
     /** @var Node\Expr Variable to assign value to */
     public Node\Expr $valueVar;
-    /** @var Node\Stmt[] Statements */
+    /** @var list<Node\Stmt> Statements */
     public array $stmts;
 
     /**
@@ -24,7 +24,7 @@ class Foreach_ extends Node\Stmt {
      * @param array{
      *     keyVar?: Node\Expr|null,
      *     byRef?: bool,
-     *     stmts?: Node\Stmt[],
+     *     stmts?: list<Node\Stmt>,
      * } $subNodes Array of the following optional subnodes:
      *             'keyVar' => null   : Variable to assign key to
      *             'byRef'  => false  : Whether to assign value by reference

@@ -10,13 +10,13 @@ class List_ extends Expr {
     public const KIND_LIST = 1; // list() syntax
     public const KIND_ARRAY = 2; // [] syntax
 
-    /** @var (ArrayItem|null)[] List of items to assign to */
+    /** @var list<ArrayItem|null> List of items to assign to */
     public array $items;
 
     /**
      * Constructs a list() destructuring node.
      *
-     * @param (ArrayItem|null)[] $items List of items to assign to
+     * @param list<ArrayItem|null> $items List of items to assign to
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $items, \PhpParser\NodeAttributes|array $attributes = []) {

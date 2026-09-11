@@ -8,12 +8,12 @@ use PhpParser\Node\MatchArm;
 class Match_ extends Node\Expr {
     /** @var Node\Expr Condition */
     public Node\Expr $cond;
-    /** @var MatchArm[] */
+    /** @var list<MatchArm> */
     public array $arms;
 
     /**
      * @param Node\Expr $cond Condition
-     * @param MatchArm[] $arms
+     * @param list<MatchArm> $arms
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(Node\Expr $cond, array $arms = [], \PhpParser\NodeAttributes|array $attributes = []) {

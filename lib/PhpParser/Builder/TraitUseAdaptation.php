@@ -18,7 +18,7 @@ class TraitUseAdaptation implements Builder {
     protected Node\Identifier $method;
     protected ?int $modifier = null;
     protected ?Node\Identifier $alias = null;
-    /** @var Node\Name[] */
+    /** @var list<Node\Name> */
     protected array $insteadof = [];
 
     /**

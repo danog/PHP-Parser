@@ -5,7 +5,7 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node;
 
 class Interface_ extends ClassLike {
-    /** @var Node\Name[] Extended interfaces */
+    /** @var list<Node\Name> Extended interfaces */
     public array $extends;
 
     /**
@@ -13,9 +13,9 @@ class Interface_ extends ClassLike {
      *
      * @param string|Node\Identifier $name Name
      * @param array{
-     *     extends?: Node\Name[],
-     *     stmts?: Node\Stmt[],
-     *     attrGroups?: Node\AttributeGroup[],
+     *     extends?: list<Node\Name>,
+     *     stmts?: list<Node\Stmt>,
+     *     attrGroups?: list<Node\AttributeGroup>,
      * } $subNodes Array of the following optional subnodes:
      *             'extends'    => array(): Name of extended interfaces
      *             'stmts'      => array(): Statements

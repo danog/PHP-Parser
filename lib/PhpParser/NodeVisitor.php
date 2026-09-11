@@ -52,9 +52,9 @@ interface NodeVisitor {
      *  * null:      $nodes stays as-is
      *  * otherwise: $nodes is set to the return value
      *
-     * @param Node[] $nodes Array of nodes
+     * @param list<Node> $nodes Array of nodes
      *
-     * @return null|Node[] Array of nodes
+     * @return null|list<Node> Array of nodes
      */
     public function beforeTraverse(array $nodes);
 
@@ -82,7 +82,7 @@ interface NodeVisitor {
      *
      * @param Node $node Node
      *
-     * @return null|int|Node|Node[] Replacement node (or special return value)
+     * @return null|int|Node|list<Node> Replacement node (or special return value)
      */
     public function enterNode(Node $node);
 
@@ -105,7 +105,7 @@ interface NodeVisitor {
      *
      * @param Node $node Node
      *
-     * @return null|int|Node|Node[] Replacement node (or special return value)
+     * @return null|int|Node|list<Node> Replacement node (or special return value)
      */
     public function leaveNode(Node $node);
 
@@ -116,9 +116,9 @@ interface NodeVisitor {
      *  * null:      $nodes stays as-is
      *  * otherwise: $nodes is set to the return value
      *
-     * @param Node[] $nodes Array of nodes
+     * @param list<Node> $nodes Array of nodes
      *
-     * @return null|Node[] Array of nodes
+     * @return null|list<Node> Array of nodes
      */
     public function afterTraverse(array $nodes);
 }

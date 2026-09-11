@@ -8,7 +8,7 @@ interface PrettyPrinter {
     /**
      * Pretty prints an array of statements.
      *
-     * @param Node[] $stmts Array of statements
+     * @param list<Node> $stmts Array of statements
      *
      * @return string Pretty printed statements
      */
@@ -26,7 +26,7 @@ interface PrettyPrinter {
     /**
      * Pretty prints a file of statements (includes the opening <?php tag if it is required).
      *
-     * @param Node[] $stmts Array of statements
+     * @param list<Node> $stmts Array of statements
      *
      * @return string Pretty printed statements
      */
@@ -43,9 +43,9 @@ interface PrettyPrinter {
      *  * The CloningVisitor must be run on the AST prior to modification.
      *  * The original tokens must be provided, using the getTokens() method on the lexer.
      *
-     * @param Node[] $stmts Modified AST with links to original AST
-     * @param Node[] $origStmts Original AST with token offset information
-     * @param Token[] $origTokens Tokens of the original code
+     * @param list<Node> $stmts Modified AST with links to original AST
+     * @param list<Node> $origStmts Original AST with token offset information
+     * @param list<Token> $origTokens Tokens of the original code
      */
     public function printFormatPreserving(array $stmts, array $origStmts, array $origTokens): string;
 }

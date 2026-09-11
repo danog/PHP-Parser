@@ -16,25 +16,25 @@ use PhpParser\Node\Expr;
  * @internal
  */
 class PrintableNewAnonClassNode extends Expr {
-    /** @var Node\AttributeGroup[] PHP attribute groups */
+    /** @var list<Node\AttributeGroup> PHP attribute groups */
     public array $attrGroups;
     /** @var int Modifiers */
     public int $flags;
-    /** @var (Node\Arg|Node\VariadicPlaceholder)[] Arguments */
+    /** @var list<Node\Arg|Node\VariadicPlaceholder> Arguments */
     public array $args;
     /** @var null|Node\Name Name of extended class */
     public ?Node\Name $extends;
-    /** @var Node\Name[] Names of implemented interfaces */
+    /** @var list<Node\Name> Names of implemented interfaces */
     public array $implements;
-    /** @var Node\Stmt[] Statements */
+    /** @var list<Node\Stmt> Statements */
     public array $stmts;
 
     /**
-     * @param Node\AttributeGroup[] $attrGroups PHP attribute groups
-     * @param (Node\Arg|Node\VariadicPlaceholder)[] $args Arguments
+     * @param list<Node\AttributeGroup> $attrGroups PHP attribute groups
+     * @param list<Node\Arg|Node\VariadicPlaceholder> $args Arguments
      * @param Node\Name|null $extends Name of extended class
-     * @param Node\Name[] $implements Names of implemented interfaces
-     * @param Node\Stmt[] $stmts Statements
+     * @param list<Node\Name> $implements Names of implemented interfaces
+     * @param list<Node\Stmt> $stmts Statements
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Attributes
      */
     public function __construct(

@@ -7,13 +7,13 @@ use PhpParser\Node\InterpolatedStringPart;
 use PhpParser\Node\Scalar;
 
 class InterpolatedString extends Scalar {
-    /** @var (Expr|InterpolatedStringPart)[] list of string parts */
+    /** @var list<Expr|InterpolatedStringPart> list of string parts */
     public array $parts;
 
     /**
      * Constructs an interpolated string node.
      *
-     * @param (Expr|InterpolatedStringPart)[] $parts Interpolated string parts
+     * @param list<Expr|InterpolatedStringPart> $parts Interpolated string parts
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $parts, \PhpParser\NodeAttributes|array $attributes = []) {

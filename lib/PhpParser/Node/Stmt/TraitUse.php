@@ -5,16 +5,16 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node;
 
 class TraitUse extends Node\Stmt {
-    /** @var Node\Name[] Traits */
+    /** @var list<Node\Name> Traits */
     public array $traits;
-    /** @var TraitUseAdaptation[] Adaptations */
+    /** @var list<TraitUseAdaptation> Adaptations */
     public array $adaptations;
 
     /**
      * Constructs a trait use node.
      *
-     * @param Node\Name[] $traits Traits
-     * @param TraitUseAdaptation[] $adaptations Adaptations
+     * @param list<Node\Name> $traits Traits
+     * @param list<TraitUseAdaptation> $adaptations Adaptations
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $traits, array $adaptations = [], \PhpParser\NodeAttributes|array $attributes = []) {

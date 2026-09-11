@@ -262,7 +262,7 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
     /**
      * Pretty prints an array of statements.
      *
-     * @param Node[] $stmts Array of statements
+     * @param list<Node> $stmts Array of statements
      *
      * @return string Pretty printed statements
      */
@@ -288,7 +288,7 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
     /**
      * Pretty prints a file of statements (includes the opening <?php tag if it is required).
      *
-     * @param Node[] $stmts Array of statements
+     * @param list<Node> $stmts Array of statements
      *
      * @return string Pretty printed statements
      */
@@ -312,7 +312,7 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
     /**
      * Preprocesses the top-level nodes to initialize pretty printer state.
      *
-     * @param Node[] $nodes Array of nodes
+     * @param list<Node> $nodes Array of nodes
      */
     protected function preprocessNodes(array $nodes): void {
         /* We can use semicolon-namespaces unless there is a global namespace declaration */
@@ -344,7 +344,7 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
     /**
      * Pretty prints an array of nodes (statements) and indents them optionally.
      *
-     * @param Node[] $nodes Array of nodes
+     * @param list<Node> $nodes Array of nodes
      * @param bool $indent Whether to indent the printed nodes
      *
      * @return string Pretty printed statements
@@ -461,7 +461,7 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
     /**
      * Pretty prints an array of nodes and implodes the printed values.
      *
-     * @param Node[] $nodes Array of Nodes to be printed
+     * @param list<Node> $nodes Array of Nodes to be printed
      * @param string $glue Character to implode with
      *
      * @return string Imploded pretty printed nodes> $pre
@@ -482,7 +482,7 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
     /**
      * Pretty prints an array of nodes and implodes the printed values with commas.
      *
-     * @param Node[] $nodes Array of Nodes to be printed
+     * @param list<Node> $nodes Array of Nodes to be printed
      *
      * @return string Comma separated pretty printed nodes
      */
@@ -495,7 +495,7 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
      *
      * The result includes a leading newline and one level of indentation (same as pStmts).
      *
-     * @param Node[] $nodes Array of Nodes to be printed
+     * @param list<Node> $nodes Array of Nodes to be printed
      * @param bool $trailingComma Whether to use a trailing comma
      *
      * @return string Comma separated pretty printed nodes in multiline style
@@ -528,7 +528,7 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
     /**
      * Prints reformatted text of the passed comments.
      *
-     * @param Comment[] $comments List of comments
+     * @param list<Comment> $comments List of comments
      *
      * @return string Reformatted text of comments
      */
@@ -553,9 +553,9 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
      *  * The CloningVisitor must be run on the AST prior to modification.
      *  * The original tokens must be provided, using the getTokens() method on the lexer.
      *
-     * @param Node[] $stmts Modified AST with links to original AST
-     * @param Node[] $origStmts Original AST with token offset information
-     * @param Token[] $origTokens Tokens of the original code
+     * @param list<Node> $stmts Modified AST with links to original AST
+     * @param list<Node> $origStmts Original AST with token offset information
+     * @param list<Token> $origTokens Tokens of the original code
      */
     public function printFormatPreserving(array $stmts, array $origStmts, array $origTokens): string {
         $this->initializeNodeListDiffer();
@@ -781,8 +781,8 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
     /**
      * Perform a format-preserving pretty print of an array.
      *
-     * @param Node[] $nodes New nodes
-     * @param Node[] $origNodes Original nodes
+     * @param list<Node> $nodes New nodes
+     * @param list<Node> $origNodes Original nodes
      * @param int $pos Current token position (updated by reference)
      * @param int $indentAdjustment Adjustment for indentation
      * @param string $parentNodeClass Class of the containing node.
@@ -1274,7 +1274,7 @@ abstract class PrettyPrinterAbstract implements PrettyPrinter {
     /**
      * Determine whether a list of nodes uses multiline formatting.
      *
-     * @param (Node|null)[] $nodes Node list
+     * @param list<Node|null> $nodes Node list
      *
      * @return bool Whether multiline formatting is used
      */

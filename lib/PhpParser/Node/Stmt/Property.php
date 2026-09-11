@@ -12,24 +12,24 @@ use PhpParser\Node\PropertyItem;
 class Property extends Node\Stmt {
     /** @var int Modifiers */
     public int $flags;
-    /** @var PropertyItem[] Properties */
+    /** @var list<PropertyItem> Properties */
     public array $props;
     /** @var null|Identifier|Name|ComplexType Type declaration */
     public ?Node $type;
-    /** @var Node\AttributeGroup[] PHP attribute groups */
+    /** @var list<Node\AttributeGroup> PHP attribute groups */
     public array $attrGroups;
-    /** @var Node\PropertyHook[] Property hooks */
+    /** @var list<Node\PropertyHook> Property hooks */
     public array $hooks;
 
     /**
      * Constructs a class property list node.
      *
      * @param int $flags Modifiers
-     * @param PropertyItem[] $props Properties
+     * @param list<PropertyItem> $props Properties
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      * @param null|Identifier|Name|ComplexType $type Type declaration
-     * @param Node\AttributeGroup[] $attrGroups PHP attribute groups
-     * @param Node\PropertyHook[] $hooks Property hooks
+     * @param list<Node\AttributeGroup> $attrGroups PHP attribute groups
+     * @param list<Node\PropertyHook> $hooks Property hooks
      */
     public function __construct(int $flags, array $props, \PhpParser\NodeAttributes|array $attributes = [], ?Node $type = null, array $attrGroups = [], array $hooks = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

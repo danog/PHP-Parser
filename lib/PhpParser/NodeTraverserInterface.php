@@ -18,9 +18,9 @@ interface NodeTraverserInterface {
     /**
      * Traverses an array of nodes using the registered visitors.
      *
-     * @param Node[] $nodes Array of nodes
+     * @param list<Node> $nodes Array of nodes
      *
-     * @return Node[] Traversed array of nodes
+     * @return list<Node> Traversed array of nodes
      */
     public function traverse(array $nodes): array;
 }

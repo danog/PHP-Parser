@@ -27,8 +27,8 @@ class Differ {
     /**
      * Calculate diff (edit script) from $old to $new.
      *
-     * @param T[] $old Original array
-     * @param T[] $new New array
+     * @param array<int, T> $old Original array
+     * @param array<int, T> $new New array
      *
      * @return list<DiffElem<T>> Diff (edit script)
      */
@@ -45,8 +45,8 @@ class Differ {
      * If a sequence of remove operations is followed by the same number of add operations, these
      * will be coalesced into replace operations.
      *
-     * @param T[] $old Original array
-     * @param T[] $new New array
+     * @param array<int, T> $old Original array
+     * @param array<int, T> $new New array
      *
      * @return list<DiffElem<T>> Diff (edit script), including replace operations
      */
@@ -55,8 +55,8 @@ class Differ {
     }
 
     /**
-     * @param T[] $old
-     * @param T[] $new
+     * @param array<int, T> $old
+     * @param array<int, T> $new
      * @return array{array<int, array<int, int>>, int, int}
      */
     private function calculateTrace(array $old, array $new): array {
@@ -92,8 +92,8 @@ class Differ {
 
     /**
      * @param array<int, array<int, int>> $trace
-     * @param T[] $old
-     * @param T[] $new
+     * @param array<int, T> $old
+     * @param array<int, T> $new
      * @return list<DiffElem<T>>
      */
     private function extractDiff(array $trace, int $x, int $y, array $old, array $new): array {

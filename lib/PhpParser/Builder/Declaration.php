@@ -21,7 +21,7 @@ abstract class Declaration implements PhpParser\Builder {
     /**
      * Adds multiple statements.
      *
-     * @param (PhpParser\Node\Stmt|PhpParser\Builder)[] $stmts The statements to add
+     * @param list<PhpParser\Node\Stmt|PhpParser\Builder> $stmts The statements to add
      *
      * @return $this The builder instance (for fluid interface)
      */

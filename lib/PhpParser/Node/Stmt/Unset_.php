@@ -5,13 +5,13 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node;
 
 class Unset_ extends Node\Stmt {
-    /** @var Node\Expr[] Variables to unset */
+    /** @var list<Node\Expr> Variables to unset */
     public array $vars;
 
     /**
      * Constructs an unset node.
      *
-     * @param Node\Expr[] $vars Variables to unset
+     * @param list<Node\Expr> $vars Variables to unset
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(array $vars, \PhpParser\NodeAttributes|array $attributes = []) {

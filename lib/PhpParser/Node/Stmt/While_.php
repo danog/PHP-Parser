@@ -7,14 +7,14 @@ use PhpParser\Node;
 class While_ extends Node\Stmt {
     /** @var Node\Expr Condition */
     public Node\Expr $cond;
-    /** @var Node\Stmt[] Statements */
+    /** @var list<Node\Stmt> Statements */
     public array $stmts;
 
     /**
      * Constructs a while node.
      *
      * @param Node\Expr $cond Condition
-     * @param Node\Stmt[] $stmts Statements
+     * @param list<Node\Stmt> $stmts Statements
      * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
      */
     public function __construct(Node\Expr $cond, array $stmts = [], \PhpParser\NodeAttributes|array $attributes = []) {

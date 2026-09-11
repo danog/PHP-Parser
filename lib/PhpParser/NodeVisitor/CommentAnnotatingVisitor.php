@@ -10,7 +10,7 @@ use PhpParser\Token;
 class CommentAnnotatingVisitor extends NodeVisitorAbstract {
     /** @var int Last seen token start position */
     private int $pos = 0;
-    /** @var Token[] Token array */
+    /** @var list<Token> Token array */
     private array $tokens;
     /** @var list<int> Token positions of comments */
     private array $commentPositions = [];
