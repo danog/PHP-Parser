@@ -38,8 +38,11 @@ final class NodeAttributes {
     public ?Node $previous = null;
     public ?Node $next = null;
     public ?Node $origNode = null;
+    /** @var \WeakReference<Node>|null */
     public ?\WeakReference $weak_parent = null;
+    /** @var \WeakReference<Node>|null */
     public ?\WeakReference $weak_previous = null;
+    /** @var \WeakReference<Node>|null */
     public ?\WeakReference $weak_next = null;
 
     /** @param NodeAttributes|AttributeArray $attributes */

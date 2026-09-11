@@ -1281,7 +1281,7 @@ abstract class ParserAbstract implements Parser {
         }
     }
 
-    /** @param array<Node\Arg|Node\VariadicPlaceholder> $args */
+    /** @param list<Node\Arg|Node\VariadicPlaceholder> $args */
     private function isSimpleExit(array $args): bool {
         if (\count($args) === 0) {
             return true;
@@ -1295,7 +1295,7 @@ abstract class ParserAbstract implements Parser {
     }
 
     /**
-     * @param array<Node\Arg|Node\VariadicPlaceholder> $args
+     * @param list<Node\Arg|Node\VariadicPlaceholder> $args
      */
     protected function createExitExpr(string $name, int $namePos, array $args, NodeAttributes $attrs): Expr {
         if ($this->isSimpleExit($args)) {
