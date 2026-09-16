@@ -2,23 +2,24 @@
 
 namespace PhpParser\Internal;
 
+use PhpParser\Node;
+
 /**
  * Implements the Myers diff algorithm.
  *
  * Myers, Eugene W. "An O (ND) difference algorithm and its variations."
  * Algorithmica 1.1 (1986): 251-266.
  *
- * @template T
  * @internal
  */
 class Differ {
-    /** @var callable(T, T): bool */
+    /** @var callable(Node, Node): bool */
     private $isEqual;
 
     /**
      * Create differ over the given equality relation.
      *
-     * @param callable(T, T): bool $isEqual Equality relation
+     * @param callable(Node, Node): bool $isEqual Equality relation
      */
     public function __construct(callable $isEqual) {
         $this->isEqual = $isEqual;
@@ -27,10 +28,10 @@ class Differ {
     /**
      * Calculate diff (edit script) from $old to $new.
      *
-     * @param array<int, T> $old Original array
-     * @param array<int, T> $new New array
+     * @param array<int, Node> $old Original array
+     * @param array<int, Node> $new New array
      *
-     * @return list<DiffElem<T>> Diff (edit script)
+     * @return list<DiffElem> Diff (edit script)
      */
     public function diff(array $old, array $new): array {
         $old = \array_values($old);
@@ -45,18 +46,18 @@ class Differ {
      * If a sequence of remove operations is followed by the same number of add operations, these
      * will be coalesced into replace operations.
      *
-     * @param array<int, T> $old Original array
-     * @param array<int, T> $new New array
+     * @param array<int, Node> $old Original array
+     * @param array<int, Node> $new New array
      *
-     * @return list<DiffElem<T>> Diff (edit script), including replace operations
+     * @return list<DiffElem> Diff (edit script), including replace operations
      */
     public function diffWithReplacements(array $old, array $new): array {
         return $this->coalesceReplacements($this->diff($old, $new));
     }
 
     /**
-     * @param array<int, T> $old
-     * @param array<int, T> $new
+     * @param array<int, Node> $old
+     * @param array<int, Node> $new
      * @return array{array<int, array<int, int>>, int, int}
      */
     private function calculateTrace(array $old, array $new): array {
@@ -92,9 +93,9 @@ class Differ {
 
     /**
      * @param array<int, array<int, int>> $trace
-     * @param array<int, T> $old
-     * @param array<int, T> $new
-     * @return list<DiffElem<T>>
+     * @param array<int, Node> $old
+     * @param array<int, Node> $new
+     * @return list<DiffElem>
      */
     private function extractDiff(array $trace, int $x, int $y, array $old, array $new): array {
         $result = [];
@@ -137,8 +138,8 @@ class Differ {
     /**
      * Coalesce equal-length sequences of remove+add into a replace operation.
      *
-     * @param list<DiffElem<T>> $diff
-     * @return list<DiffElem<T>>
+     * @param list<DiffElem> $diff
+     * @return list<DiffElem>
      */
     private function coalesceReplacements(array $diff): array {
         $newDiff = [];

@@ -2,9 +2,10 @@
 
 namespace PhpParser\Internal;
 
+use PhpParser\Node;
+
 /**
  * @internal
- * @template T
  */
 class DiffElem {
     public const TYPE_KEEP = 0;
@@ -14,15 +15,15 @@ class DiffElem {
 
     /** @var int One of the TYPE_* constants */
     public int $type;
-    /** @var T|null Is null for add operations */
+    /** @var Node|null Is null for add operations */
     public $old;
-    /** @var T|null Is null for remove operations */
+    /** @var Node|null Is null for remove operations */
     public $new;
 
     /**
      * @param int $type One of the TYPE_* constants
-     * @param T|null $old Is null for add operations
-     * @param T|null $new Is null for remove operations
+     * @param Node|null $old Is null for add operations
+     * @param Node|null $new Is null for remove operations
      */
     public function __construct(int $type, $old, $new) {
         $this->type = $type;
