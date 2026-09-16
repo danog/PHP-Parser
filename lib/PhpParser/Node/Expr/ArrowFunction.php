@@ -103,6 +103,7 @@ class ArrowFunction extends Expr implements FunctionLike {
         return $this->params;
     }
 
+    /** @return null|Node\Identifier|Node\Name|Node\ComplexType */
     public function getReturnType() {
         return $this->returnType;
     }

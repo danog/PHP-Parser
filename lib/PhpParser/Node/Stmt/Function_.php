@@ -102,6 +102,7 @@ class Function_ extends Node\Stmt implements FunctionLike {
         return $this->params;
     }
 
+    /** @return null|Node\Identifier|Node\Name|Node\ComplexType */
     public function getReturnType() {
         return $this->returnType;
     }

@@ -60,6 +60,7 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
         return $this->params;
     }
 
+    /** @return null|Identifier|Name|ComplexType */
     public function getReturnType() {
         return null;
     }
