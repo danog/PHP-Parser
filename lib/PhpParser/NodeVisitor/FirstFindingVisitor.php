@@ -11,11 +11,12 @@ use PhpParser\NodeVisitorAbstract;
  * a filter callback.
  */
 class FirstFindingVisitor extends NodeVisitorAbstract {
-    /** @var callable Filter callback */
+    /** @var callable(Node): bool Filter callback */
     protected $filterCallback;
     /** @var null|Node Found node */
     protected ?Node $foundNode;
 
+    /** @param callable(Node): bool $filterCallback */
     public function __construct(callable $filterCallback) {
         $this->filterCallback = $filterCallback;
     }
