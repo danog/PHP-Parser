@@ -22,7 +22,10 @@ abstract class KeywordEmulator extends TokenEmulator {
             && $prevToken->id !== \T_NULLSAFE_OBJECT_OPERATOR;
     }
 
-    /** @return list<\PhpParser\Token> */
+    /**
+     * @return list<\PhpParser\Token>
+     * @param list<\PhpParser\Token> $tokens
+     */
     public function emulate(string $code, array $tokens): array {
         $keywordString = $this->getKeywordString();
         foreach ($tokens as $i => $token) {
@@ -49,7 +52,10 @@ abstract class KeywordEmulator extends TokenEmulator {
         return null;
     }
 
-    /** @return list<\PhpParser\Token> */
+    /**
+     * @return list<\PhpParser\Token>
+     * @param list<\PhpParser\Token> $tokens
+     */
     public function reverseEmulate(string $code, array $tokens): array {
         $keywordToken = $this->getKeywordToken();
         foreach ($tokens as $token) {

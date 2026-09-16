@@ -23,12 +23,18 @@ final class ReverseEmulator extends TokenEmulator {
         return $this->emulator->isEmulationNeeded($code);
     }
 
-    /** @return list<\PhpParser\Token> */
+    /**
+     * @return list<\PhpParser\Token>
+     * @param list<\PhpParser\Token> $tokens
+     */
     public function emulate(string $code, array $tokens): array {
         return $this->emulator->reverseEmulate($code, $tokens);
     }
 
-    /** @return list<\PhpParser\Token> */
+    /**
+     * @return list<\PhpParser\Token>
+     * @param list<\PhpParser\Token> $tokens
+     */
     public function reverseEmulate(string $code, array $tokens): array {
         return $this->emulator->emulate($code, $tokens);
     }

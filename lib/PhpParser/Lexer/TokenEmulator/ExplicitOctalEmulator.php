@@ -14,7 +14,10 @@ class ExplicitOctalEmulator extends TokenEmulator {
         return strpos($code, '0o') !== false || strpos($code, '0O') !== false;
     }
 
-    /** @return list<\PhpParser\Token> */
+    /**
+     * @return list<\PhpParser\Token>
+     * @param list<\PhpParser\Token> $tokens
+     */
     public function emulate(string $code, array $tokens): array {
         for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
             $token = $tokens[$i];
@@ -39,7 +42,10 @@ class ExplicitOctalEmulator extends TokenEmulator {
         return is_float($num) ? \T_DNUMBER : \T_LNUMBER;
     }
 
-    /** @return list<\PhpParser\Token> */
+    /**
+     * @return list<\PhpParser\Token>
+     * @param list<\PhpParser\Token> $tokens
+     */
     public function reverseEmulate(string $code, array $tokens): array {
         // Explicit octals were not legal code previously, don't bother.
         return $tokens;

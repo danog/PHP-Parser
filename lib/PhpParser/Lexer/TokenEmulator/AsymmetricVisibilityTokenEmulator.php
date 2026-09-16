@@ -16,7 +16,10 @@ final class AsymmetricVisibilityTokenEmulator extends TokenEmulator {
             strpos($code, 'private(set)') !== false;
     }
 
-    /** @return list<\PhpParser\Token> */
+    /**
+     * @return list<\PhpParser\Token>
+     * @param list<\PhpParser\Token> $tokens
+     */
     public function emulate(string $code, array $tokens): array {
         $map = [
             \T_PUBLIC => \T_PUBLIC_SET,
@@ -42,7 +45,10 @@ final class AsymmetricVisibilityTokenEmulator extends TokenEmulator {
         return $tokens;
     }
 
-    /** @return list<\PhpParser\Token> */
+    /**
+     * @return list<\PhpParser\Token>
+     * @param list<\PhpParser\Token> $tokens
+     */
     public function reverseEmulate(string $code, array $tokens): array {
         $reverseMap = [
             \T_PUBLIC_SET => \T_PUBLIC,

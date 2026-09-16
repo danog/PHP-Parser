@@ -14,7 +14,10 @@ final class AttributeEmulator extends TokenEmulator {
         return strpos($code, '#[') !== false;
     }
 
-    /** @return list<\PhpParser\Token> */
+    /**
+     * @return list<\PhpParser\Token>
+     * @param list<\PhpParser\Token> $tokens
+     */
     public function emulate(string $code, array $tokens): array {
         // We need to manually iterate and manage a count because we'll change
         // the tokens array on the way.
@@ -32,7 +35,10 @@ final class AttributeEmulator extends TokenEmulator {
         return $tokens;
     }
 
-    /** @return list<\PhpParser\Token> */
+    /**
+     * @return list<\PhpParser\Token>
+     * @param list<\PhpParser\Token> $tokens
+     */
     public function reverseEmulate(string $code, array $tokens): array {
         // TODO
         return $tokens;
