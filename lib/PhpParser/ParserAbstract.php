@@ -149,6 +149,19 @@ abstract class ParserAbstract implements Parser {
     /**
      * Initialize $reduceCallbacks map.
      */
+    /**
+     * The parts of an encapsed string (a semantic value known to hold a list of parts), typed for the escape
+     * sequence processing of the semantic actions.
+     *
+     * @param SemValue $parts
+     * @return list<Node\Expr|Node\InterpolatedStringPart>
+     */
+    protected static function encapsedParts($parts): array {
+        assert(\is_array($parts));
+        /** @var list<Node\Expr|Node\InterpolatedStringPart> $parts */
+        return $parts;
+    }
+
     abstract protected function initReduceCallbacks(): void;
 
     /**

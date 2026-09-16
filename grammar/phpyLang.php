@@ -108,7 +108,7 @@ function resolveMacros($code) {
             if ('parseEncapsed' === $name) {
                 assertArgs(3, $args, $name);
 
-                return 'foreach (' . $args[0] . ' as $s) { if ($s instanceof Node\InterpolatedStringPart) {'
+                return 'foreach (self::encapsedParts(' . $args[0] . ') as $s) { if ($s instanceof Node\InterpolatedStringPart) {'
                        . ' $s->value = Node\Scalar\String_::parseEscapeSequences($s->value, ' . $args[1] . ', ' . $args[2] . '); } }';
             }
 
