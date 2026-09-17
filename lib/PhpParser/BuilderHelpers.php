@@ -16,11 +16,10 @@ use PhpParser\Node\Stmt;
  *
  * @internal
  *
- * @psalm-type BuilderValue = Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array>|\UnitEnum>|\UnitEnum
+ * @psalm-type BuilderValue = Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|\UnitEnum>|\UnitEnum>|\UnitEnum>|\UnitEnum
  */
 final class BuilderHelpers {
     /**
- * @psalm-type BuilderValue = Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array>|\UnitEnum>|\UnitEnum
      * Normalizes a node: Converts builder objects to nodes.
      *
      * @param Node|Builder $node The node to normalize
@@ -40,7 +39,6 @@ final class BuilderHelpers {
     }
 
     /**
- * @psalm-type BuilderValue = Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array>|\UnitEnum>|\UnitEnum
      * Normalizes a node to a statement.
      *
      * Expressions are wrapped in a Stmt\Expression node.
@@ -63,7 +61,6 @@ final class BuilderHelpers {
     }
 
     /**
- * @psalm-type BuilderValue = Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array>|\UnitEnum>|\UnitEnum
      * Normalizes strings to Identifier.
      *
      * @param string|Identifier $name The identifier to normalize
@@ -83,7 +80,6 @@ final class BuilderHelpers {
     }
 
     /**
- * @psalm-type BuilderValue = Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array>|\UnitEnum>|\UnitEnum
      * Normalizes strings to Identifier, also allowing expressions.
      *
      * @param string|Identifier|Expr $name The identifier to normalize
@@ -103,7 +99,6 @@ final class BuilderHelpers {
     }
 
     /**
- * @psalm-type BuilderValue = Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array>|\UnitEnum>|\UnitEnum
      * Normalizes a name: Converts string names to Name nodes.
      *
      * @param Name|string $name The name to normalize
@@ -135,7 +130,6 @@ final class BuilderHelpers {
     }
 
     /**
- * @psalm-type BuilderValue = Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array>|\UnitEnum>|\UnitEnum
      * Normalizes a name: Converts string names to Name nodes, while also allowing expressions.
      *
      * @param Expr|Name|string $name The name to normalize
@@ -157,7 +151,6 @@ final class BuilderHelpers {
     }
 
     /**
- * @psalm-type BuilderValue = Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array>|\UnitEnum>|\UnitEnum
      * Normalizes a type: Converts plain-text type names into proper AST representation.
      *
      * In particular, builtin types become Identifiers, custom types become Names and nullables
@@ -221,7 +214,6 @@ final class BuilderHelpers {
     }
 
     /**
- * @psalm-type BuilderValue = Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array>|\UnitEnum>|\UnitEnum
      * Normalizes a value: Converts nulls, booleans, integers,
      * floats, strings and arrays into their respective nodes
      *
@@ -288,7 +280,6 @@ final class BuilderHelpers {
     }
 
     /**
- * @psalm-type BuilderValue = Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array>|\UnitEnum>|\UnitEnum
      * Normalizes a doc comment: Converts plain strings to PhpParser\Comment\Doc.
      *
      * @param Comment\Doc|string $docComment The doc comment to normalize
@@ -308,7 +299,6 @@ final class BuilderHelpers {
     }
 
     /**
- * @psalm-type BuilderValue = Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array>|\UnitEnum>|\UnitEnum
      * Normalizes a attribute: Converts attribute to the Attribute Group if needed.
      *
      * @param Node\Attribute|Node\AttributeGroup $attribute
@@ -328,7 +318,6 @@ final class BuilderHelpers {
     }
 
     /**
- * @psalm-type BuilderValue = Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array>|\UnitEnum>|\UnitEnum
      * Adds a modifier and returns new modifier bitmask.
      *
      * @param int $modifiers Existing modifiers
@@ -342,7 +331,6 @@ final class BuilderHelpers {
     }
 
     /**
- * @psalm-type BuilderValue = Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array<array-key, Node\Expr|bool|null|int|float|string|array>|\UnitEnum>|\UnitEnum
      * Adds a modifier and returns new modifier bitmask.
      * @return int New modifiers
      */

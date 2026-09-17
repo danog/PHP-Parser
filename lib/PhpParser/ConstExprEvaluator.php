@@ -28,7 +28,7 @@ use function array_merge;
  */
 /**
  * @psalm-type ConstScalar = scalar|null
- * @psalm-type ConstValue = ConstScalar|array<array-key, ConstScalar|array<array-key, ConstScalar|array<array-key, ConstScalar|array>>>
+ * @psalm-type ConstValue = ConstScalar|array<array-key, ConstScalar|array<array-key, ConstScalar|array<array-key, ConstScalar|array<array-key, ConstScalar>>>>
  */
 class ConstExprEvaluator {
     /** @var (callable(Expr): ConstValue)|null */
@@ -155,14 +155,18 @@ class ConstExprEvaluator {
         return ($this->fallbackEvaluator)($expr);
     }
 
-    /** @return array<array-key, ConstValue> */
+    /** @return array<array-key, ConstScalar|array<array-key, ConstScalar|array<array-key, ConstScalar|array<array-key, ConstScalar>>>> */
     private function evaluateArray(Expr\Array_ $expr): array {
         $array = [];
         foreach ($expr->items as $item) {
             if (null !== $item->key) {
                 $array[$this->evaluate($item->key)] = $this->evaluate($item->value);
             } elseif ($item->unpack) {
-                $array = array_merge($array, $this->evaluate($item->value));
+                $value = $this->evaluate($item->value);
+                if (!is_array($value)) {
+                    throw new ConstExprEvaluationException('Only arrays can be unpacked');
+                }
+                $array = array_merge($array, $value);
             } else {
                 $array[] = $this->evaluate($item->value);
             }

@@ -121,9 +121,16 @@ class Emulative extends Lexer {
     private function sortPatches(): void {
         // Patches may be contributed by different emulators.
         // Make sure they are sorted by increasing patch position.
-        usort($this->patches, function (array $p1, array $p2): int {
-            return $p1[0] <=> $p2[0];
-        });
+        usort(
+            $this->patches,
+            /**
+             * @param array{int, string, string} $p1
+             * @param array{int, string, string} $p2
+             */
+            function (array $p1, array $p2): int {
+                return $p1[0] <=> $p2[0];
+            },
+        );
     }
 
     /**
