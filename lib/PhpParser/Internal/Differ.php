@@ -56,6 +56,15 @@ class Differ {
     }
 
     /**
+     * The Myers frontier before the first step: the furthest x reached on each diagonal k, seeded at k = 1.
+     *
+     * @return non-empty-array<int, int>
+     */
+    private static function initialFrontier(): array {
+        return [1 => 0];
+    }
+
+    /**
      * @param array<int, Node> $old
      * @param array<int, Node> $new
      * @return array{array<int, array<int, int>>, int, int}
@@ -64,7 +73,7 @@ class Differ {
         $n = \count($old);
         $m = \count($new);
         $max = $n + $m;
-        $v = array_fill(1, 1, 0);
+        $v = self::initialFrontier();
         $trace = [];
         for ($d = 0; $d <= $max; $d++) {
             $trace[] = $v;

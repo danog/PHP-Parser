@@ -161,8 +161,9 @@ class Emulative extends Lexer {
                 $patchTextLen = \strlen($patchText);
                 if ($patchType === 'remove') {
                     if ($patchPos === $pos && $patchTextLen === $len) {
-                        // Remove token entirely
-                        array_splice($tokens, $i, 1, []);
+                        // Remove token entirely (unset + reindex keeps the list typed, unlike array_splice)
+                        unset($tokens[$i]);
+                        $tokens = array_values($tokens);
                         $i--;
                         $c--;
                     } else {
