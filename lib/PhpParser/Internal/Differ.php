@@ -64,7 +64,7 @@ class Differ {
         $n = \count($old);
         $m = \count($new);
         $max = $n + $m;
-        $v = [1 => 0];
+        $v = array_fill(1, 1, 0);
         $trace = [];
         for ($d = 0; $d <= $max; $d++) {
             $trace[] = $v;
