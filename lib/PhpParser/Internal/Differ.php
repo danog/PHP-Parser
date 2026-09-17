@@ -64,16 +64,15 @@ class Differ {
         $n = \count($old);
         $m = \count($new);
         $max = $n + $m;
-        /** @var array<int, int> $v */
         $v = [1 => 0];
         $trace = [];
         for ($d = 0; $d <= $max; $d++) {
             $trace[] = $v;
             for ($k = -$d; $k <= $d; $k += 2) {
-                if ($k === -$d || ($k !== $d && $v[$k - 1] < $v[$k + 1])) {
-                    $x = $v[$k + 1];
+                if ($k === -$d || ($k !== $d && ($v[$k - 1] ?? 0) < ($v[$k + 1] ?? 0))) {
+                    $x = $v[$k + 1] ?? 0;
                 } else {
-                    $x = $v[$k - 1] + 1;
+                    $x = ($v[$k - 1] ?? 0) + 1;
                 }
 
                 $y = $x - $k;
@@ -103,7 +102,7 @@ class Differ {
             $v = $trace[$d];
             $k = $x - $y;
 
-            if ($k === -$d || ($k !== $d && $v[$k - 1] < $v[$k + 1])) {
+            if ($k === -$d || ($k !== $d && ($v[$k - 1] ?? 0) < ($v[$k + 1] ?? 0))) {
                 $prevK = $k + 1;
             } else {
                 $prevK = $k - 1;
