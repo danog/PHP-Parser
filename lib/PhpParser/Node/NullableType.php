@@ -4,6 +4,9 @@ namespace PhpParser\Node;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class NullableType extends ComplexType {
     /** @var Identifier|Name Type */
     public Node $type;
@@ -12,7 +15,7 @@ class NullableType extends ComplexType {
      * Constructs a nullable type (wrapping another type).
      *
      * @param Identifier|Name $type Type
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Node $type, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

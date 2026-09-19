@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt;
 
 use PhpParser\Node\Stmt;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Block extends Stmt {
     /** @var list<Stmt> Statements */
     public array $stmts;
@@ -12,7 +15,7 @@ class Block extends Stmt {
      * A block of statements.
      *
      * @param list<Stmt> $stmts Statements
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $stmts, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

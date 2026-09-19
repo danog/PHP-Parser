@@ -2,6 +2,9 @@
 
 namespace PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class IntersectionType extends ComplexType {
     /** @var list<Identifier|Name> Types */
     public array $types;
@@ -10,7 +13,7 @@ class IntersectionType extends ComplexType {
      * Constructs an intersection type.
      *
      * @param list<Identifier|Name> $types Types
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $types, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

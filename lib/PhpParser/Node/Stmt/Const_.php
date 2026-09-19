@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Const_ extends Node\Stmt {
     /** @var list<Node\Const_> Constant declarations */
     public array $consts;
@@ -14,7 +17,7 @@ class Const_ extends Node\Stmt {
      * Constructs a const list node.
      *
      * @param list<Node\Const_> $consts Constant declarations
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      * @param list<Node\AttributeGroup> $attrGroups PHP attribute groups
      */
     public function __construct(

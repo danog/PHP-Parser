@@ -5,6 +5,9 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Stmt;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Goto_ extends Stmt {
     /** @var Identifier Name of label to jump to */
     public Identifier $name;
@@ -13,7 +16,7 @@ class Goto_ extends Stmt {
      * Constructs a goto node.
      *
      * @param string|Identifier $name Name of label to jump to
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct($name, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

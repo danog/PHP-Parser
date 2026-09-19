@@ -5,6 +5,9 @@ namespace PhpParser\Node\Expr;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Name;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class ConstFetch extends Expr {
     /** @var Name Constant name */
     public Name $name;
@@ -13,7 +16,7 @@ class ConstFetch extends Expr {
      * Constructs a const fetch node.
      *
      * @param Name $name Constant name
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Name $name, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

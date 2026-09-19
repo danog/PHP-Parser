@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Return_ extends Node\Stmt {
     /** @var null|Node\Expr Expression */
     public ?Node\Expr $expr;
@@ -12,7 +15,7 @@ class Return_ extends Node\Stmt {
      * Constructs a return node.
      *
      * @param null|Node\Expr $expr Expression
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(?Node\Expr $expr = null, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

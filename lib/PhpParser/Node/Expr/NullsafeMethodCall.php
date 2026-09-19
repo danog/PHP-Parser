@@ -8,6 +8,9 @@ use PhpParser\Node\Expr;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\VariadicPlaceholder;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class NullsafeMethodCall extends CallLike {
     /** @var Expr Variable holding object */
     public Expr $var;
@@ -22,7 +25,7 @@ class NullsafeMethodCall extends CallLike {
      * @param Expr $var Variable holding object
      * @param string|Identifier|Expr $name Method name
      * @param list<Arg|VariadicPlaceholder> $args Arguments
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Expr $var, $name, array $args = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

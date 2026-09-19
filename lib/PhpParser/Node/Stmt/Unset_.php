@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Unset_ extends Node\Stmt {
     /** @var list<Node\Expr> Variables to unset */
     public array $vars;
@@ -12,7 +15,7 @@ class Unset_ extends Node\Stmt {
      * Constructs an unset node.
      *
      * @param list<Node\Expr> $vars Variables to unset
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $vars, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

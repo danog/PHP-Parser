@@ -4,6 +4,9 @@ namespace PhpParser\Node\Expr;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Throw_ extends Node\Expr {
     /** @var Node\Expr Expression */
     public Node\Expr $expr;
@@ -12,7 +15,7 @@ class Throw_ extends Node\Expr {
      * Constructs a throw expression node.
      *
      * @param Node\Expr $expr Expression
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Node\Expr $expr, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

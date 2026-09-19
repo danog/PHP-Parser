@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Namespace_ extends Node\Stmt {
     /* For use in the "kind" attribute */
     public const KIND_SEMICOLON = 1;
@@ -19,7 +22,7 @@ class Namespace_ extends Node\Stmt {
      *
      * @param null|Node\Name $name Name
      * @param null|list<Node\Stmt> $stmts Statements
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(?Node\Name $name = null, ?array $stmts = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

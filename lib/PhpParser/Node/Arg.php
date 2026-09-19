@@ -4,6 +4,9 @@ namespace PhpParser\Node;
 
 use PhpParser\NodeAbstract;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Arg extends NodeAbstract {
     /** @var Identifier|null Parameter name (for named parameters) */
     public ?Identifier $name;
@@ -20,7 +23,7 @@ class Arg extends NodeAbstract {
      * @param Expr $value Value to pass
      * @param bool $byRef Whether to pass by ref
      * @param bool $unpack Whether to unpack the argument
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      * @param Identifier|null $name Parameter name (for named parameters)
      */
     public function __construct(

@@ -6,6 +6,9 @@ use PhpParser\Modifiers;
 use PhpParser\Node;
 use PhpParser\NodeAbstract;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Param extends NodeAbstract {
     /** @var null|Identifier|Name|ComplexType Type declaration */
     public ?Node $type;
@@ -32,7 +35,7 @@ class Param extends NodeAbstract {
      * @param null|Identifier|Name|ComplexType $type Type declaration
      * @param bool $byRef Whether is passed by reference
      * @param bool $variadic Whether this is a variadic argument
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      * @param int $flags Optional visibility flags
      * @param list<AttributeGroup> $attrGroups PHP attribute groups
      * @param list<PropertyHook> $hooks Property hooks for promoted properties

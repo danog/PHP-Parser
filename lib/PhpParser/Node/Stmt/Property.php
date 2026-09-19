@@ -9,6 +9,9 @@ use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PhpParser\Node\PropertyItem;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Property extends Node\Stmt {
     /** @var int Modifiers */
     public int $flags;
@@ -26,7 +29,7 @@ class Property extends Node\Stmt {
      *
      * @param int $flags Modifiers
      * @param list<PropertyItem> $props Properties
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      * @param null|Identifier|Name|ComplexType $type Type declaration
      * @param list<Node\AttributeGroup> $attrGroups PHP attribute groups
      * @param list<Node\PropertyHook> $hooks Property hooks

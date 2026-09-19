@@ -8,6 +8,9 @@ use PhpParser\Node\Expr;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\VariadicPlaceholder;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class StaticCall extends CallLike {
     /** @var Node\Name|Expr Class name */
     public Node $class;
@@ -22,7 +25,7 @@ class StaticCall extends CallLike {
      * @param Node\Name|Expr $class Class name
      * @param string|Identifier|Expr $name Method name
      * @param list<Arg|VariadicPlaceholder> $args Arguments
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Node $class, $name, array $args = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

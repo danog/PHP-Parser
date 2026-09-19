@@ -5,6 +5,9 @@ namespace PhpParser\Node;
 use PhpParser\Node;
 use PhpParser\NodeAbstract;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class StaticVar extends NodeAbstract {
     /** @var Expr\Variable Variable */
     public Expr\Variable $var;
@@ -16,7 +19,7 @@ class StaticVar extends NodeAbstract {
      *
      * @param Expr\Variable $var Name
      * @param null|Node\Expr $default Default value
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(
         Expr\Variable $var, ?Node\Expr $default = null, \PhpParser\NodeAttributes|array $attributes = []

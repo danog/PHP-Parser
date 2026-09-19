@@ -5,6 +5,9 @@ namespace PhpParser\Node\Scalar;
 use PhpParser\Error;
 use PhpParser\Node\Scalar;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Int_ extends Scalar {
     /* For use in "kind" attribute */
     public const KIND_BIN = 2;
@@ -19,7 +22,7 @@ class Int_ extends Scalar {
      * Constructs an integer number scalar node.
      *
      * @param int $value Value of the number
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(int $value, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);
@@ -53,7 +56,7 @@ class Int_ extends Scalar {
      * Constructs an Int node from a string number literal.
      *
      * @param string $str String number literal (decimal, octal, hex or binary)
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      * @param bool $allowInvalidOctal Whether to allow invalid octal numbers (PHP 5)
      *
      * @return Int_ The constructed LNumber, including kind attribute

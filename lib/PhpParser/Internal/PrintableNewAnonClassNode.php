@@ -14,6 +14,7 @@ use PhpParser\Node\Expr;
  * restore a sane token offset order.
  *
  * @internal
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
  */
 class PrintableNewAnonClassNode extends Expr {
     /** @var list<Node\AttributeGroup> PHP attribute groups */
@@ -35,7 +36,7 @@ class PrintableNewAnonClassNode extends Expr {
      * @param Node\Name|null $extends Name of extended class
      * @param list<Node\Name> $implements Names of implemented interfaces
      * @param list<Node\Stmt> $stmts Statements
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Attributes
      */
     public function __construct(
         array $attrGroups, int $flags, array $args, ?Node\Name $extends, array $implements,

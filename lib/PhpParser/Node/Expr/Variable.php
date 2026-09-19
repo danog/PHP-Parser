@@ -4,6 +4,9 @@ namespace PhpParser\Node\Expr;
 
 use PhpParser\Node\Expr;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Variable extends Expr {
     /** @var string|Expr Name */
     public $name;
@@ -12,7 +15,7 @@ class Variable extends Expr {
      * Constructs a variable node.
      *
      * @param string|Expr $name Name
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct($name, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

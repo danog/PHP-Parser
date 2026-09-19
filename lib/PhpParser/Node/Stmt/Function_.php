@@ -5,6 +5,9 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node;
 use PhpParser\Node\FunctionLike;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Function_ extends Node\Stmt implements FunctionLike {
     /** @var bool Whether function returns by reference */
     public bool $byRef;
@@ -38,7 +41,7 @@ class Function_ extends Node\Stmt implements FunctionLike {
      *             'returnType' => null   : Return type
      *             'stmts'      => array(): Statements
      *             'attrGroups' => array(): PHP attribute groups
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct($name, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

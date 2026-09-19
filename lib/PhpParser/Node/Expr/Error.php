@@ -9,12 +9,13 @@ use PhpParser\Node\Expr;
  *
  * An error node may be placed at a position where an expression is required, but an error occurred.
  * Error nodes will not be present if the parser is run in throwOnError mode (the default).
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
  */
 class Error extends Expr {
     /**
      * Constructs an error node.
      *
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(\PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

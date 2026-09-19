@@ -5,6 +5,9 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Modifiers;
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class ClassConst extends Node\Stmt {
     /** @var int Modifiers */
     public int $flags;
@@ -20,7 +23,7 @@ class ClassConst extends Node\Stmt {
      *
      * @param list<Node\Const_> $consts Constant declarations
      * @param int $flags Modifiers
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      * @param list<Node\AttributeGroup> $attrGroups PHP attribute groups
      * @param null|Node\Identifier|Node\Name|Node\ComplexType $type Type declaration
      */

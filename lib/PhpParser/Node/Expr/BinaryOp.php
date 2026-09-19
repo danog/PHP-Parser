@@ -4,6 +4,9 @@ namespace PhpParser\Node\Expr;
 
 use PhpParser\Node\Expr;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 abstract class BinaryOp extends Expr {
     /** @var Expr The left hand side expression */
     public Expr $left;
@@ -15,7 +18,7 @@ abstract class BinaryOp extends Expr {
      *
      * @param Expr $left The left hand side expression
      * @param Expr $right The right hand side expression
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Expr $left, Expr $right, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

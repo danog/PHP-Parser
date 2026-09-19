@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Else_ extends Node\Stmt {
     /** @var list<Node\Stmt> Statements */
     public array $stmts;
@@ -12,7 +15,7 @@ class Else_ extends Node\Stmt {
      * Constructs an else node.
      *
      * @param list<Node\Stmt> $stmts Statements
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $stmts = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

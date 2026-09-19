@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class TraitUse extends Node\Stmt {
     /** @var list<Node\Name> Traits */
     public array $traits;
@@ -15,7 +18,7 @@ class TraitUse extends Node\Stmt {
      *
      * @param list<Node\Name> $traits Traits
      * @param list<TraitUseAdaptation> $adaptations Adaptations
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $traits, array $adaptations = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

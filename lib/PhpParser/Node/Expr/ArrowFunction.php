@@ -6,6 +6,9 @@ use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\FunctionLike;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class ArrowFunction extends Expr implements FunctionLike {
     /** @var bool Whether the closure is static */
     public bool $static;
@@ -39,7 +42,7 @@ class ArrowFunction extends Expr implements FunctionLike {
      *             'params'     => array() : Parameters
      *             'returnType' => null    : Return type
      *             'attrGroups' => array() : PHP attribute groups
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $subNodes, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

@@ -4,6 +4,9 @@ namespace PhpParser\Node\Expr;
 
 use PhpParser\Node\Expr;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Include_ extends Expr {
     public const TYPE_INCLUDE      = 1;
     public const TYPE_INCLUDE_ONCE = 2;
@@ -20,7 +23,7 @@ class Include_ extends Expr {
      *
      * @param Expr $expr Expression
      * @param int $type Type of include
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Expr $expr, int $type, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

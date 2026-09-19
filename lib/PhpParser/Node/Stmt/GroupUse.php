@@ -6,6 +6,9 @@ use PhpParser\Node\Name;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\UseItem;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class GroupUse extends Stmt {
     /**
      * @var Use_::TYPE_* Type of group use
@@ -22,7 +25,7 @@ class GroupUse extends Stmt {
      * @param Name $prefix Prefix for uses
      * @param list<UseItem> $uses Uses
      * @param Use_::TYPE_* $type Type of group use
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Name $prefix, array $uses, int $type = Use_::TYPE_NORMAL, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

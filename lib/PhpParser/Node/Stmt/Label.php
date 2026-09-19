@@ -5,6 +5,9 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Stmt;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Label extends Stmt {
     /** @var Identifier Name */
     public Identifier $name;
@@ -13,7 +16,7 @@ class Label extends Stmt {
      * Constructs a label node.
      *
      * @param string|Identifier $name Name
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct($name, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

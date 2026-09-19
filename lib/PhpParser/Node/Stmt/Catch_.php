@@ -5,6 +5,9 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Catch_ extends Node\Stmt {
     /** @var list<Node\Name> Types of exceptions to catch */
     public array $types;
@@ -19,7 +22,7 @@ class Catch_ extends Node\Stmt {
      * @param list<Node\Name> $types Types of exceptions to catch
      * @param Expr\Variable|null $var Variable for exception
      * @param list<Node\Stmt> $stmts Statements
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(
         array $types, ?Expr\Variable $var = null, array $stmts = [], \PhpParser\NodeAttributes|array $attributes = []

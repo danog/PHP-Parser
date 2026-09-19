@@ -5,6 +5,9 @@ namespace PhpParser\Node\Expr;
 use PhpParser\Node\Expr;
 use PhpParser\Node\InterpolatedStringPart;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class ShellExec extends Expr {
     /** @var list<Expr|InterpolatedStringPart> Interpolated string array */
     public array $parts;
@@ -13,7 +16,7 @@ class ShellExec extends Expr {
      * Constructs a shell exec (backtick) node.
      *
      * @param list<Expr|InterpolatedStringPart> $parts Interpolated string array
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $parts, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

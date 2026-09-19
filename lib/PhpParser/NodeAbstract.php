@@ -2,13 +2,16 @@
 
 namespace PhpParser;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 abstract class NodeAbstract implements Node, \JsonSerializable {
     protected NodeAttributes $attributes;
 
     /**
      * Creates a Node.
      *
-     * @param NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes
+     * @param NodeAttributes|AttributeArray $attributes
      */
     public function __construct(NodeAttributes|array $attributes = []) {
         $this->attributes = NodeAttributes::from($attributes);
@@ -161,7 +164,7 @@ abstract class NodeAbstract implements Node, \JsonSerializable {
         return clone $this->attributes;
     }
 
-    /** @param NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes */
+    /** @param NodeAttributes|AttributeArray $attributes */
     public function setAttributes(NodeAttributes|array $attributes): void {
         $this->attributes = NodeAttributes::from($attributes);
     }

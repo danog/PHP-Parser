@@ -4,6 +4,9 @@ namespace PhpParser\Node\Expr;
 
 use PhpParser\Node\Expr;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class AssignRef extends Expr {
     /** @var Expr Variable reference is assigned to */
     public Expr $var;
@@ -15,7 +18,7 @@ class AssignRef extends Expr {
      *
      * @param Expr $var Variable
      * @param Expr $expr Expression
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Expr $var, Expr $expr, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

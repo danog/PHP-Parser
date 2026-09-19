@@ -5,6 +5,9 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node\StaticVar;
 use PhpParser\Node\Stmt;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Static_ extends Stmt {
     /** @var list<StaticVar> Variable definitions */
     public array $vars;
@@ -13,7 +16,7 @@ class Static_ extends Stmt {
      * Constructs a static variables list node.
      *
      * @param list<StaticVar> $vars Variable definitions
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $vars, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

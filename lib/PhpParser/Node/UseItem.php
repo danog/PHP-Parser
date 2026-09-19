@@ -6,6 +6,9 @@ use PhpParser\Node;
 use PhpParser\NodeAbstract;
 use PhpParser\Node\Stmt\Use_;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class UseItem extends NodeAbstract {
     /**
      * @var Use_::TYPE_* One of the Stmt\Use_::TYPE_* constants. Will only differ from TYPE_UNKNOWN for mixed group uses
@@ -22,7 +25,7 @@ class UseItem extends NodeAbstract {
      * @param Node\Name $name Namespace/Class to alias
      * @param null|string|Identifier $alias Alias
      * @param Use_::TYPE_* $type Type of the use element (for mixed group use only)
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Node\Name $name, $alias = null, int $type = Use_::TYPE_UNKNOWN, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

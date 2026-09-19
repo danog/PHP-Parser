@@ -13,6 +13,7 @@ use PhpParser\Node\ComplexType;
 
 /**
  * @psalm-import-type BuilderValue from \PhpParser\BuilderHelpers
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
  */
 class Property implements PhpParser\Builder {
     protected string $name;
@@ -20,7 +21,7 @@ class Property implements PhpParser\Builder {
     protected int $flags = 0;
 
     protected ?Node\Expr $default = null;
-    /** @var \PhpParser\NodeAttributes::AttributeArray */
+    /** @var AttributeArray */
     protected array $attributes = [];
     /** @var null|Identifier|Name|ComplexType */
     protected ?Node $type = null;

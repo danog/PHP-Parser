@@ -4,6 +4,9 @@ namespace PhpParser\Node;
 
 use PhpParser\NodeAbstract;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Const_ extends NodeAbstract {
     /** @var Identifier Name */
     public Identifier $name;
@@ -18,7 +21,7 @@ class Const_ extends NodeAbstract {
      *
      * @param string|Identifier $name Name
      * @param Expr $value Value
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct($name, Expr $value, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

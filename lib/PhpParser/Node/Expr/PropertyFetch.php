@@ -6,6 +6,9 @@ use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Identifier;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class PropertyFetch extends Expr {
     /** @var Expr Variable holding object */
     public Expr $var;
@@ -17,7 +20,7 @@ class PropertyFetch extends Expr {
      *
      * @param Expr $var Variable holding object
      * @param string|Identifier|Expr $name Property name
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Expr $var, $name, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

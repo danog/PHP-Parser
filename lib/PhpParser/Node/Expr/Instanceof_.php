@@ -6,6 +6,9 @@ use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Name;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Instanceof_ extends Expr {
     /** @var Expr Expression */
     public Expr $expr;
@@ -17,7 +20,7 @@ class Instanceof_ extends Expr {
      *
      * @param Expr $expr Expression
      * @param Name|Expr $class Class name
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Expr $expr, Node $class, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

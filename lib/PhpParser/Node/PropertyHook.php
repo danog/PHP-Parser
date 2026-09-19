@@ -10,6 +10,9 @@ use PhpParser\Node\Stmt\Expression;
 use PhpParser\Node\Stmt\Return_;
 use PhpParser\NodeAbstract;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class PropertyHook extends NodeAbstract implements FunctionLike {
     /** @var list<AttributeGroup> PHP attribute groups */
     public array $attrGroups;
@@ -39,7 +42,7 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
      *             'byRef'      => false  : Whether hook returns by reference
      *             'params'     => array(): Parameters
      *             'attrGroups' => array(): PHP attribute groups
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct($name, $body, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

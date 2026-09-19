@@ -4,13 +4,16 @@ namespace PhpParser\Node;
 
 use PhpParser\NodeAbstract;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class AttributeGroup extends NodeAbstract {
     /** @var list<Attribute> Attributes */
     public array $attrs;
 
     /**
      * @param list<Attribute> $attrs PHP attributes
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional node attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional node attributes
      */
     public function __construct(array $attrs, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

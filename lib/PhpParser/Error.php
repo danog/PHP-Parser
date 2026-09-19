@@ -2,6 +2,9 @@
 
 namespace PhpParser;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Error extends \RuntimeException {
     protected string $rawMessage;
     protected NodeAttributes $attributes;
@@ -10,7 +13,7 @@ class Error extends \RuntimeException {
      * Creates an Exception signifying a parse error.
      *
      * @param string $message Error message
-     * @param NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Attributes of node/token where error occurred
+     * @param NodeAttributes|AttributeArray $attributes Attributes of node/token where error occurred
      */
     public function __construct(string $message, NodeAttributes|array $attributes = []) {
         $this->rawMessage = $message;
@@ -58,7 +61,7 @@ class Error extends \RuntimeException {
     /**
      * Sets the attributes of the node/token the error occurred at.
      *
-     * @param NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes
+     * @param NodeAttributes|AttributeArray $attributes
      */
     public function setAttributes(NodeAttributes|array $attributes): void {
         $this->attributes = NodeAttributes::from($attributes);

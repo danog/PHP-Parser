@@ -5,6 +5,9 @@ namespace PhpParser\Node;
 use PhpParser\Node;
 use PhpParser\NodeAbstract;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class MatchArm extends NodeAbstract {
     /** @var null|list<Node\Expr> */
     public ?array $conds;
@@ -12,7 +15,7 @@ class MatchArm extends NodeAbstract {
 
     /**
      * @param null|list<Node\Expr> $conds
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(?array $conds, Node\Expr $body, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->conds = $conds;

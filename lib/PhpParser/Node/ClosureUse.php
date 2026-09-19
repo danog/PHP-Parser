@@ -4,6 +4,9 @@ namespace PhpParser\Node;
 
 use PhpParser\NodeAbstract;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class ClosureUse extends NodeAbstract {
     /** @var Expr\Variable Variable to use */
     public Expr\Variable $var;
@@ -15,7 +18,7 @@ class ClosureUse extends NodeAbstract {
      *
      * @param Expr\Variable $var Variable to use
      * @param bool $byRef Whether to use by reference
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Expr\Variable $var, bool $byRef = false, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

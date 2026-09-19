@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Echo_ extends Node\Stmt {
     /** @var list<Node\Expr> Expressions */
     public array $exprs;
@@ -12,7 +15,7 @@ class Echo_ extends Node\Stmt {
      * Constructs an echo node.
      *
      * @param list<Node\Expr> $exprs Expressions
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $exprs, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

@@ -6,6 +6,7 @@ namespace PhpParser;
  * @psalm-type JsonScalar = scalar|null
  * @psalm-type JsonInput = JsonScalar|array<array-key, JsonScalar|array<array-key, JsonScalar|array<array-key, JsonScalar|array>>>
  * @psalm-type Decoded = Node|Comment|JsonScalar|array<array-key, Node|Comment|JsonScalar|array<array-key, Node|Comment|JsonScalar|array>>
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
  */
 class JsonDecoder {
     /** @return Decoded */
@@ -65,7 +66,7 @@ class JsonDecoder {
                 throw new \RuntimeException('Attributes must be an array');
             }
 
-            /** @var \PhpParser\NodeAttributes::AttributeArray $attributes */
+            /** @var AttributeArray $attributes */
             $attributes = $this->decodeArray($value['attributes']);
             $node->setAttributes($attributes);
         }

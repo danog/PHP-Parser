@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Case_ extends Node\Stmt {
     /** @var null|Node\Expr Condition (null for default) */
     public ?Node\Expr $cond;
@@ -15,7 +18,7 @@ class Case_ extends Node\Stmt {
      *
      * @param null|Node\Expr $cond Condition (null for default)
      * @param list<Node\Stmt> $stmts Statements
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(?Node\Expr $cond, array $stmts = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

@@ -5,6 +5,9 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Node;
 use PhpParser\Node\AttributeGroup;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class EnumCase extends Node\Stmt {
     /** @var Node\Identifier Enum case name */
     public Node\Identifier $name;
@@ -17,7 +20,7 @@ class EnumCase extends Node\Stmt {
      * @param string|Node\Identifier $name Enum case name
      * @param Node\Expr|null $expr Enum case expression
      * @param list<AttributeGroup> $attrGroups PHP attribute groups
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct($name, ?Node\Expr $expr = null, array $attrGroups = [], \PhpParser\NodeAttributes|array $attributes = []) {
         parent::__construct($attributes);

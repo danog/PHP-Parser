@@ -7,6 +7,9 @@ use PhpParser\Node\Expr;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class ClassConstFetch extends Expr {
     /** @var Name|Expr Class name */
     public Node $class;
@@ -18,7 +21,7 @@ class ClassConstFetch extends Expr {
      *
      * @param Name|Expr $class Class name
      * @param string|Identifier|Expr|Error $name Constant name
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Node $class, $name, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

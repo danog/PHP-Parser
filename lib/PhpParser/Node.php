@@ -2,6 +2,9 @@
 
 namespace PhpParser;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 interface Node {
     /**
      * Gets the type of the node.
@@ -132,6 +135,6 @@ interface Node {
     /** A copy of the node's attributes. */
     public function getAttributes(): NodeAttributes;
 
-    /** @param NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes */
+    /** @param NodeAttributes|AttributeArray $attributes */
     public function setAttributes(NodeAttributes|array $attributes): void;
 }

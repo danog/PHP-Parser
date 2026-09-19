@@ -4,6 +4,9 @@ namespace PhpParser\Node\Expr;
 
 use PhpParser\Node\Expr;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Ternary extends Expr {
     /** @var Expr Condition */
     public Expr $cond;
@@ -18,7 +21,7 @@ class Ternary extends Expr {
      * @param Expr $cond Condition
      * @param null|Expr $if Expression for true
      * @param Expr $else Expression for false
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Expr $cond, ?Expr $if, Expr $else, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

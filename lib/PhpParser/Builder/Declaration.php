@@ -5,8 +5,11 @@ namespace PhpParser\Builder;
 use PhpParser;
 use PhpParser\BuilderHelpers;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 abstract class Declaration implements PhpParser\Builder {
-    /** @var \PhpParser\NodeAttributes::AttributeArray */
+    /** @var AttributeArray */
     protected array $attributes = [];
 
     /**

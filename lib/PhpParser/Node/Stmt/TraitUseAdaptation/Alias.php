@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt\TraitUseAdaptation;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Alias extends Node\Stmt\TraitUseAdaptation {
     /** @var null|int New modifier */
     public ?int $newModifier;
@@ -17,7 +20,7 @@ class Alias extends Node\Stmt\TraitUseAdaptation {
      * @param string|Node\Identifier $method Method name
      * @param null|int $newModifier New modifier
      * @param null|string|Node\Identifier $newName New name
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(?Node\Name $trait, $method, ?int $newModifier, $newName, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

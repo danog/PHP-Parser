@@ -5,6 +5,9 @@ namespace PhpParser\Node\Scalar;
 use PhpParser\Error;
 use PhpParser\Node\Scalar;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class String_ extends Scalar {
     /* For use in "kind" attribute */
     public const KIND_SINGLE_QUOTED = 1;
@@ -31,7 +34,7 @@ class String_ extends Scalar {
      * Constructs a string scalar node.
      *
      * @param string $value Value of the string
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(string $value, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);
@@ -62,7 +65,7 @@ class String_ extends Scalar {
     }
 
     /**
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes
      * @param bool $parseUnicodeEscape Whether to parse PHP 7 \u escapes
      */
     public static function fromString(string $str, \PhpParser\NodeAttributes|array $attributes = [], bool $parseUnicodeEscape = true): self {

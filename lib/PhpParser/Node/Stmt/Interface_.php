@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Interface_ extends ClassLike {
     /** @var list<Node\Name> Extended interfaces */
     public array $extends;
@@ -20,7 +23,7 @@ class Interface_ extends ClassLike {
      *             'extends'    => array(): Name of extended interfaces
      *             'stmts'      => array(): Statements
      *             'attrGroups' => array(): PHP attribute groups
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct($name, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

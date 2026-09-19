@@ -4,11 +4,14 @@ namespace PhpParser\Node\Scalar;
 
 use PhpParser\Node\Scalar;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 abstract class MagicConst extends Scalar {
     /**
      * Constructs a magic constant node.
      *
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(\PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

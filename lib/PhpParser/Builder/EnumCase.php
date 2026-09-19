@@ -10,11 +10,14 @@ use PhpParser\Node;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Stmt;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class EnumCase implements PhpParser\Builder {
     /** @var Identifier|string */
     protected $name;
     protected ?Node\Expr $value = null;
-    /** @var \PhpParser\NodeAttributes::AttributeArray */
+    /** @var AttributeArray */
     protected array $attributes = [];
 
     /** @var list<Node\AttributeGroup> */

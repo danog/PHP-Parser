@@ -6,12 +6,13 @@ use PhpParser\NodeAbstract;
 
 /**
  * Represents the "..." in "foo(...)" of the first-class callable syntax.
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
  */
 class VariadicPlaceholder extends NodeAbstract {
     /**
      * Create a variadic argument placeholder (first-class callable syntax).
      *
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(\PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

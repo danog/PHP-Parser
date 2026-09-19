@@ -2,6 +2,9 @@
 
 namespace PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class UnionType extends ComplexType {
     /** @var list<Identifier|Name|IntersectionType> Types */
     public array $types;
@@ -10,7 +13,7 @@ class UnionType extends ComplexType {
      * Constructs a union type.
      *
      * @param list<Identifier|Name|IntersectionType> $types Types
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $types, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

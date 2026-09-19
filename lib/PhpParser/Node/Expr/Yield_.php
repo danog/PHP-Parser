@@ -4,6 +4,9 @@ namespace PhpParser\Node\Expr;
 
 use PhpParser\Node\Expr;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Yield_ extends Expr {
     /** @var null|Expr Key expression */
     public ?Expr $key;
@@ -15,7 +18,7 @@ class Yield_ extends Expr {
      *
      * @param null|Expr $value Value expression
      * @param null|Expr $key Key expression
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(?Expr $value = null, ?Expr $key = null, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

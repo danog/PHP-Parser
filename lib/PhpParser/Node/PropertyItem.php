@@ -5,6 +5,9 @@ namespace PhpParser\Node;
 use PhpParser\Node;
 use PhpParser\NodeAbstract;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class PropertyItem extends NodeAbstract {
     /** @var Node\VarLikeIdentifier Name */
     public VarLikeIdentifier $name;
@@ -16,7 +19,7 @@ class PropertyItem extends NodeAbstract {
      *
      * @param string|Node\VarLikeIdentifier $name Name
      * @param null|Node\Expr $default Default value
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct($name, ?Node\Expr $default = null, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

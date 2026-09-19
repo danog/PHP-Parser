@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt;
 
 use PhpParser\Node\Stmt;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class HaltCompiler extends Stmt {
     /** @var string Remaining text after halt compiler statement. */
     public string $remaining;
@@ -12,7 +15,7 @@ class HaltCompiler extends Stmt {
      * Constructs a __halt_compiler node.
      *
      * @param string $remaining Remaining text after halt compiler statement.
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(string $remaining, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

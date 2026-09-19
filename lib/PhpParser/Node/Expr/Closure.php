@@ -7,6 +7,9 @@ use PhpParser\Node\ClosureUse;
 use PhpParser\Node\Expr;
 use PhpParser\Node\FunctionLike;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Closure extends Expr implements FunctionLike {
     /** @var bool Whether the closure is static */
     public bool $static;
@@ -42,7 +45,7 @@ class Closure extends Expr implements FunctionLike {
      *             'returnType' => null   : Return type
      *             'stmts'      => array(): Statements
      *             'attrGroups' => array(): PHP attributes groups
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

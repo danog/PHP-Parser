@@ -6,6 +6,7 @@ use PhpParser\NodeAbstract;
 
 /**
  * Represents a non-namespaced name. Namespaced names are represented using Name nodes.
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
  */
 class Identifier extends NodeAbstract {
     /**
@@ -25,7 +26,7 @@ class Identifier extends NodeAbstract {
      * Constructs an identifier node.
      *
      * @param string $name Identifier as string
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(string $name, \PhpParser\NodeAttributes|array $attributes = []) {
         if ($name === '') {

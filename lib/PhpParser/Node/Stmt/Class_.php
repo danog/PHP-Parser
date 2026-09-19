@@ -5,6 +5,9 @@ namespace PhpParser\Node\Stmt;
 use PhpParser\Modifiers;
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Class_ extends ClassLike {
     /** @deprecated Use Modifiers::PUBLIC instead */
     public const MODIFIER_PUBLIC    =  1;
@@ -48,7 +51,7 @@ class Class_ extends ClassLike {
      *             'implements'  => array(): Names of implemented interfaces
      *             'stmts'       => array(): Statements
      *             'attrGroups'  => array(): PHP attribute groups
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct($name, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

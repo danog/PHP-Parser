@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class TryCatch extends Node\Stmt {
     /** @var list<Node\Stmt> Statements */
     public array $stmts;
@@ -18,7 +21,7 @@ class TryCatch extends Node\Stmt {
      * @param list<Node\Stmt> $stmts Statements
      * @param list<Catch_> $catches Catches
      * @param null|Finally_ $finally Optional finally node
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $stmts, array $catches, ?Finally_ $finally = null, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

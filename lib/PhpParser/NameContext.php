@@ -6,6 +6,9 @@ use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Stmt;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class NameContext {
     /** @var null|Name Current namespace */
     protected ?Name $namespace;
@@ -50,7 +53,7 @@ class NameContext {
      * @param Name $name Original name
      * @param string $aliasName Aliased name
      * @param Stmt\Use_::TYPE_* $type One of Stmt\Use_::TYPE_*
-     * @param NodeAttributes|NodeAttributes::AttributeArray $errorAttrs Attributes to use to report an error
+     * @param NodeAttributes|AttributeArray $errorAttrs Attributes to use to report an error
      */
     public function addAlias(Name $name, string $aliasName, int $type, NodeAttributes|array $errorAttrs = []): void {
         // Constant names are case sensitive, everything else case insensitive

@@ -5,6 +5,9 @@ namespace PhpParser\Node\Expr;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class FuncCall extends CallLike {
     /** @var Node\Name|Expr Function name */
     public Node $name;
@@ -16,7 +19,7 @@ class FuncCall extends CallLike {
      *
      * @param Node\Name|Expr $name Function name
      * @param list<Node\Arg|Node\VariadicPlaceholder> $args Arguments
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Node $name, array $args = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

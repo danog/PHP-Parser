@@ -4,6 +4,9 @@ namespace PhpParser\Node;
 
 use PhpParser\NodeAbstract;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class InterpolatedStringPart extends NodeAbstract {
     /** @var string String value */
     public string $value;
@@ -12,7 +15,7 @@ class InterpolatedStringPart extends NodeAbstract {
      * Constructs a node representing a string part of an interpolated string.
      *
      * @param string $value String value
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(string $value, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

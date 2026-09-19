@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Foreach_ extends Node\Stmt {
     /** @var Node\Expr Expression to iterate */
     public Node\Expr $expr;
@@ -29,7 +32,7 @@ class Foreach_ extends Node\Stmt {
      *             'keyVar' => null   : Variable to assign key to
      *             'byRef'  => false  : Whether to assign value by reference
      *             'stmts'  => array(): Statements
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Node\Expr $expr, Node\Expr $valueVar, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

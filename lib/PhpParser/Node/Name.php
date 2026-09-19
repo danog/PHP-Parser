@@ -4,6 +4,9 @@ namespace PhpParser\Node;
 
 use PhpParser\NodeAbstract;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Name extends NodeAbstract {
     /**
      * @psalm-var non-empty-string
@@ -22,7 +25,7 @@ class Name extends NodeAbstract {
      * Constructs a name node.
      *
      * @param string|list<string>|self $name Name as string, part array or Name instance (copy ctor)
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     final public function __construct($name, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);
@@ -238,7 +241,7 @@ class Name extends NodeAbstract {
      *
      * @param string|list<string>|self|null $name1 The first name
      * @param string|list<string>|self|null $name2 The second name
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Attributes to assign to concatenated name
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Attributes to assign to concatenated name
      *
      * @return static|null Concatenated name
      */

@@ -5,6 +5,9 @@ namespace PhpParser\Node\Expr;
 use PhpParser\Node\ArrayItem;
 use PhpParser\Node\Expr;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Array_ extends Expr {
     // For use in "kind" attribute
     public const KIND_LONG = 1;  // array() syntax
@@ -17,7 +20,7 @@ class Array_ extends Expr {
      * Constructs an array node.
      *
      * @param list<ArrayItem|null> $items Items of the array
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $items = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

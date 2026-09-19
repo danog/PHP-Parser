@@ -14,10 +14,11 @@ use PhpParser\Node\Stmt;
 
 /**
  * @psalm-import-type BuilderValue from \PhpParser\BuilderHelpers
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
  */
 class ClassConst implements PhpParser\Builder {
     protected int $flags = 0;
-    /** @var \PhpParser\NodeAttributes::AttributeArray */
+    /** @var AttributeArray */
     protected array $attributes = [];
     /** @var list<Const_> */
     protected array $constants = [];

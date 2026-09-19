@@ -4,6 +4,9 @@ namespace PhpParser\Node\Stmt;
 
 use PhpParser\Node;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class If_ extends Node\Stmt {
     /** @var Node\Expr Condition expression */
     public Node\Expr $cond;
@@ -26,7 +29,7 @@ class If_ extends Node\Stmt {
      *             'stmts'   => array(): Statements
      *             'elseifs' => array(): Elseif clauses
      *             'else'    => null   : Else clause
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Node\Expr $cond, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);

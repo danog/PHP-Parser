@@ -4,6 +4,9 @@ namespace PhpParser\Node\Scalar;
 
 use PhpParser\Node\Scalar;
 
+/**
+ * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
+ */
 class Float_ extends Scalar {
     /** @var float Number value */
     public float $value;
@@ -12,7 +15,7 @@ class Float_ extends Scalar {
      * Constructs a float number scalar node.
      *
      * @param float $value Value of the number
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes Additional attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(float $value, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);
@@ -43,7 +46,7 @@ class Float_ extends Scalar {
     }
 
     /**
-     * @param \PhpParser\NodeAttributes|\PhpParser\NodeAttributes::AttributeArray $attributes
+     * @param \PhpParser\NodeAttributes|AttributeArray $attributes
      */
     public static function fromString(string $str, \PhpParser\NodeAttributes|array $attributes = []): Float_ {
         $attributes = \PhpParser\NodeAttributes::from($attributes);
