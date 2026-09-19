@@ -9,7 +9,7 @@ use PhpParser\Node\InterpolatedStringPart;
  * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
  */
 class ShellExec extends Expr {
-    /** @var list<\PhpParser\Node\Expr|\PhpParser\Node\InterpolatedStringPart> Interpolated string array */
+    /** @var list<Expr|InterpolatedStringPart> Interpolated string array */
     public array $parts;
 
     /**
