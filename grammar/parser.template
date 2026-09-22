@@ -97,7 +97,7 @@ class #(-p) extends \PhpParser\ParserAbstract
     protected function initReduceCallbacks(): void {
         $this->reduceCallbacks = [
 #reduce
-            %n => static function ($self, $stackPos): void {
+            %n => static function (self $self, int $stackPos): void {
                 %b
             },
 #noact

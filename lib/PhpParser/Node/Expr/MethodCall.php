@@ -4,6 +4,7 @@ namespace PhpParser\Node\Expr;
 
 use PhpParser\Node;
 use PhpParser\Node\Arg;
+use PhpParser\Node\ArgPlaceholder;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\VariadicPlaceholder;
@@ -16,7 +17,7 @@ class MethodCall extends CallLike {
     public Expr $var;
     /** @var Identifier|Expr Method name */
     public Node $name;
-    /** @var list<Arg|VariadicPlaceholder> Arguments */
+    /** @var list<Arg|VariadicPlaceholder|ArgPlaceholder> Arguments */
     public array $args;
 
     /**
@@ -24,7 +25,7 @@ class MethodCall extends CallLike {
      *
      * @param Expr $var Variable holding object
      * @param string|Identifier|Expr $name Method name
-     * @param list<Arg|VariadicPlaceholder> $args Arguments
+     * @param list<Arg|VariadicPlaceholder|ArgPlaceholder> $args Arguments
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Expr $var, $name, array $args = [], \PhpParser\NodeAttributes|array $attributes = []) {

@@ -1,42 +1,40 @@
 <?php declare(strict_types=1);
 
-namespace PhpParser\Node\Expr;
+namespace PhpParser\Node;
 
-use PhpParser\Node;
-use PhpParser\Node\Expr;
+use PhpParser\NodeAbstract;
 
 /**
+ * Represents the "?" argument placeholder of the partial function application syntax,
+ * e.g. the "?" in "foo(?)". Like VariadicPlaceholder, it occurs in the argument list
+ * of a call, in place of an ordinary Arg.
+ *
  * @psalm-import-type AttributeArray from \PhpParser\NodeAttributes
  */
-class FuncCall extends CallLike {
-    /** @var Node\Name|Expr Function name */
-    public Node $name;
-    /** @var list<Node\Arg|Node\VariadicPlaceholder|Node\ArgPlaceholder> Arguments */
-    public array $args;
+class ArgPlaceholder extends NodeAbstract {
+    /** @var Identifier|null Parameter name (for named placeholders) */
+    public ?Identifier $name;
 
     /**
-     * Constructs a function call node.
+     * Create a "?" argument placeholder (partial function application syntax).
      *
-     * @param Node\Name|Expr $name Function name
-     * @param list<Node\Arg|Node\VariadicPlaceholder|Node\ArgPlaceholder> $args Arguments
+     * @param Identifier|null $name Parameter name (for named placeholders)
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
-    public function __construct(Node $name, array $args = [], \PhpParser\NodeAttributes|array $attributes = []) {
+    public function __construct(?Identifier $name = null, \PhpParser\NodeAttributes|array $attributes = []) {
         $this->attributes = \PhpParser\NodeAttributes::from($attributes);
         $this->name = $name;
-        $this->args = $args;
     }
 
     /** @return list<string> */
     public function getSubNodeNames(): array {
-        return ['name', 'args'];
+        return ['name'];
     }
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'name' => $this->name,
-            'args' => $this->args,
             default => throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class),
         };
     }
@@ -47,19 +45,11 @@ class FuncCall extends CallLike {
             case 'name':
                 $this->name = $value;
                 return;
-            case 'args':
-                $this->args = $value;
-                return;
         }
         throw new \LogicException('Unknown sub node ' . $name . ' on ' . static::class);
     }
 
     public function getType(): string {
-        return 'Expr_FuncCall';
-    }
-
-    /** @return list<\PhpParser\Node\Arg|\PhpParser\Node\VariadicPlaceholder> */
-    public function getRawArgs(): array {
-        return $this->args;
+        return 'ArgPlaceholder';
     }
 }

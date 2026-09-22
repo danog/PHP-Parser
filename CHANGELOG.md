@@ -1,3 +1,18 @@
+Version 5.9.0 (2026-09-13)
+--------------------------
+
+### Fixed
+
+* Fix attribute insertion on enums and enum cases in formatting-preserving pretty printer.
+* Reject invalid Unicode escapes above `\u{10FFFF}`. Previously the limit was `\u{1FFFFF}`.
+* Don't allow newlines in `(void)` cast emulation.
+* Fix warning on float hex/binary/octal literals with PHP 8.6.
+
+### Added
+
+* Added support for PHP 8.6 partial function application. Placeholders are represented using
+  `ArgPlaceholder` nodes.
+
 Version 5.8.0 (2026-06-04)
 --------------------------
 

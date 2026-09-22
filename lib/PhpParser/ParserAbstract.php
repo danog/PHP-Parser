@@ -1294,7 +1294,7 @@ abstract class ParserAbstract implements Parser {
         }
     }
 
-    /** @param list<Node\Arg|Node\VariadicPlaceholder> $args */
+    /** @param list<Node\Arg|Node\VariadicPlaceholder|Node\ArgPlaceholder> $args */
     private function isSimpleExit(array $args): bool {
         if (\count($args) === 0) {
             return true;
@@ -1308,7 +1308,7 @@ abstract class ParserAbstract implements Parser {
     }
 
     /**
-     * @param list<Node\Arg|Node\VariadicPlaceholder> $args
+     * @param list<Node\Arg|Node\VariadicPlaceholder|Node\ArgPlaceholder> $args
      */
     protected function createExitExpr(string $name, int $namePos, array $args, NodeAttributes $attrs): Expr {
         if ($this->isSimpleExit($args)) {
@@ -1326,9 +1326,39 @@ abstract class ParserAbstract implements Parser {
      * The token map maps the PHP internal token identifiers
      * to the identifiers used by the Parser. Additionally it
      * maps T_OPEN_TAG_WITH_ECHO to T_ECHO and T_CLOSE_TAG to ';'.
-     * The map is generated for each parser (see Php7/Php8).
      *
      * @return array<int, int> The token map
      */
-    abstract protected function createTokenMap(): array;
+    protected function createTokenMap(): array {
+        $tokenMap = [];
+
+        // Single-char tokens use an identity mapping.
+        for ($i = 0; $i < 256; ++$i) {
+            $tokenMap[$i] = $i;
+        }
+
+        foreach ($this->symbolToName as $name) {
+            if ($name[0] === 'T') {
+                $tokenMap[\constant($name)] = constant(static::class . '::' . $name);
+            }
+        }
+
+        // T_OPEN_TAG_WITH_ECHO with dropped T_OPEN_TAG results in T_ECHO
+        $tokenMap[\T_OPEN_TAG_WITH_ECHO] = static::T_ECHO;
+        // T_CLOSE_TAG is equivalent to ';'
+        $tokenMap[\T_CLOSE_TAG] = ord(';');
+
+        // We have created a map from PHP token IDs to external symbol IDs.
+        // Now map them to the internal symbol ID.
+        $fullTokenMap = [];
+        foreach ($tokenMap as $phpToken => $extSymbol) {
+            $intSymbol = $this->tokenToSymbol[$extSymbol];
+            if ($intSymbol === $this->invalidSymbol) {
+                continue;
+            }
+            $fullTokenMap[$phpToken] = $intSymbol;
+        }
+
+        return $fullTokenMap;
+    }
 }

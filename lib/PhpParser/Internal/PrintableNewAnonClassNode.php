@@ -21,7 +21,7 @@ class PrintableNewAnonClassNode extends Expr {
     public array $attrGroups;
     /** @var int Modifiers */
     public int $flags;
-    /** @var list<Node\Arg|Node\VariadicPlaceholder> Arguments */
+    /** @var list<Node\Arg|Node\VariadicPlaceholder|Node\ArgPlaceholder> Arguments */
     public array $args;
     /** @var null|Node\Name Name of extended class */
     public ?Node\Name $extends;
@@ -32,7 +32,7 @@ class PrintableNewAnonClassNode extends Expr {
 
     /**
      * @param list<Node\AttributeGroup> $attrGroups PHP attribute groups
-     * @param list<Node\Arg|Node\VariadicPlaceholder> $args Arguments
+     * @param list<Node\Arg|Node\VariadicPlaceholder|Node\ArgPlaceholder> $args Arguments
      * @param Node\Name|null $extends Name of extended class
      * @param list<Node\Name> $implements Names of implemented interfaces
      * @param list<Node\Stmt> $stmts Statements

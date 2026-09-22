@@ -37,6 +37,10 @@ class Standard extends PrettyPrinterAbstract {
         return '...';
     }
 
+    protected function pArgPlaceholder(Node\ArgPlaceholder $node): string {
+        return ($node->name ? $node->name->toString() . ': ' : '') . '?';
+    }
+
     protected function pConst(Node\Const_ $node): string {
         return $node->name . ' = ' . $this->p($node->value);
     }
@@ -1235,6 +1239,7 @@ class Standard extends PrettyPrinterAbstract {
     protected function pDispatch(Node $node, int $precedence, int $lhsPrecedence): string {
         return match ($node::class) {
             \PhpParser\Node\Arg::class => $this->pArg($node),
+            \PhpParser\Node\ArgPlaceholder::class => $this->pArgPlaceholder($node),
             \PhpParser\Node\ArrayItem::class => $this->pArrayItem($node),
             \PhpParser\Node\Attribute::class => $this->pAttribute($node),
             \PhpParser\Node\AttributeGroup::class => $this->pAttributeGroup($node),

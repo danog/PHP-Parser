@@ -4,6 +4,7 @@ namespace PhpParser\Node\Expr;
 
 use PhpParser\Node;
 use PhpParser\Node\Arg;
+use PhpParser\Node\ArgPlaceholder;
 use PhpParser\Node\Expr;
 use PhpParser\Node\VariadicPlaceholder;
 
@@ -13,14 +14,14 @@ use PhpParser\Node\VariadicPlaceholder;
 class New_ extends CallLike {
     /** @var Node\Name|Expr|Node\Stmt\Class_ Class name */
     public Node $class;
-    /** @var list<Arg|VariadicPlaceholder> Arguments */
+    /** @var list<Arg|VariadicPlaceholder|ArgPlaceholder> Arguments */
     public array $args;
 
     /**
      * Constructs a function call node.
      *
      * @param Node\Name|Expr|Node\Stmt\Class_ $class Class name (or class node for anonymous classes)
-     * @param list<Arg|VariadicPlaceholder> $args Arguments
+     * @param list<Arg|VariadicPlaceholder|ArgPlaceholder> $args Arguments
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Node $class, array $args = [], \PhpParser\NodeAttributes|array $attributes = []) {

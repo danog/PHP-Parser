@@ -393,7 +393,7 @@ non_empty_statement:
     | T_ECHO expr_list_forbid_comma semi                    { $$ = Stmt\Echo_[$2]; }
     | T_INLINE_HTML {
         $$ = Stmt\InlineHTML[$1];
-        $$->setAttribute('hasLeadingNewline', $this->inlineHtmlHasLeadingNewline(#1));
+        $$->attrs()->hasLeadingNewline = $this->inlineHtmlHasLeadingNewline(#1);
     }
     | expr semi                                             { $$ = Stmt\Expression[$1]; }
     | T_UNSET '(' variables_list ')' semi                   { $$ = Stmt\Unset_[$3]; }
@@ -785,14 +785,12 @@ optional_return_type:
 argument_list:
       '(' ')'                                               { $$ = array(); }
     | '(' non_empty_argument_list optional_comma ')'        { $$ = $2; }
-    | '(' variadic_placeholder ')'                          { init($2); }
 ;
 
 clone_argument_list:
       '(' ')'                                              { $$ = array(); }
     | '(' non_empty_clone_argument_list optional_comma ')' { $$ = $2; }
     | '(' expr ',' ')'                                     { init(Node\Arg[$2, false, false]); }
-    | '(' variadic_placeholder ')'                         { init($2); }
 ;
 
 non_empty_clone_argument_list:
@@ -804,10 +802,6 @@ non_empty_clone_argument_list:
 			{ push($1, $3); }
 ;
 
-variadic_placeholder:
-      T_ELLIPSIS                                            { $$ = Node\VariadicPlaceholder[]; }
-;
-
 non_empty_argument_list:
       argument                                              { init($1); }
     | non_empty_argument_list ',' argument                  { push($1, $3); }
@@ -816,8 +810,11 @@ non_empty_argument_list:
 argument_no_expr:
       ampersand variable                                    { $$ = Node\Arg[$2, true, false]; }
     | T_ELLIPSIS expr                                       { $$ = Node\Arg[$2, false, true]; }
+    | T_ELLIPSIS                                            { $$ = Node\VariadicPlaceholder[]; }
+    | '?'                                                   { $$ = Node\ArgPlaceholder[null]; }
     | identifier_maybe_reserved ':' expr
           { $$ = new Node\Arg($3, false, false, attributes(), $1); }
+    | identifier_maybe_reserved ':' '?'                     { $$ = Node\ArgPlaceholder[$1]; }
 ;
 
 argument:
