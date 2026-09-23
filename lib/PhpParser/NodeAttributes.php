@@ -49,9 +49,14 @@ final class NodeAttributes {
     /** @var \WeakReference<Node>|null */
     public ?\WeakReference $weak_next = null;
 
-    /** @param NodeAttributes|AttributeArray $attributes */
+    /**
+     * A NodeAttributes object is taken as-is: the parser builds a fresh one per node, and getAttributes()
+     * already clones for callers that copy another node's attributes (attrs() exposes the live object).
+     *
+     * @param NodeAttributes|AttributeArray $attributes
+     */
     public static function from(NodeAttributes|array $attributes): self {
-        return $attributes instanceof self ? clone $attributes : self::fromArray($attributes);
+        return $attributes instanceof self ? $attributes : self::fromArray($attributes);
     }
 
     /** @param AttributeArray $attributes */
