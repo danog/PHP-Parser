@@ -75,7 +75,10 @@ class NodeTraverser implements NodeTraverserInterface {
             $subNode = $node->getSubNode($name);
 
             if (\is_array($subNode)) {
-                $node->setSubNode($name, $this->traverseArray($subNode));
+                $traversed = $this->traverseArray($subNode);
+                if ($traversed !== $subNode) { // same array: identity check is a pointer comparison
+                    $node->setSubNode($name, $traversed);
+                }
                 if ($this->stopTraversal) {
                     break;
                 }
