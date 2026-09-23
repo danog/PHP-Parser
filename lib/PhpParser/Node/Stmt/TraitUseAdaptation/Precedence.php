@@ -20,7 +20,7 @@ class Precedence extends Node\Stmt\TraitUseAdaptation {
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Node\Name $trait, $method, array $insteadof, \PhpParser\NodeAttributes|array $attributes = []) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->trait = $trait;
         $this->method = \is_string($method) ? new Node\Identifier($method) : $method;
         $this->insteadof = $insteadof;
@@ -30,6 +30,16 @@ class Precedence extends Node\Stmt\TraitUseAdaptation {
     public function getSubNodeNames(): array {
         return ['trait', 'method', 'insteadof'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['trait' => $this->trait, 'method' => $this->method, 'insteadof' => $this->insteadof];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

@@ -17,7 +17,7 @@ class Error extends \RuntimeException {
      */
     public function __construct(string $message, NodeAttributes|array $attributes = []) {
         $this->rawMessage = $message;
-        $this->attributes = NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof NodeAttributes ? $attributes : NodeAttributes::fromArray($attributes);
         $this->updateMessage();
     }
 
@@ -64,7 +64,7 @@ class Error extends \RuntimeException {
      * @param NodeAttributes|AttributeArray $attributes
      */
     public function setAttributes(NodeAttributes|array $attributes): void {
-        $this->attributes = NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof NodeAttributes ? $attributes : NodeAttributes::fromArray($attributes);
         $this->updateMessage();
     }
 

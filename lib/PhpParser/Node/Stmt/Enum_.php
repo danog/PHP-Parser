@@ -42,6 +42,16 @@ class Enum_ extends ClassLike {
         return ['attrGroups', 'name', 'scalarType', 'implements', 'stmts'];
     }
 
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['attrGroups' => $this->attrGroups, 'name' => $this->name, 'scalarType' => $this->scalarType, 'implements' => $this->implements, 'stmts' => $this->stmts];
+    }
+
+
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {

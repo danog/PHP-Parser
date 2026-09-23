@@ -29,7 +29,7 @@ class MethodCall extends CallLike {
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Expr $var, $name, array $args = [], \PhpParser\NodeAttributes|array $attributes = []) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->var = $var;
         $this->name = \is_string($name) ? new Identifier($name) : $name;
         $this->args = $args;
@@ -39,6 +39,16 @@ class MethodCall extends CallLike {
     public function getSubNodeNames(): array {
         return ['var', 'name', 'args'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['var' => $this->var, 'name' => $this->name, 'args' => $this->args];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

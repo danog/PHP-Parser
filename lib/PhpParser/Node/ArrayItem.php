@@ -26,7 +26,7 @@ class ArrayItem extends NodeAbstract {
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Expr $value, ?Expr $key = null, bool $byRef = false, \PhpParser\NodeAttributes|array $attributes = [], bool $unpack = false) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->key = $key;
         $this->value = $value;
         $this->byRef = $byRef;
@@ -37,6 +37,16 @@ class ArrayItem extends NodeAbstract {
     public function getSubNodeNames(): array {
         return ['key', 'value', 'byRef', 'unpack'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['key' => $this->key, 'value' => $this->value, 'byRef' => $this->byRef, 'unpack' => $this->unpack];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

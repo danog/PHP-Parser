@@ -20,7 +20,7 @@ class Match_ extends Node\Expr {
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Node\Expr $cond, array $arms = [], \PhpParser\NodeAttributes|array $attributes = []) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->cond = $cond;
         $this->arms = $arms;
     }
@@ -29,6 +29,16 @@ class Match_ extends Node\Expr {
     public function getSubNodeNames(): array {
         return ['cond', 'arms'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['cond' => $this->cond, 'arms' => $this->arms];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

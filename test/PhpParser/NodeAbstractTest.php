@@ -18,6 +18,10 @@ class DummyNode extends NodeAbstract {
         return ['subNode1', 'subNode2'];
     }
 
+    public function getSubNodes(): array {
+        return ['subNode1' => $this->subNode1, 'subNode2' => $this->subNode2];
+    }
+
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'subNode1' => $this->subNode1,

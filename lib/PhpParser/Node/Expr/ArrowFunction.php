@@ -45,7 +45,7 @@ class ArrowFunction extends Expr implements FunctionLike {
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $subNodes, \PhpParser\NodeAttributes|array $attributes = []) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->static = $subNodes['static'] ?? false;
         $this->byRef = $subNodes['byRef'] ?? false;
         $this->params = $subNodes['params'] ?? [];
@@ -58,6 +58,16 @@ class ArrowFunction extends Expr implements FunctionLike {
     public function getSubNodeNames(): array {
         return ['attrGroups', 'static', 'byRef', 'params', 'returnType', 'expr'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['attrGroups' => $this->attrGroups, 'static' => $this->static, 'byRef' => $this->byRef, 'params' => $this->params, 'returnType' => $this->returnType, 'expr' => $this->expr];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

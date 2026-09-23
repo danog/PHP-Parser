@@ -29,6 +29,13 @@ interface Node {
     public function getSubNode(string $name): mixed;
 
     /**
+     * Every sub node by name, in getSubNodeNames() order.
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array;
+
+    /**
      * Sets the sub node with the given name (one of getSubNodeNames()).
      */
     /** @param Node|list<Node|null>|string|int|float|bool|null $value */

@@ -48,7 +48,7 @@ class Param extends NodeAbstract {
         array $attrGroups = [],
         array $hooks = []
     ) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->type = $type;
         $this->byRef = $byRef;
         $this->variadic = $variadic;
@@ -63,6 +63,16 @@ class Param extends NodeAbstract {
     public function getSubNodeNames(): array {
         return ['attrGroups', 'flags', 'type', 'byRef', 'variadic', 'var', 'default', 'hooks'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['attrGroups' => $this->attrGroups, 'flags' => $this->flags, 'type' => $this->type, 'byRef' => $this->byRef, 'variadic' => $this->variadic, 'var' => $this->var, 'default' => $this->default, 'hooks' => $this->hooks];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

@@ -27,7 +27,7 @@ class Catch_ extends Node\Stmt {
     public function __construct(
         array $types, ?Expr\Variable $var = null, array $stmts = [], \PhpParser\NodeAttributes|array $attributes = []
     ) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->types = $types;
         $this->var = $var;
         $this->stmts = $stmts;
@@ -37,6 +37,16 @@ class Catch_ extends Node\Stmt {
     public function getSubNodeNames(): array {
         return ['types', 'var', 'stmts'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['types' => $this->types, 'var' => $this->var, 'stmts' => $this->stmts];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

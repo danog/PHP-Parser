@@ -54,7 +54,7 @@ class Class_ extends ClassLike {
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct($name, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->flags = $subNodes['flags'] ?? $subNodes['type'] ?? 0;
         $this->name = \is_string($name) ? new Node\Identifier($name) : $name;
         $this->extends = $subNodes['extends'] ?? null;
@@ -67,6 +67,16 @@ class Class_ extends ClassLike {
     public function getSubNodeNames(): array {
         return ['attrGroups', 'flags', 'name', 'extends', 'implements', 'stmts'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['attrGroups' => $this->attrGroups, 'flags' => $this->flags, 'name' => $this->name, 'extends' => $this->extends, 'implements' => $this->implements, 'stmts' => $this->stmts];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

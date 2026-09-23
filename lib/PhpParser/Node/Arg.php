@@ -30,7 +30,7 @@ class Arg extends NodeAbstract {
         Expr $value, bool $byRef = false, bool $unpack = false, \PhpParser\NodeAttributes|array $attributes = [],
         ?Identifier $name = null
     ) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->name = $name;
         $this->value = $value;
         $this->byRef = $byRef;
@@ -41,6 +41,16 @@ class Arg extends NodeAbstract {
     public function getSubNodeNames(): array {
         return ['name', 'value', 'byRef', 'unpack'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['name' => $this->name, 'value' => $this->value, 'byRef' => $this->byRef, 'unpack' => $this->unpack];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

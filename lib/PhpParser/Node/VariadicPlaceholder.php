@@ -15,7 +15,7 @@ class VariadicPlaceholder extends NodeAbstract {
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(\PhpParser\NodeAttributes|array $attributes = []) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
     }
 
     public function getType(): string {
@@ -24,6 +24,11 @@ class VariadicPlaceholder extends NodeAbstract {
 
     /** @return list<string> */
     public function getSubNodeNames(): array {
+        return [];
+    }
+
+    /** @return array<string, Node|list<Node|null>|string|int|float|bool|null> */
+    public function getSubNodes(): array {
         return [];
     }
 

@@ -33,7 +33,7 @@ class For_ extends Node\Stmt {
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->init = $subNodes['init'] ?? [];
         $this->cond = $subNodes['cond'] ?? [];
         $this->loop = $subNodes['loop'] ?? [];
@@ -44,6 +44,16 @@ class For_ extends Node\Stmt {
     public function getSubNodeNames(): array {
         return ['init', 'cond', 'loop', 'stmts'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['init' => $this->init, 'cond' => $this->cond, 'loop' => $this->loop, 'stmts' => $this->stmts];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

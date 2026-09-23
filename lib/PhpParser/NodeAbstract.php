@@ -14,7 +14,7 @@ abstract class NodeAbstract implements Node, \JsonSerializable {
      * @param NodeAttributes|AttributeArray $attributes
      */
     public function __construct(NodeAttributes|array $attributes = []) {
-        $this->attributes = NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof NodeAttributes ? $attributes : NodeAttributes::fromArray($attributes);
     }
 
     /**
@@ -166,7 +166,7 @@ abstract class NodeAbstract implements Node, \JsonSerializable {
 
     /** @param NodeAttributes|AttributeArray $attributes */
     public function setAttributes(NodeAttributes|array $attributes): void {
-        $this->attributes = NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof NodeAttributes ? $attributes : NodeAttributes::fromArray($attributes);
     }
 
     /**

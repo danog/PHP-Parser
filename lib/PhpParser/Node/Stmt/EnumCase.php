@@ -34,6 +34,16 @@ class EnumCase extends Node\Stmt {
         return ['attrGroups', 'name', 'expr'];
     }
 
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['attrGroups' => $this->attrGroups, 'name' => $this->name, 'expr' => $this->expr];
+    }
+
+
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {

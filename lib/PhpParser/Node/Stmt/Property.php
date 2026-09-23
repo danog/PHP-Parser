@@ -35,7 +35,7 @@ class Property extends Node\Stmt {
      * @param list<Node\PropertyHook> $hooks Property hooks
      */
     public function __construct(int $flags, array $props, \PhpParser\NodeAttributes|array $attributes = [], ?Node $type = null, array $attrGroups = [], array $hooks = []) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->flags = $flags;
         $this->props = $props;
         $this->type = $type;
@@ -47,6 +47,16 @@ class Property extends Node\Stmt {
     public function getSubNodeNames(): array {
         return ['attrGroups', 'flags', 'type', 'props', 'hooks'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['attrGroups' => $this->attrGroups, 'flags' => $this->flags, 'type' => $this->type, 'props' => $this->props, 'hooks' => $this->hooks];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

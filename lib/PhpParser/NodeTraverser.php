@@ -71,9 +71,7 @@ class NodeTraverser implements NodeTraverserInterface {
      * @param Node $node Node to traverse.
      */
     protected function traverseNode(Node $node): void {
-        foreach ($node->getSubNodeNames() as $name) {
-            $subNode = $node->getSubNode($name);
-
+        foreach ($node->getSubNodes() as $name => $subNode) {
             if (\is_array($subNode)) {
                 $traversed = $this->traverseArray($subNode);
                 if ($traversed !== $subNode) { // same array: identity check is a pointer comparison

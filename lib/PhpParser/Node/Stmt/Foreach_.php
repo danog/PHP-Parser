@@ -35,7 +35,7 @@ class Foreach_ extends Node\Stmt {
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Node\Expr $expr, Node\Expr $valueVar, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->expr = $expr;
         $this->keyVar = $subNodes['keyVar'] ?? null;
         $this->byRef = $subNodes['byRef'] ?? false;
@@ -47,6 +47,16 @@ class Foreach_ extends Node\Stmt {
     public function getSubNodeNames(): array {
         return ['expr', 'keyVar', 'byRef', 'valueVar', 'stmts'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['expr' => $this->expr, 'keyVar' => $this->keyVar, 'byRef' => $this->byRef, 'valueVar' => $this->valueVar, 'stmts' => $this->stmts];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

@@ -44,7 +44,7 @@ class Function_ extends Node\Stmt implements FunctionLike {
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct($name, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->byRef = $subNodes['byRef'] ?? false;
         $this->name = \is_string($name) ? new Node\Identifier($name) : $name;
         $this->params = $subNodes['params'] ?? [];
@@ -57,6 +57,16 @@ class Function_ extends Node\Stmt implements FunctionLike {
     public function getSubNodeNames(): array {
         return ['attrGroups', 'byRef', 'name', 'params', 'returnType', 'stmts'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['attrGroups' => $this->attrGroups, 'byRef' => $this->byRef, 'name' => $this->name, 'params' => $this->params, 'returnType' => $this->returnType, 'stmts' => $this->stmts];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

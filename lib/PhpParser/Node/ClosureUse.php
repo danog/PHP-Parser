@@ -21,7 +21,7 @@ class ClosureUse extends NodeAbstract {
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Expr\Variable $var, bool $byRef = false, \PhpParser\NodeAttributes|array $attributes = []) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->var = $var;
         $this->byRef = $byRef;
     }
@@ -30,6 +30,16 @@ class ClosureUse extends NodeAbstract {
     public function getSubNodeNames(): array {
         return ['var', 'byRef'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['var' => $this->var, 'byRef' => $this->byRef];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

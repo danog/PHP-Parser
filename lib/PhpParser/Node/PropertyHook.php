@@ -45,7 +45,7 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct($name, $body, array $subNodes = [], \PhpParser\NodeAttributes|array $attributes = []) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->name = \is_string($name) ? new Identifier($name) : $name;
         $this->body = $body;
         $this->flags = $subNodes['flags'] ?? 0;
@@ -110,6 +110,16 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
     public function getSubNodeNames(): array {
         return ['attrGroups', 'flags', 'byRef', 'name', 'params', 'body'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['attrGroups' => $this->attrGroups, 'flags' => $this->flags, 'byRef' => $this->byRef, 'name' => $this->name, 'params' => $this->params, 'body' => $this->body];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

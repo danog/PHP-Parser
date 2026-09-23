@@ -71,6 +71,11 @@ class PrintableNewAnonClassNode extends Expr {
         return ['attrGroups', 'flags', 'args', 'extends', 'implements', 'stmts'];
     }
 
+    /** @return array<string, \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null> */
+    public function getSubNodes(): array {
+        return ['attrGroups' => $this->attrGroups, 'flags' => $this->flags, 'args' => $this->args, 'extends' => $this->extends, 'implements' => $this->implements, 'stmts' => $this->stmts];
+    }
+
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
         return match ($name) {

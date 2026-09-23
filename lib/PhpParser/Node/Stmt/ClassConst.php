@@ -34,7 +34,7 @@ class ClassConst extends Node\Stmt {
         array $attrGroups = [],
         ?Node $type = null
     ) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->flags = $flags;
         $this->consts = $consts;
         $this->attrGroups = $attrGroups;
@@ -45,6 +45,16 @@ class ClassConst extends Node\Stmt {
     public function getSubNodeNames(): array {
         return ['attrGroups', 'flags', 'type', 'consts'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['attrGroups' => $this->attrGroups, 'flags' => $this->flags, 'type' => $this->type, 'consts' => $this->consts];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

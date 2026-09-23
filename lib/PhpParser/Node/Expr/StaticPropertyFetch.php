@@ -24,7 +24,7 @@ class StaticPropertyFetch extends Expr {
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(Node $class, $name, \PhpParser\NodeAttributes|array $attributes = []) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->class = $class;
         $this->name = \is_string($name) ? new VarLikeIdentifier($name) : $name;
     }
@@ -33,6 +33,16 @@ class StaticPropertyFetch extends Expr {
     public function getSubNodeNames(): array {
         return ['class', 'name'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['class' => $this->class, 'name' => $this->name];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

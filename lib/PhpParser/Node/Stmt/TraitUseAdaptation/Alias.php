@@ -23,7 +23,7 @@ class Alias extends Node\Stmt\TraitUseAdaptation {
      * @param \PhpParser\NodeAttributes|AttributeArray $attributes Additional attributes
      */
     public function __construct(?Node\Name $trait, $method, ?int $newModifier, $newName, \PhpParser\NodeAttributes|array $attributes = []) {
-        $this->attributes = \PhpParser\NodeAttributes::from($attributes);
+        $this->attributes = $attributes instanceof \PhpParser\NodeAttributes ? $attributes : \PhpParser\NodeAttributes::fromArray($attributes);
         $this->trait = $trait;
         $this->method = \is_string($method) ? new Node\Identifier($method) : $method;
         $this->newModifier = $newModifier;
@@ -34,6 +34,16 @@ class Alias extends Node\Stmt\TraitUseAdaptation {
     public function getSubNodeNames(): array {
         return ['trait', 'method', 'newModifier', 'newName'];
     }
+
+    /**
+     * Every sub node by name, in getSubNodeNames() order (one call instead of one getSubNode() per name).
+     *
+     * @return array<string, Node|list<Node|null>|string|int|float|bool|null>
+     */
+    public function getSubNodes(): array {
+        return ['trait' => $this->trait, 'method' => $this->method, 'newModifier' => $this->newModifier, 'newName' => $this->newName];
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
