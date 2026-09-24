@@ -14,6 +14,8 @@ class CommentAnnotatingVisitor extends NodeVisitorAbstract {
     private array $tokens;
     /** @var list<int> Token positions of comments */
     private array $commentPositions = [];
+    /** @var int Index of the next comment position to consider (a cursor over $commentPositions) */
+    private int $commentIdx = 0;
 
     /**
      * Create a comment annotation visitor.
@@ -33,7 +35,7 @@ class CommentAnnotatingVisitor extends NodeVisitorAbstract {
     }
 
     public function enterNode(Node $node) {
-        $nextCommentPos = current($this->commentPositions);
+        $nextCommentPos = $this->commentPositions[$this->commentIdx] ?? false;
         if ($nextCommentPos === false) {
             // No more comments.
             return self::STOP_TRAVERSAL;
@@ -66,7 +68,7 @@ class CommentAnnotatingVisitor extends NodeVisitorAbstract {
             }
 
             do {
-                $nextCommentPos = next($this->commentPositions);
+                $nextCommentPos = $this->commentPositions[++$this->commentIdx] ?? false;
             } while ($nextCommentPos !== false && $nextCommentPos < $this->pos);
         }
 
