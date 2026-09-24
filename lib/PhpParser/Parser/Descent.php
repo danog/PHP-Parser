@@ -35,84 +35,84 @@ class Descent extends Php8 {
     public static ?string $lastError = null;
 
     // single-character token ids
-    private const SEMI = 59;        // ;
-    private const COMMA = 44;       // ,
-    private const LPAREN = 40;      // (
-    private const RPAREN = 41;      // )
-    private const LBRACKET = 91;    // [
-    private const RBRACKET = 93;    // ]
-    private const LBRACE = 123;     // {
-    private const RBRACE = 125;     // }
-    private const COLON = 58;       // :
-    private const QUESTION = 63;    // ?
-    private const EQUALS = 61;      // =
-    private const DOLLAR = 36;      // $
-    private const DQUOTE = 34;      // "
-    private const BACKTICK = 96;    // `
-    private const PLUS = 43;
-    private const MINUS = 45;
-    private const MUL = 42;
-    private const DIV = 47;
-    private const MOD = 37;
-    private const DOT = 46;
-    private const PIPE = 124;
-    private const CARET = 94;
-    private const LT = 60;
-    private const GT = 62;
-    private const NOT = 33;         // !
-    private const TILDE = 126;
-    private const AT = 64;
+    private const int SEMI = 59;        // ;
+    private const int COMMA = 44;       // ,
+    private const int LPAREN = 40;      // (
+    private const int RPAREN = 41;      // )
+    private const int LBRACKET = 91;    // [
+    private const int RBRACKET = 93;    // ]
+    private const int LBRACE = 123;     // {
+    private const int RBRACE = 125;     // }
+    private const int COLON = 58;       // :
+    private const int QUESTION = 63;    // ?
+    private const int EQUALS = 61;      // =
+    private const int DOLLAR = 36;      // $
+    private const int DQUOTE = 34;      // "
+    private const int BACKTICK = 96;    // `
+    private const int PLUS = 43;
+    private const int MINUS = 45;
+    private const int MUL = 42;
+    private const int DIV = 47;
+    private const int MOD = 37;
+    private const int DOT = 46;
+    private const int PIPE = 124;
+    private const int CARET = 94;
+    private const int LT = 60;
+    private const int GT = 62;
+    private const int NOT = 33;         // !
+    private const int TILDE = 126;
+    private const int AT = 64;
 
     // primary kinds (which postfix operations the grammar allows on the node)
-    private const K_NONE = 0;       // plain expr
-    private const K_VAR = 1;        // variable
-    private const K_DEREF = 2;      // fully_dereferenceable that is not a variable
-    private const K_CONST = 3;      // constant
-    private const K_CLASSNAME = 4;  // class_name awaiting ::
+    private const int K_NONE = 0;       // plain expr
+    private const int K_VAR = 1;        // variable
+    private const int K_DEREF = 2;      // fully_dereferenceable that is not a variable
+    private const int K_CONST = 3;      // constant
+    private const int K_CLASSNAME = 4;  // class_name awaiting ::
 
     // precedence levels (grammar/php.y, PHP 8 section), higher binds tighter
-    private const P_VOID_CAST = 1;
-    private const P_THROW = 2;
-    private const P_INCLUDE = 3;
-    private const P_LOGICAL_OR = 5;
-    private const P_LOGICAL_XOR = 6;
-    private const P_LOGICAL_AND = 7;
-    private const P_PRINT = 8;
-    private const P_YIELD = 9;
-    private const P_DOUBLE_ARROW = 10;
-    private const P_YIELD_FROM = 11;
-    private const P_ASSIGN = 12;
-    private const P_TERNARY = 13;
-    private const P_COALESCE = 14;
-    private const P_BOOLEAN_OR = 15;
-    private const P_BOOLEAN_AND = 16;
-    private const P_BIT_OR = 17;
-    private const P_BIT_XOR = 18;
-    private const P_BIT_AND = 19;
-    private const P_EQUALITY = 20;
-    private const P_COMPARISON = 21;
-    private const P_PIPE = 22;
-    private const P_CONCAT = 23;
-    private const P_SHIFT = 24;
-    private const P_ADD = 25;
-    private const P_MUL = 26;
-    private const P_NOT = 27;
-    private const P_INSTANCEOF = 28;
-    private const P_UNARY = 29;
-    private const P_POW = 30;
-    private const P_NEW = 32;
+    private const int P_VOID_CAST = 1;
+    private const int P_THROW = 2;
+    private const int P_INCLUDE = 3;
+    private const int P_LOGICAL_OR = 5;
+    private const int P_LOGICAL_XOR = 6;
+    private const int P_LOGICAL_AND = 7;
+    private const int P_PRINT = 8;
+    private const int P_YIELD = 9;
+    private const int P_DOUBLE_ARROW = 10;
+    private const int P_YIELD_FROM = 11;
+    private const int P_ASSIGN = 12;
+    private const int P_TERNARY = 13;
+    private const int P_COALESCE = 14;
+    private const int P_BOOLEAN_OR = 15;
+    private const int P_BOOLEAN_AND = 16;
+    private const int P_BIT_OR = 17;
+    private const int P_BIT_XOR = 18;
+    private const int P_BIT_AND = 19;
+    private const int P_EQUALITY = 20;
+    private const int P_COMPARISON = 21;
+    private const int P_PIPE = 22;
+    private const int P_CONCAT = 23;
+    private const int P_SHIFT = 24;
+    private const int P_ADD = 25;
+    private const int P_MUL = 26;
+    private const int P_NOT = 27;
+    private const int P_INSTANCEOF = 28;
+    private const int P_UNARY = 29;
+    private const int P_POW = 30;
+    private const int P_NEW = 32;
 
     /** @var array<int, bool> levels that are %right */
-    private const RIGHT_ASSOC = [
+    private const array RIGHT_ASSOC = [
         self::P_VOID_CAST => true, self::P_THROW => true, self::P_PRINT => true, self::P_YIELD => true,
         self::P_DOUBLE_ARROW => true, self::P_YIELD_FROM => true, self::P_COALESCE => true,
         self::P_NOT => true, self::P_UNARY => true, self::P_POW => true,
     ];
     /** @var array<int, bool> levels that are %nonassoc */
-    private const NONASSOC = [self::P_EQUALITY => true, self::P_COMPARISON => true];
+    private const array NONASSOC = [self::P_EQUALITY => true, self::P_COMPARISON => true];
 
     /** @var array<int, int> binary operator token => precedence level */
-    private const BINARY_PREC = [
+    private const array BINARY_PREC = [
         \T_BOOLEAN_OR => self::P_BOOLEAN_OR, \T_BOOLEAN_AND => self::P_BOOLEAN_AND,
         \T_LOGICAL_OR => self::P_LOGICAL_OR, \T_LOGICAL_AND => self::P_LOGICAL_AND, \T_LOGICAL_XOR => self::P_LOGICAL_XOR,
         self::PIPE => self::P_BIT_OR, \T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG => self::P_BIT_AND,
@@ -129,7 +129,7 @@ class Descent extends Php8 {
     ];
 
     /** @var array<int, bool> compound assignment tokens */
-    private const ASSIGN_OPS = [
+    private const array ASSIGN_OPS = [
         \T_PLUS_EQUAL => true, \T_MINUS_EQUAL => true, \T_MUL_EQUAL => true, \T_DIV_EQUAL => true,
         \T_CONCAT_EQUAL => true, \T_MOD_EQUAL => true, \T_AND_EQUAL => true, \T_OR_EQUAL => true,
         \T_XOR_EQUAL => true, \T_SL_EQUAL => true, \T_SR_EQUAL => true, \T_POW_EQUAL => true,
@@ -137,7 +137,7 @@ class Descent extends Php8 {
     ];
 
     /** @var array<int, bool> reserved_non_modifiers */
-    private const RESERVED_NON_MODIFIERS = [
+    private const array RESERVED_NON_MODIFIERS = [
         \T_INCLUDE => true, \T_INCLUDE_ONCE => true, \T_EVAL => true, \T_REQUIRE => true, \T_REQUIRE_ONCE => true,
         \T_LOGICAL_OR => true, \T_LOGICAL_XOR => true, \T_LOGICAL_AND => true, \T_INSTANCEOF => true, \T_NEW => true,
         \T_CLONE => true, \T_EXIT => true, \T_IF => true, \T_ELSEIF => true, \T_ELSE => true, \T_ENDIF => true,
@@ -155,13 +155,13 @@ class Descent extends Php8 {
     ];
 
     /** @var array<int, bool> semi_reserved minus reserved_non_modifiers */
-    private const MODIFIER_WORDS = [
+    private const array MODIFIER_WORDS = [
         \T_STATIC => true, \T_ABSTRACT => true, \T_FINAL => true, \T_PRIVATE => true, \T_PROTECTED => true,
         \T_PUBLIC => true, \T_READONLY => true,
     ];
 
     /** @var array<int, int> member_modifier token => flag */
-    private const MEMBER_MODIFIERS = [
+    private const array MEMBER_MODIFIERS = [
         \T_PUBLIC => Modifiers::PUBLIC, \T_PROTECTED => Modifiers::PROTECTED, \T_PRIVATE => Modifiers::PRIVATE,
         \T_PUBLIC_SET => Modifiers::PUBLIC_SET, \T_PROTECTED_SET => Modifiers::PROTECTED_SET,
         \T_PRIVATE_SET => Modifiers::PRIVATE_SET, \T_STATIC => Modifiers::STATIC, \T_ABSTRACT => Modifiers::ABSTRACT,
@@ -169,25 +169,25 @@ class Descent extends Php8 {
     ];
 
     /** @var array<int, int> property_modifier token => flag (parameters) */
-    private const PROPERTY_MODIFIERS = [
+    private const array PROPERTY_MODIFIERS = [
         \T_PUBLIC => Modifiers::PUBLIC, \T_PROTECTED => Modifiers::PROTECTED, \T_PRIVATE => Modifiers::PRIVATE,
         \T_PUBLIC_SET => Modifiers::PUBLIC_SET, \T_PROTECTED_SET => Modifiers::PROTECTED_SET,
         \T_PRIVATE_SET => Modifiers::PRIVATE_SET, \T_READONLY => Modifiers::READONLY, \T_FINAL => Modifiers::FINAL,
     ];
 
     /** @var array<int, int> class_modifier token => flag */
-    private const CLASS_MODIFIERS = [
+    private const array CLASS_MODIFIERS = [
         \T_ABSTRACT => Modifiers::ABSTRACT, \T_FINAL => Modifiers::FINAL, \T_READONLY => Modifiers::READONLY,
     ];
 
     /** @var array<int, bool> magic constant tokens */
-    private const MAGIC_CONSTS = [
+    private const array MAGIC_CONSTS = [
         \T_LINE => true, \T_FILE => true, \T_DIR => true, \T_CLASS_C => true, \T_TRAIT_C => true,
         \T_METHOD_C => true, \T_FUNC_C => true, \T_NS_C => true, \T_PROPERTY_C => true,
     ];
 
     /** @var array<int, bool> tokens that can begin an expr */
-    private const EXPR_START = [
+    private const array EXPR_START = [
         \T_VARIABLE => true, self::DOLLAR => true, \T_STRING => true, \T_NAME_QUALIFIED => true,
         \T_NAME_FULLY_QUALIFIED => true, \T_NAME_RELATIVE => true, \T_STATIC => true, \T_READONLY => true,
         \T_LINE => true, \T_FILE => true, \T_DIR => true, \T_CLASS_C => true, \T_TRAIT_C => true,
@@ -205,7 +205,7 @@ class Descent extends Php8 {
     ];
 
     /** @var array<int, bool> prefix operators whose precedence is below T_YIELD: `yield` does not take them as operand */
-    private const BELOW_YIELD = [
+    private const array BELOW_YIELD = [
         \T_PRINT => true, \T_THROW => true, \T_INCLUDE => true, \T_INCLUDE_ONCE => true, \T_REQUIRE => true,
         \T_REQUIRE_ONCE => true, \T_VOID_CAST => true,
     ];
@@ -228,11 +228,14 @@ class Descent extends Php8 {
         $this->tokens = $this->lexer->tokenize($code, $this->errorHandler);
         $this->fellBack = false;
         $result = $this->doParse();
-        foreach ($this->createdArrays as $node) {
-            foreach ($node->items as $item) {
-                if ($item->value instanceof Expr\Error) {
-                    $this->errorHandler->handleError(
-                        new Error('Cannot use empty array elements in arrays', $item->getAttributes()));
+        $createdArrays = $this->createdArrays;
+        if ($createdArrays !== null) {
+            foreach ($createdArrays as $node) {
+                foreach ($node->items as $item) {
+                    if ($item !== null && $item->value instanceof Expr\Error) {
+                        $this->errorHandler->handleError(
+                            new Error('Cannot use empty array elements in arrays', $item->getAttributes()));
+                    }
                 }
             }
         }
@@ -302,7 +305,7 @@ class Descent extends Php8 {
     }
 
     /** Id of the k-th significant token after the lookahead. */
-    private function peek(int $k = 1): int {
+    private function peek(int $k): int {
         $p = $this->pos;
         $tokens = $this->tokens;
         $id = 0;
@@ -333,6 +336,10 @@ class Descent extends Php8 {
             $this->fail('Expected token ' . $id);
         }
         $this->advance();
+    }
+
+    private function is(int $id): bool {
+        return $this->id === $id;
     }
 
     private function accept(int $id): bool {
@@ -404,7 +411,7 @@ class Descent extends Php8 {
 
     /** A node built from another one at the same start takes over as comment holder. */
     private function rehold(NodeAttributes $old, NodeAttributes $new): void {
-        $start = $old->startTokenPos;
+        $start = $old->startTokenPos ?? -1;
         if (($this->commentHolders[$start] ?? null) === $old) {
             $this->commentHolders[$start] = $new;
         }
@@ -419,10 +426,12 @@ class Descent extends Php8 {
     }
 
     protected function fixupArrayDestructuring(Expr\Array_ $node): Expr\List_ {
-        $this->createdArrays->offsetUnset($node);
+        if ($this->createdArrays !== null) {
+            $this->createdArrays->offsetUnset($node);
+        }
         $items = [];
         foreach ($node->items as $item) {
-            if ($item->value instanceof Expr\Error) {
+            if ($item === null || $item->value instanceof Expr\Error) {
                 $items[] = null;
             } elseif ($item->value instanceof Expr\Array_) {
                 $inner = $this->fixupArrayDestructuring($item->value);
@@ -455,15 +464,14 @@ class Descent extends Php8 {
 
     /** no_comma: a trailing comma is reported but consumed */
     private function noComma(): void {
-        if ($this->id === self::COMMA) {
+        if ($this->is(self::COMMA)) {
             $this->emitError(new Error('A trailing comma is not allowed here', $this->tokAttrs($this->pos)));
             $this->advance();
         }
     }
 
-    private function isAmpersand(): bool {
-        return $this->id === \T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG
-            || $this->id === \T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG;
+    private static function isAmpersand(int $id): bool {
+        return $id === \T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG || $id === \T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG;
     }
 
     private function isIdentifierMaybeReserved(int $id): bool {
@@ -481,15 +489,16 @@ class Descent extends Php8 {
     private function zeroLengthNop(): ?Stmt\Nop {
         $nop = $this->maybeCreateZeroLengthNop($this->pos);
         if ($nop !== null) {
-            $this->noteAttrs($nop->attrs(), $nop->attrs()->startTokenPos);
+            $this->noteAttrs($nop->attrs(), $nop->attrs()->startTokenPos ?? 0);
         }
         return $nop;
     }
 
+    /** @return list<Stmt> */
     private function topStatementList(int $end): array {
         $stmts = [];
-        while ($this->id !== $end) {
-            if ($this->id === 0) {
+        while (!$this->is($end)) {
+            if ($this->is(0)) {
                 $this->fail('Unexpected end of file');
             }
             $stmt = $this->topStatement();
@@ -505,6 +514,10 @@ class Descent extends Php8 {
     }
 
     /** inner_statement_list, ending at any of $ends (token id => true) */
+    /**
+     * @param array<int, bool> $ends
+     * @return list<Stmt>
+     */
     private function innerStatementList(array $ends): array {
         $stmts = $this->innerStatementListEx($ends);
         $nop = $this->zeroLengthNop();
@@ -514,12 +527,16 @@ class Descent extends Php8 {
         return $stmts;
     }
 
-    private const END_BRACE = [self::RBRACE => true];
+    private const array END_BRACE = [self::RBRACE => true];
 
+    /**
+     * @param array<int, bool> $ends
+     * @return list<Stmt>
+     */
     private function innerStatementListEx(array $ends): array {
         $stmts = [];
         while (!isset($ends[$this->id])) {
-            if ($this->id === 0) {
+            if ($this->is(0)) {
                 $this->fail('Unexpected end of file');
             }
             $stmt = $this->innerStatement();
@@ -530,6 +547,7 @@ class Descent extends Php8 {
         return $stmts;
     }
 
+    /** @return list<Stmt> */
     private function block(): array {
         $this->expect(self::LBRACE);
         $stmts = $this->innerStatementList(self::END_BRACE);
@@ -539,7 +557,8 @@ class Descent extends Php8 {
 
     private function topStatement(): ?Stmt {
         $start = $this->pos;
-        switch ($this->id) {
+        $id = $this->id;
+        switch ($id) {
             case \T_HALT_COMPILER:
                 $this->advance();
                 $this->expect(self::LPAREN);
@@ -552,7 +571,7 @@ class Descent extends Php8 {
                 return new Stmt\HaltCompiler($next->id === \T_INLINE_HTML ? $next->text : '', $this->attrs($start));
             case \T_NAMESPACE:
                 $this->advance();
-                if ($this->id === self::LBRACE) {
+                if ($this->is(self::LBRACE)) {
                     $this->advance();
                     $stmts = $this->topStatementList(self::RBRACE);
                     $this->expect(self::RBRACE);
@@ -569,7 +588,7 @@ class Descent extends Php8 {
                 $this->checkEchoIdentifier();
                 $name = new Name($this->text(), $this->tokAttrs($this->pos));
                 $this->advance();
-                if ($this->id === self::LBRACE) {
+                if ($this->is(self::LBRACE)) {
                     $this->advance();
                     $stmts = $this->topStatementList(self::RBRACE);
                     $this->expect(self::RBRACE);
@@ -628,7 +647,8 @@ class Descent extends Php8 {
     }
 
     private function innerStatement(): ?Stmt {
-        switch ($this->id) {
+        $id = $this->id;
+        switch ($id) {
             case \T_HALT_COMPILER:
                 throw new Error('__HALT_COMPILER() can only be used from the outermost scope', $this->tokAttrs($this->pos));
             case \T_FUNCTION:
@@ -654,7 +674,8 @@ class Descent extends Php8 {
             case \T_ATTRIBUTE:
                 $start = $this->pos;
                 $attrGroups = $this->attributes();
-                switch ($this->id) {
+                $id = $this->id;
+                switch ($id) {
                     case \T_FUNCTION:
                         if ($this->functionIsDeclaration(1)) {
                             return $this->functionDeclaration($start, $attrGroups);
@@ -708,7 +729,8 @@ class Descent extends Php8 {
 
     private function statement(): ?Stmt {
         $start = $this->pos;
-        switch ($this->id) {
+        $id = $this->id;
+        switch ($id) {
             case self::LBRACE:
                 $this->advance();
                 $stmts = $this->innerStatementList(self::END_BRACE);
@@ -727,7 +749,7 @@ class Descent extends Php8 {
                 $this->expect(self::LPAREN);
                 $cond = $this->expr(0);
                 $this->expect(self::RPAREN);
-                if ($this->id === self::COLON) {
+                if ($this->is(self::COLON)) {
                     $this->advance();
                     $stmts = $this->innerStatementList([\T_ENDWHILE => true]);
                     $this->expect(\T_ENDWHILE);
@@ -754,7 +776,7 @@ class Descent extends Php8 {
                 $this->expect(self::SEMI);
                 $loop = $this->forExpr(self::RPAREN);
                 $this->expect(self::RPAREN);
-                if ($this->id === self::COLON) {
+                if ($this->is(self::COLON)) {
                     $this->advance();
                     $stmts = $this->innerStatementList([\T_ENDFOR => true]);
                     $this->expect(\T_ENDFOR);
@@ -785,12 +807,12 @@ class Descent extends Php8 {
                 $vars = [];
                 do {
                     $vars[] = $this->simpleVariable();
-                } while ($this->id === self::COMMA && $this->peek() !== self::SEMI && $this->accept(self::COMMA));
+                } while ($this->is(self::COMMA) && $this->peek(1) !== self::SEMI && $this->accept(self::COMMA));
                 $this->noComma();
                 $this->semi();
                 return new Stmt\Global_($vars, $this->attrs($start));
             case \T_STATIC:
-                if ($this->peek() !== \T_VARIABLE) {
+                if ($this->peek(1) !== \T_VARIABLE) {
                     break;
                 }
                 $this->advance();
@@ -800,7 +822,7 @@ class Descent extends Php8 {
                     $var = $this->plainVariable();
                     $default = $this->accept(self::EQUALS) ? $this->expr(0) : null;
                     $vars[] = new Stmt\StaticVar($var, $default, $this->attrs($vstart));
-                } while ($this->id === self::COMMA && $this->peek() !== self::SEMI && $this->accept(self::COMMA));
+                } while ($this->is(self::COMMA) && $this->peek(1) !== self::SEMI && $this->accept(self::COMMA));
                 $this->noComma();
                 $this->semi();
                 return new Stmt\Static_($vars, $this->attrs($start));
@@ -826,7 +848,7 @@ class Descent extends Php8 {
                 $vars = [];
                 do {
                     $vars[] = $this->variable();
-                } while ($this->accept(self::COMMA) && $this->id !== self::RPAREN);
+                } while ($this->accept(self::COMMA) && !$this->is(self::RPAREN));
                 $this->expect(self::RPAREN);
                 $this->semi();
                 return new Stmt\Unset_($vars, $this->attrs($start));
@@ -841,13 +863,13 @@ class Descent extends Php8 {
                     $key = $this->identifierNotReserved();
                     $this->expect(self::EQUALS);
                     $declares[] = new Node\DeclareItem($key, $this->expr(0), $this->attrs($dstart));
-                } while ($this->id === self::COMMA && $this->peek() !== self::RPAREN && $this->accept(self::COMMA));
+                } while ($this->is(self::COMMA) && $this->peek(1) !== self::RPAREN && $this->accept(self::COMMA));
                 $this->noComma();
                 $this->expect(self::RPAREN);
-                if ($this->id === self::SEMI) {
+                if ($this->is(self::SEMI)) {
                     $this->advance();
                     $stmts = null;
-                } elseif ($this->id === self::COLON) {
+                } elseif ($this->is(self::COLON)) {
                     $this->advance();
                     $stmts = $this->innerStatementList([\T_ENDDECLARE => true]);
                     $this->expect(\T_ENDDECLARE);
@@ -860,7 +882,7 @@ class Descent extends Php8 {
                 $this->advance();
                 $stmts = $this->block();
                 $catches = [];
-                while ($this->id === \T_CATCH) {
+                while ($this->is(\T_CATCH)) {
                     $cstart = $this->pos;
                     $this->advance();
                     $this->expect(self::LPAREN);
@@ -868,13 +890,13 @@ class Descent extends Php8 {
                     while ($this->accept(self::PIPE)) {
                         $types[] = $this->name();
                     }
-                    $var = $this->id === \T_VARIABLE ? $this->plainVariable() : null;
+                    $var = $this->is(\T_VARIABLE) ? $this->plainVariable() : null;
                     $this->expect(self::RPAREN);
                     $body = $this->block();
                     $catches[] = new Stmt\Catch_($types, $var, $body, $this->attrs($cstart));
                 }
                 $finally = null;
-                if ($this->id === \T_FINALLY) {
+                if ($this->is(\T_FINALLY)) {
                     $fstart = $this->pos;
                     $this->advance();
                     $body = $this->block();
@@ -889,7 +911,7 @@ class Descent extends Php8 {
                 $this->semi();
                 return new Stmt\Goto_($name, $this->attrs($start));
             case \T_STRING:
-                if ($this->peek() === self::COLON) {
+                if ($this->peek(1) === self::COLON) {
                     $name = $this->identifierNotReserved();
                     $this->advance();
                     return new Stmt\Label($name, $this->attrs($start));
@@ -902,6 +924,7 @@ class Descent extends Php8 {
     }
 
     /** @return list<Stmt> */
+    /** @return list<Stmt> */
     private function toBlock(?Stmt $stmt): array {
         if ($stmt instanceof Stmt\Block) {
             return $stmt->stmts;
@@ -912,28 +935,31 @@ class Descent extends Php8 {
         return [$stmt];
     }
 
+    /** @return list<Stmt> */
     private function blocklikeStatement(): array {
         return $this->toBlock($this->statement());
     }
 
     private function optionalExpr(): ?Expr {
-        if ($this->id === self::SEMI) {
+        if ($this->is(self::SEMI)) {
             return null;
         }
         return $this->expr(0);
     }
 
+    /** @return list<Expr> */
     private function forExpr(int $end): array {
-        if ($this->id === $end) {
+        if ($this->is($end)) {
             return [];
         }
         return $this->exprListForbidComma();
     }
 
+    /** @return list<Expr> */
     private function exprListForbidComma(): array {
         $exprs = [$this->expr(0)];
-        while ($this->id === self::COMMA) {
-            if (!isset(self::EXPR_START[$this->peek()])) {
+        while ($this->is(self::COMMA)) {
+            if (!isset(self::EXPR_START[$this->peek(1)])) {
                 break;
             }
             $this->advance();
@@ -949,12 +975,12 @@ class Descent extends Php8 {
         $this->expect(self::LPAREN);
         $cond = $this->expr(0);
         $this->expect(self::RPAREN);
-        if ($this->id === self::COLON) {
+        if ($this->is(self::COLON)) {
             $this->advance();
             $ends = [\T_ELSEIF => true, \T_ELSE => true, \T_ENDIF => true];
             $stmts = $this->innerStatementList($ends);
             $elseifs = [];
-            while ($this->id === \T_ELSEIF) {
+            while ($this->is(\T_ELSEIF)) {
                 $estart = $this->pos;
                 $this->advance();
                 $this->expect(self::LPAREN);
@@ -967,7 +993,7 @@ class Descent extends Php8 {
                 $elseifs[] = $elseif;
             }
             $else = null;
-            if ($this->id === \T_ELSE) {
+            if ($this->is(\T_ELSE)) {
                 $estart = $this->pos;
                 $this->advance();
                 $this->expect(self::COLON);
@@ -981,7 +1007,7 @@ class Descent extends Php8 {
         }
         $stmts = $this->blocklikeStatement();
         $elseifs = [];
-        while ($this->id === \T_ELSEIF) {
+        while ($this->is(\T_ELSEIF)) {
             $estart = $this->pos;
             $this->advance();
             $this->expect(self::LPAREN);
@@ -991,7 +1017,7 @@ class Descent extends Php8 {
             $elseifs[] = new Stmt\ElseIf_($econd, $estmts, $this->attrs($estart));
         }
         $else = null;
-        if ($this->id === \T_ELSE) {
+        if ($this->is(\T_ELSE)) {
             $estart = $this->pos;
             $this->advance();
             $estmts = $this->blocklikeStatement();
@@ -1006,7 +1032,7 @@ class Descent extends Php8 {
         $this->expect(self::LPAREN);
         $cond = $this->expr(0);
         $this->expect(self::RPAREN);
-        if ($this->id === self::COLON) {
+        if ($this->is(self::COLON)) {
             $this->advance();
             $end = \T_ENDSWITCH;
         } else {
@@ -1016,18 +1042,18 @@ class Descent extends Php8 {
         $this->accept(self::SEMI);
         $cases = [];
         $ends = [\T_CASE => true, \T_DEFAULT => true, $end => true];
-        while ($this->id !== $end) {
+        while (!$this->is($end)) {
             $cstart = $this->pos;
-            if ($this->id === \T_CASE) {
+            if ($this->is(\T_CASE)) {
                 $this->advance();
                 $ccond = $this->expr(0);
-            } elseif ($this->id === \T_DEFAULT) {
+            } elseif ($this->is(\T_DEFAULT)) {
                 $this->advance();
                 $ccond = null;
             } else {
                 $this->fail('Expected case or default');
             }
-            if ($this->id !== self::COLON && $this->id !== self::SEMI) {
+            if (!$this->is(self::COLON) && !$this->is(self::SEMI)) {
                 $this->fail('Expected case separator');
             }
             $this->advance();
@@ -1049,7 +1075,7 @@ class Descent extends Php8 {
         $this->expect(\T_AS);
         $keyVar = null;
         [$valueVar, $byRef] = $this->foreachVariable();
-        if ($this->id === \T_DOUBLE_ARROW) {
+        if ($this->is(\T_DOUBLE_ARROW)) {
             if ($byRef || !($this->kind === self::K_VAR)) {
                 $this->fail('Foreach key must be a variable');
             }
@@ -1058,7 +1084,7 @@ class Descent extends Php8 {
             [$valueVar, $byRef] = $this->foreachVariable();
         }
         $this->expect(self::RPAREN);
-        if ($this->id === self::COLON) {
+        if ($this->is(self::COLON)) {
             $this->advance();
             $stmts = $this->innerStatementList([\T_ENDFOREACH => true]);
             $this->expect(\T_ENDFOREACH);
@@ -1070,19 +1096,20 @@ class Descent extends Php8 {
     }
 
     /** foreach_variable; sets $this->kind to K_VAR when the result is a plain variable */
+    /** @return array{Expr, bool} */
     private function foreachVariable(): array {
-        if ($this->isAmpersand()) {
+        if (self::isAmpersand($this->id)) {
             $this->advance();
             $var = $this->variable();
             $this->kind = self::K_NONE;
             return [$var, true];
         }
-        if ($this->id === \T_LIST) {
+        if ($this->is(\T_LIST)) {
             $list = $this->listExpr();
             $this->kind = self::K_NONE;
             return [$list, false];
         }
-        if ($this->id === self::LBRACKET) {
+        if ($this->is(self::LBRACKET)) {
             $start = $this->pos;
             $array = $this->shortArray();
             $id = $this->id;
@@ -1105,6 +1132,7 @@ class Descent extends Php8 {
     // ---- declarations ----
 
     /** attributes: one or more attribute groups */
+    /** @return list<Node\AttributeGroup> */
     private function attributes(): array {
         $groups = [];
         do {
@@ -1114,32 +1142,33 @@ class Descent extends Php8 {
             do {
                 $astart = $this->pos;
                 $name = $this->className();
-                $args = $this->id === self::LPAREN ? $this->argumentList() : [];
+                $args = $this->is(self::LPAREN) ? $this->argumentList() : [];
                 $attrs[] = new Node\Attribute($name, $args, $this->attrs($astart));
-            } while ($this->accept(self::COMMA) && $this->id !== self::RBRACKET);
+            } while ($this->accept(self::COMMA) && !$this->is(self::RBRACKET));
             $this->expect(self::RBRACKET);
             $groups[] = new Node\AttributeGroup($attrs, $this->attrs($start));
-        } while ($this->id === \T_ATTRIBUTE);
+        } while ($this->is(\T_ATTRIBUTE));
         return $groups;
     }
 
+    /** @return list<Node\AttributeGroup> */
     private function optionalAttributes(): array {
-        return $this->id === \T_ATTRIBUTE ? $this->attributes() : [];
+        return $this->is(\T_ATTRIBUTE) ? $this->attributes() : [];
     }
 
     private function useStatement(): Stmt {
         $start = $this->pos;
         $this->advance();
         $type = Stmt\Use_::TYPE_NORMAL;
-        if ($this->id === \T_FUNCTION) {
+        if ($this->is(\T_FUNCTION)) {
             $type = Stmt\Use_::TYPE_FUNCTION;
             $this->advance();
-        } elseif ($this->id === \T_CONST) {
+        } elseif ($this->is(\T_CONST)) {
             $type = Stmt\Use_::TYPE_CONSTANT;
             $this->advance();
         }
         // group use: legacy_namespace_name T_NS_SEPARATOR '{'
-        if ($this->isNameToken($this->id) && $this->peek() === \T_NS_SEPARATOR) {
+        if ($this->isNameToken($this->id) && $this->peek(1) === \T_NS_SEPARATOR) {
             $prefix = $this->legacyNamespaceName();
             $this->expect(\T_NS_SEPARATOR);
             $this->expect(self::LBRACE);
@@ -1149,10 +1178,10 @@ class Descent extends Php8 {
                 $itemType = Stmt\Use_::TYPE_NORMAL;
                 if ($type === Stmt\Use_::TYPE_NORMAL) {
                     // inline_use_declaration: [use_type] unprefixed_use_declaration
-                    if ($this->id === \T_FUNCTION) {
+                    if ($this->is(\T_FUNCTION)) {
                         $itemType = Stmt\Use_::TYPE_FUNCTION;
                         $this->advance();
-                    } elseif ($this->id === \T_CONST) {
+                    } elseif ($this->is(\T_CONST)) {
                         $itemType = Stmt\Use_::TYPE_CONSTANT;
                         $this->advance();
                     }
@@ -1163,7 +1192,7 @@ class Descent extends Php8 {
                     $item->type = $itemType;
                 }
                 $uses[] = $item;
-            } while ($this->accept(self::COMMA) && $this->id !== self::RBRACE);
+            } while ($this->accept(self::COMMA) && !$this->is(self::RBRACE));
             $this->expect(self::RBRACE);
             $this->semi();
             return new Stmt\GroupUse($prefix, $uses, $type === Stmt\Use_::TYPE_NORMAL ? Stmt\Use_::TYPE_UNKNOWN : $type, $this->attrs($start));
@@ -1171,7 +1200,7 @@ class Descent extends Php8 {
         $uses = [];
         do {
             $uses[] = $this->useDeclaration($this->pos, true);
-        } while ($this->id === self::COMMA && $this->peek() !== self::SEMI && $this->accept(self::COMMA));
+        } while ($this->is(self::COMMA) && $this->peek(1) !== self::SEMI && $this->accept(self::COMMA));
         $this->noComma();
         $this->semi();
         return new Stmt\Use_($uses, $type, $this->attrs($start));
@@ -1182,7 +1211,7 @@ class Descent extends Php8 {
         $name = $legacy ? $this->legacyNamespaceName() : $this->namespaceName();
         $alias = null;
         $aliasPos = $namePos;
-        if ($this->id === \T_AS) {
+        if ($this->is(\T_AS)) {
             $this->advance();
             $aliasPos = $this->pos;
             $alias = $this->identifierNotReserved();
@@ -1193,7 +1222,7 @@ class Descent extends Php8 {
     }
 
     private function namespaceName(): Name {
-        if ($this->id !== \T_STRING && $this->id !== \T_NAME_QUALIFIED) {
+        if (!$this->is(\T_STRING) && !$this->is(\T_NAME_QUALIFIED)) {
             $this->fail('Expected namespace name');
         }
         $name = new Name($this->text(), $this->tokAttrs($this->pos));
@@ -1202,7 +1231,7 @@ class Descent extends Php8 {
     }
 
     private function legacyNamespaceName(): Name {
-        if ($this->id === \T_NAME_FULLY_QUALIFIED) {
+        if ($this->is(\T_NAME_FULLY_QUALIFIED)) {
             $name = new Name(substr($this->text(), 1), $this->tokAttrs($this->pos));
             $this->advance();
             return $name;
@@ -1210,6 +1239,7 @@ class Descent extends Php8 {
         return $this->namespaceName();
     }
 
+    /** @return list<Node\Const_> */
     private function constantDeclarationList(): array {
         $consts = [];
         do {
@@ -1217,7 +1247,7 @@ class Descent extends Php8 {
             $name = $this->identifierNotReserved();
             $this->expect(self::EQUALS);
             $consts[] = new Node\Const_($name, $this->expr(0), $this->attrs($start));
-        } while ($this->id === self::COMMA && $this->peek() !== self::SEMI && $this->accept(self::COMMA));
+        } while ($this->is(self::COMMA) && $this->peek(1) !== self::SEMI && $this->accept(self::COMMA));
         $this->noComma();
         return $consts;
     }
@@ -1304,10 +1334,11 @@ class Descent extends Php8 {
         return $enum;
     }
 
+    /** @return list<Name> */
     private function classNameList(): array {
         $names = [$this->className()];
-        while ($this->id === self::COMMA) {
-            $next = $this->peek();
+        while ($this->is(self::COMMA)) {
+            $next = $this->peek(1);
             if (!$this->isNameToken($next) && $next !== \T_STATIC) {
                 break;
             }
@@ -1318,11 +1349,12 @@ class Descent extends Php8 {
         return $names;
     }
 
+    /** @return list<Stmt> */
     private function classBody(): array {
         $this->expect(self::LBRACE);
         $stmts = [];
-        while ($this->id !== self::RBRACE) {
-            if ($this->id === 0) {
+        while (!$this->is(self::RBRACE)) {
+            if ($this->is(0)) {
                 $this->fail('Unexpected end of file in class body');
             }
             $stmt = $this->classStatement();
@@ -1340,14 +1372,14 @@ class Descent extends Php8 {
 
     private function classStatement(): ?Stmt {
         $start = $this->pos;
-        if ($this->id === \T_USE) {
+        if ($this->is(\T_USE)) {
             $this->advance();
             $traits = $this->classNameList();
             $adaptations = $this->traitAdaptations();
             return new Stmt\TraitUse($traits, $adaptations, $this->attrs($start));
         }
         $attrGroups = $this->optionalAttributes();
-        if ($this->id === \T_CASE) {
+        if ($this->is(\T_CASE)) {
             $this->advance();
             $name = $this->identifierMaybeReserved();
             $expr = $this->accept(self::EQUALS) ? $this->expr(0) : null;
@@ -1358,7 +1390,7 @@ class Descent extends Php8 {
         $modStart = $this->pos;
         $flags = 0;
         $isVar = false;
-        if ($this->id === \T_VAR) {
+        if ($this->is(\T_VAR)) {
             $isVar = true;
             $this->advance();
         } else {
@@ -1373,7 +1405,7 @@ class Descent extends Php8 {
         }
         $hasModifiers = $isVar || $flags !== 0;
         $modPos = $hasModifiers ? $this->slot($modStart, $this->last) : $this->slot($this->pos, $prevEnd);
-        if ($this->id === \T_CONST && !$isVar) {
+        if ($this->is(\T_CONST) && !$isVar) {
             $this->advance();
             $type = null;
             if ($this->classConstHasType()) {
@@ -1390,14 +1422,14 @@ class Descent extends Php8 {
                 $this->advance();
                 $this->expect(self::EQUALS);
                 $consts[] = new Node\Const_($name, $this->expr(0), $this->attrs($cstart));
-            } while ($this->id === self::COMMA && $this->peek() !== self::SEMI && $this->accept(self::COMMA));
+            } while ($this->is(self::COMMA) && $this->peek(1) !== self::SEMI && $this->accept(self::COMMA));
             $this->noComma();
             $this->semi();
             $const = new Stmt\ClassConst($consts, $flags, $this->attrs($start), $attrGroups, $type);
             $this->checkClassConst($const, $modPos);
             return $const;
         }
-        if ($this->id === \T_FUNCTION && !$isVar) {
+        if ($this->is(\T_FUNCTION) && !$isVar) {
             $this->advance();
             $byRef = $this->optionalRef();
             $name = $this->identifierMaybeReserved();
@@ -1420,16 +1452,16 @@ class Descent extends Php8 {
         $props = [];
         do {
             $pstart = $this->pos;
-            if ($this->id !== \T_VARIABLE) {
+            if (!$this->is(\T_VARIABLE)) {
                 $this->fail('Expected property name');
             }
             $name = new Node\VarLikeIdentifier(substr($this->text(), 1), $this->tokAttrs($this->pos));
             $this->advance();
             $default = $this->accept(self::EQUALS) ? $this->expr(0) : null;
             $props[] = new Node\PropertyItem($name, $default, $this->attrs($pstart));
-        } while ($this->id === self::COMMA && $this->peek() !== self::SEMI && $this->accept(self::COMMA));
+        } while ($this->is(self::COMMA) && $this->peek(1) !== self::SEMI && $this->accept(self::COMMA));
         $this->noComma();
-        if ($this->id === self::LBRACE) {
+        if ($this->is(self::LBRACE)) {
             $hookPos = $this->pos;
             $this->advance();
             $hooks = $this->propertyHookList();
@@ -1450,24 +1482,25 @@ class Descent extends Php8 {
         if ($id === self::QUESTION || $id === self::LPAREN) {
             return true;
         }
-        return $this->peek() !== self::EQUALS;
+        return $this->peek(1) !== self::EQUALS;
     }
 
+    /** @return list<Stmt\TraitUseAdaptation> */
     private function traitAdaptations(): array {
         if ($this->accept(self::SEMI)) {
             return [];
         }
         $this->expect(self::LBRACE);
         $adaptations = [];
-        while ($this->id !== self::RBRACE) {
+        while (!$this->is(self::RBRACE)) {
             $start = $this->pos;
             $trait = null;
-            if ($this->isNameToken($this->id) && $this->peek() === \T_PAAMAYIM_NEKUDOTAYIM) {
+            if ($this->isNameToken($this->id) && $this->peek(1) === \T_PAAMAYIM_NEKUDOTAYIM) {
                 $trait = $this->name();
                 $this->advance();
             }
             $method = $this->identifierMaybeReserved();
-            if ($this->id === \T_INSTEADOF) {
+            if ($this->is(\T_INSTEADOF)) {
                 if ($trait === null) {
                     $this->fail('insteadof needs a qualified method reference');
                 }
@@ -1481,12 +1514,12 @@ class Descent extends Php8 {
             if (isset(self::MEMBER_MODIFIERS[$this->id])) {
                 $modifier = self::MEMBER_MODIFIERS[$this->id];
                 $this->advance();
-                $newName = $this->id === self::SEMI ? null : $this->identifierMaybeReserved();
+                $newName = $this->is(self::SEMI) ? null : $this->identifierMaybeReserved();
                 $this->expect(self::SEMI);
                 $adaptations[] = new Stmt\TraitUseAdaptation\Alias($trait, $method, $modifier, $newName, $this->attrs($start));
                 continue;
             }
-            if ($this->id !== \T_STRING && !isset(self::RESERVED_NON_MODIFIERS[$this->id])) {
+            if (!$this->is(\T_STRING) && !isset(self::RESERVED_NON_MODIFIERS[$this->id])) {
                 $this->fail('Expected alias name');
             }
             $newName = $this->identifierMaybeReserved();
@@ -1497,9 +1530,10 @@ class Descent extends Php8 {
         return $adaptations;
     }
 
+    /** @return list<Node\PropertyHook> */
     private function propertyHookList(): array {
         $hooks = [];
-        while ($this->id !== self::RBRACE) {
+        while (!$this->is(self::RBRACE)) {
             $start = $this->pos;
             $attrGroups = $this->optionalAttributes();
             $flags = 0;
@@ -1513,7 +1547,7 @@ class Descent extends Php8 {
             $name = $this->identifierNotReserved();
             $params = [];
             $paramListPos = null;
-            if ($this->id === self::LPAREN) {
+            if ($this->is(self::LPAREN)) {
                 $paramListPos = $this->slot($this->pos, $this->pos);
                 $this->advance();
                 $params = $this->parameterList();
@@ -1521,7 +1555,7 @@ class Descent extends Php8 {
             }
             if ($this->accept(self::SEMI)) {
                 $body = null;
-            } elseif ($this->id === self::LBRACE) {
+            } elseif ($this->is(self::LBRACE)) {
                 $body = $this->block();
             } else {
                 $this->expect(\T_DOUBLE_ARROW);
@@ -1538,21 +1572,22 @@ class Descent extends Php8 {
     }
 
     private function optionalRef(): bool {
-        if ($this->isAmpersand()) {
+        if (self::isAmpersand($this->id)) {
             $this->advance();
             return true;
         }
         return false;
     }
 
+    /** @return list<Node\Param> */
     private function parameterList(): array {
-        if ($this->id === self::RPAREN) {
+        if ($this->is(self::RPAREN)) {
             return [];
         }
         $params = [];
         do {
             $params[] = $this->parameter();
-        } while ($this->accept(self::COMMA) && $this->id !== self::RPAREN);
+        } while ($this->accept(self::COMMA) && !$this->is(self::RPAREN));
         return $params;
     }
 
@@ -1570,18 +1605,18 @@ class Descent extends Php8 {
         }
         $type = $this->optionalTypeWithoutStatic();
         $byRef = false;
-        if ($this->id === \T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG) {
+        if ($this->is(\T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG)) {
             $byRef = true;
             $this->advance();
         }
         $variadic = $this->accept(\T_ELLIPSIS);
-        if ($this->id !== \T_VARIABLE) {
+        if (!$this->is(\T_VARIABLE)) {
             $this->fail('Expected parameter variable');
         }
         $var = $this->plainVariable();
         $default = $this->accept(self::EQUALS) ? $this->expr(0) : null;
         $hooks = [];
-        if ($this->id === self::LBRACE) {
+        if ($this->is(self::LBRACE)) {
             $hookPos = $this->pos;
             $this->advance();
             $hooks = $this->propertyHookList();
@@ -1594,8 +1629,8 @@ class Descent extends Php8 {
         return $param;
     }
 
-    private function optionalReturnType(): ?Node {
-        if ($this->id !== self::COLON) {
+    private function optionalReturnType(): Identifier|Name|Node\ComplexType|null {
+        if (!$this->is(self::COLON)) {
             return null;
         }
         $this->advance();
@@ -1610,34 +1645,37 @@ class Descent extends Php8 {
             || $id === \T_CALLABLE || ($allowStatic && $id === \T_STATIC);
     }
 
-    private function optionalTypeWithoutStatic(): ?Node {
+    private function optionalTypeWithoutStatic(): Identifier|Name|Node\ComplexType|null {
         return $this->typeStartsHere(false) ? $this->typeExpr(false) : null;
     }
 
     /** type_expr / type_expr_without_static */
-    private function typeExpr(bool $allowStatic): Node {
+    private function typeExpr(bool $allowStatic): Identifier|Name|Node\ComplexType {
         $start = $this->pos;
-        if ($this->id === self::QUESTION) {
+        if ($this->is(self::QUESTION)) {
             $this->advance();
             $type = $this->type($allowStatic);
             return new Node\NullableType($type, $this->attrs($start));
         }
-        if ($this->id === self::LPAREN) {
-            $first = $this->parenIntersectionType($allowStatic);
-            if ($this->id !== self::PIPE) {
+        if ($this->is(self::LPAREN)) {
+            $types = [$this->parenIntersectionType($allowStatic)];
+            if (!$this->is(self::PIPE)) {
                 $this->fail('Expected | after DNF group');
             }
-        } else {
-            $first = $this->type($allowStatic);
-        }
-        if ($this->id === self::PIPE) {
-            $types = [$first];
             while ($this->accept(self::PIPE)) {
-                $types[] = $this->id === self::LPAREN ? $this->parenIntersectionType($allowStatic) : $this->type($allowStatic);
+                $types[] = $this->is(self::LPAREN) ? $this->parenIntersectionType($allowStatic) : $this->type($allowStatic);
             }
             return new Node\UnionType($types, $this->attrs($start));
         }
-        if ($this->id === \T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG) {
+        $first = $this->type($allowStatic);
+        if ($this->is(self::PIPE)) {
+            $types = [$first];
+            while ($this->accept(self::PIPE)) {
+                $types[] = $this->is(self::LPAREN) ? $this->parenIntersectionType($allowStatic) : $this->type($allowStatic);
+            }
+            return new Node\UnionType($types, $this->attrs($start));
+        }
+        if ($this->is(\T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG)) {
             $types = [$first];
             while ($this->accept(\T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG)) {
                 $types[] = $this->type($allowStatic);
@@ -1651,7 +1689,7 @@ class Descent extends Php8 {
         $this->expect(self::LPAREN);
         $start = $this->pos;
         $types = [$this->type($allowStatic)];
-        if ($this->id !== \T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG) {
+        if (!$this->is(\T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG)) {
             $this->fail('Expected & in DNF group');
         }
         while ($this->accept(\T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG)) {
@@ -1663,7 +1701,7 @@ class Descent extends Php8 {
     }
 
     /** type / type_without_static */
-    private function type(bool $allowStatic): Node {
+    private function type(bool $allowStatic): Identifier|Name {
         $id = $this->id;
         if ($id === \T_ARRAY) {
             $node = new Identifier('array', $this->tokAttrs($this->pos));
@@ -1691,7 +1729,8 @@ class Descent extends Php8 {
     private function name(): Name {
         $pos = $this->pos;
         $text = $this->text();
-        switch ($this->id) {
+        $id = $this->id;
+        switch ($id) {
             case \T_STRING:
             case \T_NAME_QUALIFIED:
                 $this->advance();
@@ -1708,7 +1747,7 @@ class Descent extends Php8 {
 
     /** class_name: T_STATIC | name */
     private function className(): Name {
-        if ($this->id === \T_STATIC) {
+        if ($this->is(\T_STATIC)) {
             $name = new Name('static', $this->tokAttrs($this->pos));
             $this->advance();
             return $name;
@@ -1717,7 +1756,7 @@ class Descent extends Php8 {
     }
 
     private function identifierNotReserved(): Identifier {
-        if ($this->id !== \T_STRING) {
+        if (!$this->is(\T_STRING)) {
             $this->fail('Expected identifier');
         }
         $ident = new Identifier($this->text(), $this->tokAttrs($this->pos));
@@ -1737,13 +1776,13 @@ class Descent extends Php8 {
 
     /** reserved_non_modifiers: T_ECHO spelled "<?=" cannot be an identifier */
     private function checkEchoIdentifier(): void {
-        if ($this->id === \T_ECHO && $this->text() === '<?=') {
+        if ($this->is(\T_ECHO) && $this->tokens[$this->pos]->text === '<?=') {
             $this->emitError(new Error('Cannot use "<?=" as an identifier', $this->tokAttrs($this->pos)));
         }
     }
 
     private function plainVariable(): Expr\Variable {
-        if ($this->id !== \T_VARIABLE) {
+        if (!$this->is(\T_VARIABLE)) {
             $this->fail('Expected variable');
         }
         $var = new Expr\Variable(substr($this->text(), 1), $this->tokAttrs($this->pos));
@@ -1753,12 +1792,12 @@ class Descent extends Php8 {
 
     /** simple_variable: $x | ${expr} | $$x */
     private function simpleVariable(): Expr\Variable {
-        if ($this->id === \T_VARIABLE) {
+        if ($this->is(\T_VARIABLE)) {
             return $this->plainVariable();
         }
         $start = $this->pos;
         $this->expect(self::DOLLAR);
-        if ($this->id === self::LBRACE) {
+        if ($this->is(self::LBRACE)) {
             $this->advance();
             $expr = $this->expr(0);
             $this->expect(self::RBRACE);
@@ -1769,7 +1808,7 @@ class Descent extends Php8 {
     }
 
     /** static_member_prop_name */
-    private function staticMemberPropName(): Node {
+    private function staticMemberPropName(): Node\VarLikeIdentifier|Expr {
         $start = $this->pos;
         $var = $this->simpleVariable();
         $name = $var->name;
@@ -1974,7 +2013,7 @@ class Descent extends Php8 {
                     return new Expr\Yield_(null, null, $this->attrs($start));
                 }
                 $value = $this->expr(self::P_YIELD);
-                if ($this->id === \T_DOUBLE_ARROW) {
+                if ($this->is(\T_DOUBLE_ARROW)) {
                     $this->advance();
                     $key = $value;
                     $value = $this->expr(self::P_DOUBLE_ARROW);
@@ -1999,7 +2038,7 @@ class Descent extends Php8 {
                 $vars = [];
                 do {
                     $vars[] = $this->expr(0);
-                } while ($this->accept(self::COMMA) && $this->id !== self::RPAREN);
+                } while ($this->accept(self::COMMA) && !$this->is(self::RPAREN));
                 $this->expect(self::RPAREN);
                 return new Expr\Isset_($vars, $this->attrs($start));
             case \T_EMPTY:
@@ -2017,13 +2056,13 @@ class Descent extends Php8 {
             case \T_EXIT:
                 $text = $this->text();
                 $this->advance();
-                $args = $this->id === self::LPAREN ? $this->argumentList() : [];
+                $args = $this->is(self::LPAREN) ? $this->argumentList() : [];
                 return $this->createExitExpr($text, $this->slot($start, $start), $args, $this->attrs($start));
             case self::BACKTICK:
                 $this->advance();
-                if ($this->id === self::BACKTICK) {
+                if ($this->is(self::BACKTICK)) {
                     $parts = [];
-                } elseif ($this->id === \T_ENCAPSED_AND_WHITESPACE && $this->peek() === self::BACKTICK) {
+                } elseif ($this->is(\T_ENCAPSED_AND_WHITESPACE) && $this->peek(1) === self::BACKTICK) {
                     $parts = [$this->encapsStringPart()];
                     $this->parseEncapsed($parts, '`');
                 } else {
@@ -2038,7 +2077,7 @@ class Descent extends Php8 {
             case \T_FN:
                 return $this->closure($start, [], false);
             case \T_STATIC:
-                $next = $this->peek();
+                $next = $this->peek(1);
                 if ($next === \T_FUNCTION || $next === \T_FN) {
                     $this->advance();
                     return $this->closure($start, [], true);
@@ -2066,7 +2105,7 @@ class Descent extends Php8 {
     }
 
     private function closureWithAttrs(int $start, array $attrGroups): Expr {
-        if ($this->id === \T_STATIC) {
+        if ($this->is(\T_STATIC)) {
             $this->advance();
             return $this->closure($start, $attrGroups, true);
         }
@@ -2075,7 +2114,7 @@ class Descent extends Php8 {
 
     /** Closure or arrow function; the `static` keyword (if any) has been consumed. */
     private function closure(int $start, array $attrGroups, bool $static): Expr {
-        if ($this->id === \T_FN) {
+        if ($this->is(\T_FN)) {
             $this->advance();
             $byRef = $this->optionalRef();
             $this->expect(self::LPAREN);
@@ -2095,7 +2134,7 @@ class Descent extends Php8 {
         $params = $this->parameterList();
         $this->expect(self::RPAREN);
         $uses = [];
-        if ($this->id === \T_USE) {
+        if ($this->is(\T_USE)) {
             $this->advance();
             $this->expect(self::LPAREN);
             do {
@@ -2103,7 +2142,7 @@ class Descent extends Php8 {
                 $uByRef = $this->optionalRef();
                 $var = $this->plainVariable();
                 $uses[] = new Node\ClosureUse($var, $uByRef, $this->attrs($ustart));
-            } while ($this->accept(self::COMMA) && $this->id !== self::RPAREN);
+            } while ($this->accept(self::COMMA) && !$this->is(self::RPAREN));
             $this->expect(self::RPAREN);
         }
         $returnType = $this->optionalReturnType();
@@ -2122,16 +2161,16 @@ class Descent extends Php8 {
         $this->expect(self::RPAREN);
         $this->expect(self::LBRACE);
         $arms = [];
-        while ($this->id !== self::RBRACE) {
+        while (!$this->is(self::RBRACE)) {
             $astart = $this->pos;
-            if ($this->id === \T_DEFAULT) {
+            if ($this->is(\T_DEFAULT)) {
                 $this->advance();
                 $this->accept(self::COMMA);
                 $conds = null;
             } else {
                 $conds = [$this->expr(0)];
                 while ($this->accept(self::COMMA)) {
-                    if ($this->id === \T_DOUBLE_ARROW) {
+                    if ($this->is(\T_DOUBLE_ARROW)) {
                         break;
                     }
                     $conds[] = $this->expr(0);
@@ -2153,19 +2192,19 @@ class Descent extends Php8 {
         $start = $this->pos;
         $text = $this->text();
         $this->advance();
-        if ($this->id !== self::LPAREN) {
+        if (!$this->is(self::LPAREN)) {
             return new Expr\Clone_($this->expr(self::P_NEW), $this->attrs($start));
         }
         $parenStart = $this->pos;
         $this->advance();
         $funcName = new Name($text, $this->tokAttrs($start));
-        if ($this->id === self::RPAREN) {
+        if ($this->is(self::RPAREN)) {
             $this->advance();
             return new Expr\FuncCall($funcName, [], $this->attrs($start));
         }
-        if ($this->argumentStartsNoExpr()) {
+        if ($this->argumentStartsNoExpr($this->id)) {
             $args = [$this->argumentNoExpr()];
-            while ($this->accept(self::COMMA) && $this->id !== self::RPAREN) {
+            while ($this->accept(self::COMMA) && !$this->is(self::RPAREN)) {
                 $args[] = $this->argument();
             }
             $this->expect(self::RPAREN);
@@ -2174,9 +2213,9 @@ class Descent extends Php8 {
         $exprStart = $this->pos;
         $expr = $this->expr(0);
         $exprEnd = $this->last;
-        if ($this->id === self::COMMA) {
+        if ($this->is(self::COMMA)) {
             $this->advance();
-            if ($this->id === self::RPAREN) {
+            if ($this->is(self::RPAREN)) {
                 $this->advance();
                 // '(' expr ',' ')': the argument spans the whole list
                 $args = [new Node\Arg($expr, false, false, $this->attrs($parenStart))];
@@ -2184,7 +2223,7 @@ class Descent extends Php8 {
             }
             $args = [new Node\Arg($expr, false, false, $this->getAttributes($exprStart, $exprEnd))];
             $args[] = $this->argument();
-            while ($this->accept(self::COMMA) && $this->id !== self::RPAREN) {
+            while ($this->accept(self::COMMA) && !$this->is(self::RPAREN)) {
                 $args[] = $this->argument();
             }
             $this->expect(self::RPAREN);
@@ -2204,19 +2243,19 @@ class Descent extends Php8 {
         $start = $this->pos;
         $startText = $this->text();
         $this->advance();
-        if ($this->id === \T_END_HEREDOC) {
+        if ($this->is(\T_END_HEREDOC)) {
             $endPos = $this->pos;
             $endText = $this->text();
             $this->advance();
             return $this->parseDocString($startText, '', $endText, $this->attrs($start), $this->tokAttrs($endPos), true);
         }
-        if ($this->id === \T_ENCAPSED_AND_WHITESPACE && $this->peek() === \T_END_HEREDOC) {
+        if ($this->is(\T_ENCAPSED_AND_WHITESPACE) && $this->peek(1) === \T_END_HEREDOC) {
             $contents = $this->text();
             $this->advance();
         } else {
             $contents = $this->encapsList(\T_END_HEREDOC);
         }
-        if ($this->id !== \T_END_HEREDOC) {
+        if (!$this->is(\T_END_HEREDOC)) {
             $this->fail('Expected end of heredoc');
         }
         $endPos = $this->pos;
@@ -2234,7 +2273,7 @@ class Descent extends Php8 {
         return new Node\InterpolatedStringPart($text, $attrs);
     }
 
-    /** @param list<Node> $parts */
+    /** @param list<Node\InterpolatedStringPart|Expr> $parts */
     private function parseEncapsed(array $parts, string $quote): void {
         $unicode = $this->phpVersion->supportsUnicodeEscapes();
         foreach ($parts as $part) {
@@ -2244,10 +2283,11 @@ class Descent extends Php8 {
         }
     }
 
+    /** @return list<Node\InterpolatedStringPart|Expr> */
     private function encapsList(int $end): array {
         $parts = [];
-        while ($this->id !== $end) {
-            if ($this->id === \T_ENCAPSED_AND_WHITESPACE) {
+        while (!$this->is($end)) {
+            if ($this->is(\T_ENCAPSED_AND_WHITESPACE)) {
                 $parts[] = $this->encapsStringPart();
             } else {
                 $parts[] = $this->encapsVar();
@@ -2261,21 +2301,22 @@ class Descent extends Php8 {
 
     private function encapsVar(): Expr {
         $start = $this->pos;
-        switch ($this->id) {
+        $id = $this->id;
+        switch ($id) {
             case \T_VARIABLE:
                 $var = $this->plainVariable();
-                if ($this->id === self::LBRACKET) {
+                if ($this->is(self::LBRACKET)) {
                     $this->advance();
                     $offset = $this->encapsVarOffset();
                     $this->expect(self::RBRACKET);
                     return new Expr\ArrayDimFetch($var, $offset, $this->attrs($start));
                 }
-                if ($this->id === \T_OBJECT_OPERATOR) {
+                if ($this->is(\T_OBJECT_OPERATOR)) {
                     $this->advance();
                     $name = $this->identifierNotReserved();
                     return new Expr\PropertyFetch($var, $name, $this->attrs($start));
                 }
-                if ($this->id === \T_NULLSAFE_OBJECT_OPERATOR) {
+                if ($this->is(\T_NULLSAFE_OBJECT_OPERATOR)) {
                     $this->advance();
                     $name = $this->identifierNotReserved();
                     return new Expr\NullsafePropertyFetch($var, $name, $this->attrs($start));
@@ -2283,8 +2324,8 @@ class Descent extends Php8 {
                 return $var;
             case \T_DOLLAR_OPEN_CURLY_BRACES:
                 $this->advance();
-                if ($this->id === \T_STRING_VARNAME) {
-                    $next = $this->peek();
+                if ($this->is(\T_STRING_VARNAME)) {
+                    $next = $this->peek(1);
                     if ($next === self::RBRACE) {
                         $name = $this->text();
                         $this->advance();
@@ -2315,7 +2356,8 @@ class Descent extends Php8 {
 
     private function encapsVarOffset(): Expr {
         $start = $this->pos;
-        switch ($this->id) {
+        $id = $this->id;
+        switch ($id) {
             case \T_STRING:
                 $text = $this->text();
                 $this->advance();
@@ -2326,7 +2368,7 @@ class Descent extends Php8 {
                 return $this->parseNumString($text, $this->attrs($start));
             case self::MINUS:
                 $this->advance();
-                if ($this->id !== \T_NUM_STRING) {
+                if (!$this->is(\T_NUM_STRING)) {
                     $this->fail('Expected numeric string offset');
                 }
                 $text = $this->text();
@@ -2353,9 +2395,9 @@ class Descent extends Php8 {
         $id = $this->id;
         if ($id === self::EQUALS) {
             $this->advance();
-            if ($this->isAmpersand()) {
+            if (self::isAmpersand($this->id)) {
                 $this->advance();
-                if ($this->id === \T_NEW) {
+                if ($this->is(\T_NEW)) {
                     $rhs = $this->newExpr();
                     $ref = new Expr\AssignRef($node, $rhs, $this->attrs($start));
                     if (!$this->phpVersion->allowsAssignNewByReference()) {
@@ -2389,26 +2431,27 @@ class Descent extends Php8 {
     private function postfixChain(Expr|Name $node, int $start): Expr {
         for (;;) {
             $kind = $this->kind;
-            switch ($this->id) {
+            $id = $this->id;
+            switch ($id) {
                 case self::LBRACKET:
-                    if ($kind === self::K_NONE || $kind === self::K_CLASSNAME) {
+                    if ($kind === self::K_NONE || $node instanceof Name) {
                         break 2;
                     }
                     $this->advance();
-                    $dim = $this->id === self::RBRACKET ? null : $this->expr(0);
+                    $dim = $this->is(self::RBRACKET) ? null : $this->expr(0);
                     $this->expect(self::RBRACKET);
                     $node = new Expr\ArrayDimFetch($node, $dim, $this->attrs($start));
                     $this->kind = self::K_VAR;
                     continue 2;
                 case \T_OBJECT_OPERATOR:
                 case \T_NULLSAFE_OBJECT_OPERATOR:
-                    if ($kind === self::K_NONE || $kind === self::K_CLASSNAME) {
+                    if ($kind === self::K_NONE || $node instanceof Name) {
                         break 2;
                     }
-                    $nullsafe = $this->id === \T_NULLSAFE_OBJECT_OPERATOR;
+                    $nullsafe = $this->is(\T_NULLSAFE_OBJECT_OPERATOR);
                     $this->advance();
                     $name = $this->propertyName();
-                    if ($this->id === self::LPAREN) {
+                    if ($this->is(self::LPAREN)) {
                         $args = $this->argumentList();
                         $node = $nullsafe
                             ? new Expr\NullsafeMethodCall($node, $name, $args, $this->attrs($start))
@@ -2440,7 +2483,7 @@ class Descent extends Php8 {
             }
             break;
         }
-        if ($this->kind === self::K_CLASSNAME) {
+        if ($node instanceof Name) {
             $this->fail('Expected :: after class name');
         }
         return $node;
@@ -2452,7 +2495,7 @@ class Descent extends Php8 {
         if ($id === \T_VARIABLE || $id === self::DOLLAR) {
             $memberStart = $this->pos;
             $var = $this->simpleVariable();
-            if ($this->id === self::LPAREN) {
+            if ($this->is(self::LPAREN)) {
                 $args = $this->argumentList();
                 $this->kind = self::K_VAR;
                 return new Expr\StaticCall($class, $var, $args, $this->attrs($start));
@@ -2466,7 +2509,7 @@ class Descent extends Php8 {
             $this->advance();
             $expr = $this->expr(0);
             $this->expect(self::RBRACE);
-            if ($this->id === self::LPAREN) {
+            if ($this->is(self::LPAREN)) {
                 $args = $this->argumentList();
                 $this->kind = self::K_VAR;
                 return new Expr\StaticCall($class, $expr, $args, $this->attrs($start));
@@ -2475,7 +2518,7 @@ class Descent extends Php8 {
             return new Expr\ClassConstFetch($class, $expr, $this->attrs($start));
         }
         $name = $this->identifierMaybeReserved();
-        if ($this->id === self::LPAREN) {
+        if ($this->is(self::LPAREN)) {
             $args = $this->argumentList();
             $this->kind = self::K_VAR;
             return new Expr\StaticCall($class, $name, $args, $this->attrs($start));
@@ -2485,17 +2528,17 @@ class Descent extends Php8 {
     }
 
     /** property_name: identifier | {expr} | simple_variable */
-    private function propertyName(): Node {
-        if ($this->id === \T_STRING) {
+    private function propertyName(): Identifier|Expr {
+        if ($this->is(\T_STRING)) {
             return $this->identifierNotReserved();
         }
-        if ($this->id === self::LBRACE) {
+        if ($this->is(self::LBRACE)) {
             $this->advance();
             $expr = $this->expr(0);
             $this->expect(self::RBRACE);
             return $expr;
         }
-        if ($this->id === \T_VARIABLE || $this->id === self::DOLLAR) {
+        if ($this->is(\T_VARIABLE) || $this->is(self::DOLLAR)) {
             return $this->simpleVariable();
         }
         $this->fail('Expected property name');
@@ -2515,12 +2558,12 @@ class Descent extends Php8 {
             case \T_NAME_FULLY_QUALIFIED:
             case \T_NAME_RELATIVE:
                 $name = $this->name();
-                if ($this->id === self::LPAREN) {
+                if ($this->is(self::LPAREN)) {
                     $args = $this->argumentList();
                     $this->kind = self::K_VAR;
                     return new Expr\FuncCall($name, $args, $this->attrs($start));
                 }
-                if ($this->id === \T_PAAMAYIM_NEKUDOTAYIM) {
+                if ($this->is(\T_PAAMAYIM_NEKUDOTAYIM)) {
                     $this->kind = self::K_CLASSNAME;
                     return $name;
                 }
@@ -2534,7 +2577,7 @@ class Descent extends Php8 {
             case \T_READONLY:
                 $name = new Name($this->text(), $this->tokAttrs($start));
                 $this->advance();
-                if ($this->id !== self::LPAREN) {
+                if (!$this->is(self::LPAREN)) {
                     $this->fail('Expected ( after readonly');
                 }
                 $args = $this->argumentList();
@@ -2578,7 +2621,7 @@ class Descent extends Php8 {
                 return $array;
             case self::LBRACKET:
                 $array = $this->shortArray();
-                if ($this->id === self::EQUALS) {
+                if ($this->is(self::EQUALS)) {
                     $this->advance();
                     $list = $this->fixupArrayDestructuring($array);
                     $rhs = $this->expr(self::P_ASSIGN);
@@ -2619,26 +2662,28 @@ class Descent extends Php8 {
     }
 
     /** array_pair_list: inner_array_pair_list with a trailing empty element dropped */
+    /** @return list<Node\ArrayItem> */
     private function arrayPairList(int $end): array {
         $items = $this->innerArrayPairList($end);
         $last = \count($items) - 1;
-        if ($items[$last]->value instanceof Expr\Error) {
+        if ($last >= 0 && $items[$last]->value instanceof Expr\Error) {
             array_pop($items);
         }
         return $items;
     }
 
+    /** @return list<Node\ArrayItem> */
     private function innerArrayPairList(int $end): array {
         $items = [];
         for (;;) {
-            if ($this->id === self::COMMA || $this->id === $end) {
+            if ($this->is(self::COMMA) || $this->is($end)) {
                 $attrs = $this->createEmptyElemAttributes($this->pos);
                 $items[] = new Node\ArrayItem(new Expr\Error($attrs), null, false, $attrs);
                 $this->noteAttrs($attrs, $this->pos);
             } else {
                 $items[] = $this->arrayPair();
             }
-            if ($this->id !== self::COMMA) {
+            if (!$this->is(self::COMMA)) {
                 return $items;
             }
             $this->advance();
@@ -2647,31 +2692,31 @@ class Descent extends Php8 {
 
     private function arrayPair(): Node\ArrayItem {
         $start = $this->pos;
-        if ($this->isAmpersand()) {
+        if (self::isAmpersand($this->id)) {
             $this->advance();
             $var = $this->variable();
             return new Node\ArrayItem($var, null, true, $this->attrs($start));
         }
-        if ($this->id === \T_LIST) {
+        if ($this->is(\T_LIST)) {
             $list = $this->listExpr();
             return new Node\ArrayItem($list, null, false, $this->attrs($start));
         }
-        if ($this->id === \T_ELLIPSIS) {
+        if ($this->is(\T_ELLIPSIS)) {
             $this->advance();
             $expr = $this->expr(0);
             return new Node\ArrayItem($expr, null, false, $this->attrs($start), true);
         }
         $expr = $this->expr(0);
-        if ($this->id !== \T_DOUBLE_ARROW) {
+        if (!$this->is(\T_DOUBLE_ARROW)) {
             return new Node\ArrayItem($expr, null, false, $this->attrs($start));
         }
         $this->advance();
-        if ($this->isAmpersand()) {
+        if (self::isAmpersand($this->id)) {
             $this->advance();
             $var = $this->variable();
             return new Node\ArrayItem($var, $expr, true, $this->attrs($start));
         }
-        if ($this->id === \T_LIST) {
+        if ($this->is(\T_LIST)) {
             $list = $this->listExpr();
             return new Node\ArrayItem($list, $expr, false, $this->attrs($start));
         }
@@ -2700,7 +2745,7 @@ class Descent extends Php8 {
             $cstart = $this->pos;
             $attrGroups = $this->optionalAttributes();
             $flags = $this->classEntryType();
-            $args = $this->id === self::LPAREN ? $this->argumentList() : [];
+            $args = $this->is(self::LPAREN) ? $this->argumentList() : [];
             $extends = $this->accept(\T_EXTENDS) ? $this->className() : null;
             $implements = $this->accept(\T_IMPLEMENTS) ? $this->classNameList() : [];
             $stmts = $this->classBody();
@@ -2713,7 +2758,7 @@ class Descent extends Php8 {
             return new Expr\New_($class, $args, $this->attrs($start));
         }
         $class = $this->classNameReference();
-        if ($this->id === self::LPAREN) {
+        if ($this->is(self::LPAREN)) {
             $args = $this->argumentList();
             $this->kind = self::K_DEREF;
             return new Expr\New_($class, $args, $this->attrs($start));
@@ -2723,12 +2768,12 @@ class Descent extends Php8 {
     }
 
     /** class_name_reference: class_name | new_variable | '(' expr ')' */
-    private function classNameReference(): Node {
+    private function classNameReference(): Name|Expr {
         $start = $this->pos;
         $id = $this->id;
         if ($id === \T_STATIC || $this->isNameToken($id)) {
             $name = $this->className();
-            if ($this->id !== \T_PAAMAYIM_NEKUDOTAYIM) {
+            if (!$this->is(\T_PAAMAYIM_NEKUDOTAYIM)) {
                 return $name;
             }
             $this->advance();
@@ -2750,10 +2795,11 @@ class Descent extends Php8 {
     /** new_variable postfix operations: [dim], ->prop, ?->prop, ::$prop */
     private function newVariableChain(Expr $node, int $start): Expr {
         for (;;) {
-            switch ($this->id) {
+            $id = $this->id;
+            switch ($id) {
                 case self::LBRACKET:
                     $this->advance();
-                    $dim = $this->id === self::RBRACKET ? null : $this->expr(0);
+                    $dim = $this->is(self::RBRACKET) ? null : $this->expr(0);
                     $this->expect(self::RBRACKET);
                     $node = new Expr\ArrayDimFetch($node, $dim, $this->attrs($start));
                     continue 2;
@@ -2779,30 +2825,31 @@ class Descent extends Php8 {
 
     // ---- arguments ----
 
+    /** @return list<Node\Arg|Node\ArgPlaceholder|Node\VariadicPlaceholder> */
     private function argumentList(): array {
         $this->expect(self::LPAREN);
-        if ($this->id === self::RPAREN) {
+        if ($this->is(self::RPAREN)) {
             $this->advance();
             return [];
         }
         $args = [];
         do {
             $args[] = $this->argument();
-        } while ($this->accept(self::COMMA) && $this->id !== self::RPAREN);
+        } while ($this->accept(self::COMMA) && !$this->is(self::RPAREN));
         $this->expect(self::RPAREN);
         return $args;
     }
 
-    private function argumentStartsNoExpr(): bool {
-        $id = $this->id;
-        if ($id === \T_ELLIPSIS || $id === self::QUESTION || $this->isAmpersand()) {
+    private function argumentStartsNoExpr(int $id): bool {
+        if ($id === \T_ELLIPSIS || $id === self::QUESTION || self::isAmpersand($this->id)) {
             return true;
         }
-        return $this->isIdentifierMaybeReserved($id) && $this->peek() === self::COLON;
+        return $this->isIdentifierMaybeReserved($id) && $this->peek(1) === self::COLON;
     }
 
+    /** @return Node\Arg|Node\ArgPlaceholder|Node\VariadicPlaceholder */
     private function argument(): Node {
-        if ($this->argumentStartsNoExpr()) {
+        if ($this->argumentStartsNoExpr($this->id)) {
             return $this->argumentNoExpr();
         }
         $start = $this->pos;
@@ -2810,10 +2857,11 @@ class Descent extends Php8 {
         return new Node\Arg($expr, false, false, $this->attrs($start));
     }
 
+    /** @return Node\Arg|Node\ArgPlaceholder|Node\VariadicPlaceholder */
     private function argumentNoExpr(): Node {
         $start = $this->pos;
         $id = $this->id;
-        if ($this->isAmpersand()) {
+        if (self::isAmpersand($this->id)) {
             $this->advance();
             $var = $this->variable();
             return new Node\Arg($var, true, false, $this->attrs($start));
@@ -2832,7 +2880,7 @@ class Descent extends Php8 {
         }
         $name = $this->identifierMaybeReserved();
         $this->expect(self::COLON);
-        if ($this->id === self::QUESTION) {
+        if ($this->is(self::QUESTION)) {
             $this->advance();
             return new Node\ArgPlaceholder($name, $this->attrs($start));
         }
