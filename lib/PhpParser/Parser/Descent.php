@@ -111,22 +111,31 @@ class Descent extends Php8 {
     /** @var array<int, bool> levels that are %nonassoc */
     private const array NONASSOC = [self::P_EQUALITY => true, self::P_COMPARISON => true];
 
-    /** @var array<int, int> binary operator token => precedence level */
-    private const array BINARY_PREC = [
-        \T_BOOLEAN_OR => self::P_BOOLEAN_OR, \T_BOOLEAN_AND => self::P_BOOLEAN_AND,
-        \T_LOGICAL_OR => self::P_LOGICAL_OR, \T_LOGICAL_AND => self::P_LOGICAL_AND, \T_LOGICAL_XOR => self::P_LOGICAL_XOR,
-        self::PIPE => self::P_BIT_OR, \T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG => self::P_BIT_AND,
-        \T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG => self::P_BIT_AND, self::CARET => self::P_BIT_XOR,
-        self::DOT => self::P_CONCAT, self::PLUS => self::P_ADD, self::MINUS => self::P_ADD,
-        self::MUL => self::P_MUL, self::DIV => self::P_MUL, self::MOD => self::P_MUL,
-        \T_SL => self::P_SHIFT, \T_SR => self::P_SHIFT, \T_POW => self::P_POW,
-        \T_IS_IDENTICAL => self::P_EQUALITY, \T_IS_NOT_IDENTICAL => self::P_EQUALITY, \T_IS_EQUAL => self::P_EQUALITY,
-        \T_IS_NOT_EQUAL => self::P_EQUALITY, \T_SPACESHIP => self::P_EQUALITY,
-        self::LT => self::P_COMPARISON, \T_IS_SMALLER_OR_EQUAL => self::P_COMPARISON,
-        self::GT => self::P_COMPARISON, \T_IS_GREATER_OR_EQUAL => self::P_COMPARISON,
-        \T_PIPE => self::P_PIPE, \T_COALESCE => self::P_COALESCE, \T_INSTANCEOF => self::P_INSTANCEOF,
-        self::QUESTION => self::P_TERNARY,
-    ];
+    /** The precedence level of a binary operator token, or -1 when the token is not one (a match, not a table lookup: this runs once per token of every expression). */
+    private static function binaryPrec(int $id): int {
+        return match ($id) {
+            \T_BOOLEAN_OR => self::P_BOOLEAN_OR,
+            \T_BOOLEAN_AND => self::P_BOOLEAN_AND,
+            \T_LOGICAL_OR => self::P_LOGICAL_OR,
+            \T_LOGICAL_AND => self::P_LOGICAL_AND,
+            \T_LOGICAL_XOR => self::P_LOGICAL_XOR,
+            self::PIPE => self::P_BIT_OR,
+            \T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG, \T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG => self::P_BIT_AND,
+            self::CARET => self::P_BIT_XOR,
+            self::DOT => self::P_CONCAT,
+            self::PLUS, self::MINUS => self::P_ADD,
+            self::MUL, self::DIV, self::MOD => self::P_MUL,
+            \T_SL, \T_SR => self::P_SHIFT,
+            \T_POW => self::P_POW,
+            \T_IS_IDENTICAL, \T_IS_NOT_IDENTICAL, \T_IS_EQUAL, \T_IS_NOT_EQUAL, \T_SPACESHIP => self::P_EQUALITY,
+            self::LT, \T_IS_SMALLER_OR_EQUAL, self::GT, \T_IS_GREATER_OR_EQUAL => self::P_COMPARISON,
+            \T_PIPE => self::P_PIPE,
+            \T_COALESCE => self::P_COALESCE,
+            \T_INSTANCEOF => self::P_INSTANCEOF,
+            self::QUESTION => self::P_TERNARY,
+            default => -1,
+        };
+    }
 
     /** @var array<int, bool> compound assignment tokens */
     private const array ASSIGN_OPS = [
@@ -1844,10 +1853,7 @@ class Descent extends Php8 {
     private function binaryLoop(Expr $lhs, int $start, int $ctx): Expr {
         for (;;) {
             $id = $this->id;
-            if (!isset(self::BINARY_PREC[$id])) {
-                return $lhs;
-            }
-            $prec = self::BINARY_PREC[$id];
+            $prec = self::binaryPrec($id);
             if ($prec < $ctx) {
                 return $lhs;
             }
