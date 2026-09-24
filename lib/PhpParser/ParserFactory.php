@@ -19,13 +19,13 @@ class ParserFactory {
             $lexer = new Lexer\Emulative($version);
         }
         if ($version->id >= 80000) {
-            // PHP_PARSER_DESCENT=1 selects the hand-written recursive-descent parser (the table parser
-            // remains its fallback for inputs it rejects)
-            $descent = getenv('PHP_PARSER_DESCENT');
-            if ($descent !== false && $descent !== '' && $descent !== '0') {
-                return new Descent($lexer, $version);
+            // The hand-written recursive-descent parser is the default; it falls back to the table parser
+            // for inputs it rejects. PHP_PARSER_LALR=1 selects the table parser directly.
+            $lalr = getenv('PHP_PARSER_LALR');
+            if ($lalr !== false && $lalr !== '' && $lalr !== '0') {
+                return new Php8($lexer, $version);
             }
-            return new Php8($lexer, $version);
+            return new Descent($lexer, $version);
         }
         return new Php7($lexer, $version);
     }
