@@ -98,9 +98,9 @@ abstract class ClassLike extends Node\Stmt {
      * @return ClassMethod|null Method node or null if the method does not exist
      */
     public function getMethod(string $name): ?ClassMethod {
-        $lowerName = strtolower($name);
+        // compared case-insensitively in place: no lowercase copy per method
         foreach ($this->stmts as $stmt) {
-            if ($stmt instanceof ClassMethod && $lowerName === $stmt->name->toLowerString()) {
+            if ($stmt instanceof ClassMethod && strcasecmp($name, $stmt->name->name) === 0) {
                 return $stmt;
             }
         }
