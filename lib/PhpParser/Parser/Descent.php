@@ -227,6 +227,9 @@ class Descent extends Php8 {
         $this->parenthesizedArrowFunctions = new \SplObjectStorage();
         $this->tokens = $this->lexer->tokenize($code, $this->errorHandler);
         $this->fellBack = false;
+        // a parse that ends in a thrown Error leaves the comment state behind: start clean
+        $this->commentHolders = [];
+        $this->pendingComments = [];
         $result = $this->doParse();
         $createdArrays = $this->createdArrays;
         if ($createdArrays !== null) {
