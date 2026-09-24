@@ -31,7 +31,7 @@ abstract class KeywordEmulator extends TokenEmulator {
         foreach ($tokens as $i => $token) {
             if ($token->id === T_STRING && strtolower($token->text) === $keywordString
                     && $this->isKeywordContext($tokens, $i)) {
-                $token->id = $this->getKeywordToken();
+                $tokens[$i] = new Token($this->getKeywordToken(), $token->text, $token->line, $token->pos);
             }
         }
 
@@ -58,9 +58,9 @@ abstract class KeywordEmulator extends TokenEmulator {
      */
     public function reverseEmulate(string $code, array $tokens): array {
         $keywordToken = $this->getKeywordToken();
-        foreach ($tokens as $token) {
+        foreach ($tokens as $i => $token) {
             if ($token->id === $keywordToken) {
-                $token->id = \T_STRING;
+                $tokens[$i] = new Token(\T_STRING, $token->text, $token->line, $token->pos);
             }
         }
 

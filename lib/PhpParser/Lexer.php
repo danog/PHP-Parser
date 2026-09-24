@@ -93,9 +93,13 @@ class Lexer {
                 }
                 $followedByVarOrVarArg = isset($tokens[$next]) &&
                     $tokens[$next]->is([\T_VARIABLE, \T_ELLIPSIS]);
-                $token->id = $followedByVarOrVarArg
-                    ? \T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG
-                    : \T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG;
+                // tokens are never written after construction: replace the object instead
+                $tokens[$i] = new Token(
+                    $followedByVarOrVarArg
+                        ? \T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG
+                        : \T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG,
+                    $token->text, $token->line, $token->pos
+                );
             }
         }
 

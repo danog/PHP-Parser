@@ -153,10 +153,12 @@ class Emulative extends Lexer {
             /** @var Token $token */
             $token = $tokens[$i];
             $pos = $token->pos;
-            $token->pos += $posDelta;
-            $token->line += $lineDelta;
+            $newPos = $pos + $posDelta;
+            $newLine = $token->line + $lineDelta;
+            $text = $token->text;
             $localPosDelta = 0;
-            $len = \strlen($token->text);
+            $removed = false;
+            $len = \strlen($text);
             while ($patchPos >= $pos && $patchPos < $pos + $len) {
                 $patchTextLen = \strlen($patchText);
                 if ($patchType === 'remove') {
@@ -166,26 +168,21 @@ class Emulative extends Lexer {
                         $tokens = array_values($tokens);
                         $i--;
                         $c--;
+                        $removed = true;
                     } else {
                         // Remove from token string
-                        $token->text = substr_replace(
-                            $token->text, '', $patchPos - $pos + $localPosDelta, $patchTextLen
-                        );
+                        $text = substr_replace($text, '', $patchPos - $pos + $localPosDelta, $patchTextLen);
                         $localPosDelta -= $patchTextLen;
                     }
                     $lineDelta -= \substr_count($patchText, "\n");
                 } elseif ($patchType === 'add') {
                     // Insert into the token string
-                    $token->text = substr_replace(
-                        $token->text, $patchText, $patchPos - $pos + $localPosDelta, 0
-                    );
+                    $text = substr_replace($text, $patchText, $patchPos - $pos + $localPosDelta, 0);
                     $localPosDelta += $patchTextLen;
                     $lineDelta += \substr_count($patchText, "\n");
                 } elseif ($patchType === 'replace') {
                     // Replace inside the token string
-                    $token->text = substr_replace(
-                        $token->text, $patchText, $patchPos - $pos + $localPosDelta, $patchTextLen
-                    );
+                    $text = substr_replace($text, $patchText, $patchPos - $pos + $localPosDelta, $patchTextLen);
                 } else {
                     assert(false);
                 }
@@ -201,6 +198,10 @@ class Emulative extends Lexer {
                 list($patchPos, $patchType, $patchText) = $this->patches[$patchIdx];
             }
 
+            if (!$removed && ($newPos !== $pos || $newLine !== $token->line || $text !== $token->text)) {
+                // tokens are never written after construction: replace the object instead
+                $tokens[$i] = new Token($token->id, $text, $newLine, $newPos);
+            }
             $posDelta += $localPosDelta;
         }
         return $tokens;
