@@ -44,6 +44,18 @@ class New_ extends CallLike {
         return ['class' => $this->class, 'args' => $this->args];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->class = $traverser->traverseRequiredChildNode($this->class);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->args = $traverser->traverseArray($this->args);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

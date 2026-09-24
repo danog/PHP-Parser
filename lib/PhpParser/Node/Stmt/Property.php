@@ -57,6 +57,28 @@ class Property extends Node\Stmt {
         return ['attrGroups' => $this->attrGroups, 'flags' => $this->flags, 'type' => $this->type, 'props' => $this->props, 'hooks' => $this->hooks];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->attrGroups = $traverser->traverseArray($this->attrGroups);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->type !== null) {
+            $this->type = $traverser->traverseChildNode($this->type);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->props = $traverser->traverseArray($this->props);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->hooks = $traverser->traverseArray($this->hooks);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

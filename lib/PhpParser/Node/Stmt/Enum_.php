@@ -51,6 +51,34 @@ class Enum_ extends ClassLike {
         return ['attrGroups' => $this->attrGroups, 'name' => $this->name, 'scalarType' => $this->scalarType, 'implements' => $this->implements, 'stmts' => $this->stmts];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->attrGroups = $traverser->traverseArray($this->attrGroups);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->name !== null) {
+            $this->name = $traverser->traverseChildNode($this->name);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        if ($this->scalarType !== null) {
+            $this->scalarType = $traverser->traverseChildNode($this->scalarType);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->implements = $traverser->traverseArray($this->implements);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->stmts = $traverser->traverseArray($this->stmts);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

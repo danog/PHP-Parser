@@ -47,6 +47,20 @@ class ArrayItem extends NodeAbstract {
         return ['key' => $this->key, 'value' => $this->value, 'byRef' => $this->byRef, 'unpack' => $this->unpack];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        if ($this->key !== null) {
+            $this->key = $traverser->traverseChildNode($this->key);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->value = $traverser->traverseRequiredChildNode($this->value);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

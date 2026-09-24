@@ -41,6 +41,18 @@ class FuncCall extends CallLike {
         return ['name' => $this->name, 'args' => $this->args];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->name = $traverser->traverseRequiredChildNode($this->name);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->args = $traverser->traverseArray($this->args);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

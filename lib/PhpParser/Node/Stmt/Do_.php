@@ -40,6 +40,18 @@ class Do_ extends Node\Stmt {
         return ['stmts' => $this->stmts, 'cond' => $this->cond];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->stmts = $traverser->traverseArray($this->stmts);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->cond = $traverser->traverseRequiredChildNode($this->cond);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

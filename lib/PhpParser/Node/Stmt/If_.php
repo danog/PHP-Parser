@@ -53,6 +53,28 @@ class If_ extends Node\Stmt {
         return ['cond' => $this->cond, 'stmts' => $this->stmts, 'elseifs' => $this->elseifs, 'else' => $this->else];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->cond = $traverser->traverseRequiredChildNode($this->cond);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->stmts = $traverser->traverseArray($this->stmts);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->elseifs = $traverser->traverseArray($this->elseifs);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->else !== null) {
+            $this->else = $traverser->traverseChildNode($this->else);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

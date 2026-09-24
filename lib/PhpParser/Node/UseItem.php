@@ -48,6 +48,20 @@ class UseItem extends NodeAbstract {
         return ['type' => $this->type, 'name' => $this->name, 'alias' => $this->alias];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->name = $traverser->traverseRequiredChildNode($this->name);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->alias !== null) {
+            $this->alias = $traverser->traverseChildNode($this->alias);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

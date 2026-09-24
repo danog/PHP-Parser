@@ -44,6 +44,26 @@ class Alias extends Node\Stmt\TraitUseAdaptation {
         return ['trait' => $this->trait, 'method' => $this->method, 'newModifier' => $this->newModifier, 'newName' => $this->newName];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        if ($this->trait !== null) {
+            $this->trait = $traverser->traverseChildNode($this->trait);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->method = $traverser->traverseRequiredChildNode($this->method);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->newName !== null) {
+            $this->newName = $traverser->traverseChildNode($this->newName);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

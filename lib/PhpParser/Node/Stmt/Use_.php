@@ -54,6 +54,14 @@ class Use_ extends Stmt {
         return ['type' => $this->type, 'uses' => $this->uses];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->uses = $traverser->traverseArray($this->uses);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

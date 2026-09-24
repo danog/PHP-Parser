@@ -44,6 +44,24 @@ class Ternary extends Expr {
         return ['cond' => $this->cond, 'if' => $this->if, 'else' => $this->else];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->cond = $traverser->traverseRequiredChildNode($this->cond);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->if !== null) {
+            $this->if = $traverser->traverseChildNode($this->if);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->else = $traverser->traverseRequiredChildNode($this->else);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

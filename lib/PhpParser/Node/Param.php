@@ -73,6 +73,34 @@ class Param extends NodeAbstract {
         return ['attrGroups' => $this->attrGroups, 'flags' => $this->flags, 'type' => $this->type, 'byRef' => $this->byRef, 'variadic' => $this->variadic, 'var' => $this->var, 'default' => $this->default, 'hooks' => $this->hooks];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->attrGroups = $traverser->traverseArray($this->attrGroups);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->type !== null) {
+            $this->type = $traverser->traverseChildNode($this->type);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->var = $traverser->traverseRequiredChildNode($this->var);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->default !== null) {
+            $this->default = $traverser->traverseChildNode($this->default);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->hooks = $traverser->traverseArray($this->hooks);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

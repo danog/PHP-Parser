@@ -54,6 +54,26 @@ class For_ extends Node\Stmt {
         return ['init' => $this->init, 'cond' => $this->cond, 'loop' => $this->loop, 'stmts' => $this->stmts];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->init = $traverser->traverseArray($this->init);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->cond = $traverser->traverseArray($this->cond);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->loop = $traverser->traverseArray($this->loop);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->stmts = $traverser->traverseArray($this->stmts);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

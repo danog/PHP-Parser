@@ -40,6 +40,18 @@ abstract class BinaryOp extends Expr {
         return ['left' => $this->left, 'right' => $this->right];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->left = $traverser->traverseRequiredChildNode($this->left);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->right = $traverser->traverseRequiredChildNode($this->right);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

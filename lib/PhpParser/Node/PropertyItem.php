@@ -41,6 +41,20 @@ class PropertyItem extends NodeAbstract {
         return ['name' => $this->name, 'default' => $this->default];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->name = $traverser->traverseRequiredChildNode($this->name);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->default !== null) {
+            $this->default = $traverser->traverseChildNode($this->default);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

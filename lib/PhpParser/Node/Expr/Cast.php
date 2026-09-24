@@ -36,6 +36,14 @@ abstract class Cast extends Expr {
         return ['expr' => $this->expr];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->expr = $traverser->traverseRequiredChildNode($this->expr);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

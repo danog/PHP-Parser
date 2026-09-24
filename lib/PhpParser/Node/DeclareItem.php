@@ -41,6 +41,18 @@ class DeclareItem extends NodeAbstract {
         return ['key' => $this->key, 'value' => $this->value];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->key = $traverser->traverseRequiredChildNode($this->key);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->value = $traverser->traverseRequiredChildNode($this->value);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

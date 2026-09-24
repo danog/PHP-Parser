@@ -67,6 +67,32 @@ class Function_ extends Node\Stmt implements FunctionLike {
         return ['attrGroups' => $this->attrGroups, 'byRef' => $this->byRef, 'name' => $this->name, 'params' => $this->params, 'returnType' => $this->returnType, 'stmts' => $this->stmts];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->attrGroups = $traverser->traverseArray($this->attrGroups);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->name = $traverser->traverseRequiredChildNode($this->name);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->params = $traverser->traverseArray($this->params);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->returnType !== null) {
+            $this->returnType = $traverser->traverseChildNode($this->returnType);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->stmts = $traverser->traverseArray($this->stmts);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

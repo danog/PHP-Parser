@@ -36,6 +36,19 @@ class Variable extends Expr {
         return ['name' => $this->name];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $__name = $this->name;
+        if ($__name instanceof \PhpParser\Node) {
+            $this->name = $traverser->traverseChildNode($__name);
+        } elseif (\is_array($__name)) {
+            $this->name = $traverser->traverseArray($__name);
+        }
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

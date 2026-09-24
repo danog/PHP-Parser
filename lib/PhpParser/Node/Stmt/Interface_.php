@@ -47,6 +47,28 @@ class Interface_ extends ClassLike {
         return ['attrGroups' => $this->attrGroups, 'name' => $this->name, 'extends' => $this->extends, 'stmts' => $this->stmts];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->attrGroups = $traverser->traverseArray($this->attrGroups);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->name !== null) {
+            $this->name = $traverser->traverseChildNode($this->name);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->extends = $traverser->traverseArray($this->extends);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->stmts = $traverser->traverseArray($this->stmts);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

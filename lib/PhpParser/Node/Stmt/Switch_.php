@@ -40,6 +40,18 @@ class Switch_ extends Node\Stmt {
         return ['cond' => $this->cond, 'cases' => $this->cases];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->cond = $traverser->traverseRequiredChildNode($this->cond);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->cases = $traverser->traverseArray($this->cases);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

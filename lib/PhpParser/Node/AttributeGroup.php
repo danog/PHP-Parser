@@ -34,6 +34,14 @@ class AttributeGroup extends NodeAbstract {
         return ['attrs' => $this->attrs];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->attrs = $traverser->traverseArray($this->attrs);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

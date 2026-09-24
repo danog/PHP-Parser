@@ -68,6 +68,28 @@ class ArrowFunction extends Expr implements FunctionLike {
         return ['attrGroups' => $this->attrGroups, 'static' => $this->static, 'byRef' => $this->byRef, 'params' => $this->params, 'returnType' => $this->returnType, 'expr' => $this->expr];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->attrGroups = $traverser->traverseArray($this->attrGroups);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->params = $traverser->traverseArray($this->params);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->returnType !== null) {
+            $this->returnType = $traverser->traverseChildNode($this->returnType);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->expr = $traverser->traverseRequiredChildNode($this->expr);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

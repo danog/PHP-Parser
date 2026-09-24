@@ -41,6 +41,20 @@ class Declare_ extends Node\Stmt {
         return ['declares' => $this->declares, 'stmts' => $this->stmts];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->declares = $traverser->traverseArray($this->declares);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->stmts !== null) {
+            $this->stmts = $traverser->traverseArray($this->stmts);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

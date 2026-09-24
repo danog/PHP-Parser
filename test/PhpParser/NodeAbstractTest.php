@@ -22,6 +22,20 @@ class DummyNode extends NodeAbstract {
         return ['subNode1' => $this->subNode1, 'subNode2' => $this->subNode2];
     }
 
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        foreach ($this->getSubNodeNames() as $name) {
+            $child = $this->getSubNode($name);
+            if ($child instanceof \PhpParser\Node) {
+                $this->setSubNode($name, $traverser->traverseChildNode($child));
+            } elseif (\is_array($child)) {
+                $this->setSubNode($name, $traverser->traverseArray($child));
+            }
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+    }
+
     public function getSubNode(string $name): mixed {
         return match ($name) {
             'subNode1' => $this->subNode1,

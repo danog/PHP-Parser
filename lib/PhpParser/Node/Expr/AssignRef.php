@@ -40,6 +40,18 @@ class AssignRef extends Expr {
         return ['var' => $this->var, 'expr' => $this->expr];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->var = $traverser->traverseRequiredChildNode($this->var);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->expr = $traverser->traverseRequiredChildNode($this->expr);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

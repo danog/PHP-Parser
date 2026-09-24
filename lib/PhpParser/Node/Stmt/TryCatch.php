@@ -44,6 +44,24 @@ class TryCatch extends Node\Stmt {
         return ['stmts' => $this->stmts, 'catches' => $this->catches, 'finally' => $this->finally];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->stmts = $traverser->traverseArray($this->stmts);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->catches = $traverser->traverseArray($this->catches);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->finally !== null) {
+            $this->finally = $traverser->traverseChildNode($this->finally);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

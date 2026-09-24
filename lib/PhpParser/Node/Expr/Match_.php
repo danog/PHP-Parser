@@ -39,6 +39,18 @@ class Match_ extends Node\Expr {
         return ['cond' => $this->cond, 'arms' => $this->arms];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->cond = $traverser->traverseRequiredChildNode($this->cond);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->arms = $traverser->traverseArray($this->arms);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

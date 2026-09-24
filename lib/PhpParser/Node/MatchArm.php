@@ -37,6 +37,20 @@ class MatchArm extends NodeAbstract {
         return ['conds' => $this->conds, 'body' => $this->body];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        if ($this->conds !== null) {
+            $this->conds = $traverser->traverseArray($this->conds);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->body = $traverser->traverseRequiredChildNode($this->body);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

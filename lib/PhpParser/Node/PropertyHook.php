@@ -120,6 +120,31 @@ class PropertyHook extends NodeAbstract implements FunctionLike {
         return ['attrGroups' => $this->attrGroups, 'flags' => $this->flags, 'byRef' => $this->byRef, 'name' => $this->name, 'params' => $this->params, 'body' => $this->body];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->attrGroups = $traverser->traverseArray($this->attrGroups);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->name = $traverser->traverseRequiredChildNode($this->name);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->params = $traverser->traverseArray($this->params);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $__body = $this->body;
+        if ($__body instanceof \PhpParser\Node) {
+            $this->body = $traverser->traverseChildNode($__body);
+        } elseif (\is_array($__body)) {
+            $this->body = $traverser->traverseArray($__body);
+        }
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

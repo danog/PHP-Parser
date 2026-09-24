@@ -40,6 +40,14 @@ class ClosureUse extends NodeAbstract {
         return ['var' => $this->var, 'byRef' => $this->byRef];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->var = $traverser->traverseRequiredChildNode($this->var);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

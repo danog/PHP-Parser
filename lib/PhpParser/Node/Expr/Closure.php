@@ -72,6 +72,32 @@ class Closure extends Expr implements FunctionLike {
         return ['attrGroups' => $this->attrGroups, 'static' => $this->static, 'byRef' => $this->byRef, 'params' => $this->params, 'uses' => $this->uses, 'returnType' => $this->returnType, 'stmts' => $this->stmts];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->attrGroups = $traverser->traverseArray($this->attrGroups);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->params = $traverser->traverseArray($this->params);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->uses = $traverser->traverseArray($this->uses);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->returnType !== null) {
+            $this->returnType = $traverser->traverseChildNode($this->returnType);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->stmts = $traverser->traverseArray($this->stmts);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

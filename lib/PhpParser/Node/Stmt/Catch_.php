@@ -47,6 +47,24 @@ class Catch_ extends Node\Stmt {
         return ['types' => $this->types, 'var' => $this->var, 'stmts' => $this->stmts];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->types = $traverser->traverseArray($this->types);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->var !== null) {
+            $this->var = $traverser->traverseChildNode($this->var);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->stmts = $traverser->traverseArray($this->stmts);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

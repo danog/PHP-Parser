@@ -36,6 +36,11 @@ class HaltCompiler extends Stmt {
         return ['remaining' => $this->remaining];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        // no child nodes
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

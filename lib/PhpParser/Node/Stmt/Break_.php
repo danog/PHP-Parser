@@ -36,6 +36,16 @@ class Break_ extends Node\Stmt {
         return ['num' => $this->num];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        if ($this->num !== null) {
+            $this->num = $traverser->traverseChildNode($this->num);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

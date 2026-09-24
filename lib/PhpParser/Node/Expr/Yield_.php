@@ -40,6 +40,22 @@ class Yield_ extends Expr {
         return ['key' => $this->key, 'value' => $this->value];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        if ($this->key !== null) {
+            $this->key = $traverser->traverseChildNode($this->key);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        if ($this->value !== null) {
+            $this->value = $traverser->traverseChildNode($this->value);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

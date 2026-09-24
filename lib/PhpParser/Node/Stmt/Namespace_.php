@@ -44,6 +44,20 @@ class Namespace_ extends Node\Stmt {
         return ['name' => $this->name, 'stmts' => $this->stmts];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        if ($this->name !== null) {
+            $this->name = $traverser->traverseChildNode($this->name);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->stmts = $traverser->traverseArray($this->stmts);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

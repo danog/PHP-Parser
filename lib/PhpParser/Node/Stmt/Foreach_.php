@@ -57,6 +57,28 @@ class Foreach_ extends Node\Stmt {
         return ['expr' => $this->expr, 'keyVar' => $this->keyVar, 'byRef' => $this->byRef, 'valueVar' => $this->valueVar, 'stmts' => $this->stmts];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->expr = $traverser->traverseRequiredChildNode($this->expr);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->keyVar !== null) {
+            $this->keyVar = $traverser->traverseChildNode($this->keyVar);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+        $this->valueVar = $traverser->traverseRequiredChildNode($this->valueVar);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->stmts = $traverser->traverseArray($this->stmts);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

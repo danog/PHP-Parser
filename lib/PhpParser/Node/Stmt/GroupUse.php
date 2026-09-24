@@ -48,6 +48,18 @@ class GroupUse extends Stmt {
         return ['type' => $this->type, 'prefix' => $this->prefix, 'uses' => $this->uses];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->prefix = $traverser->traverseRequiredChildNode($this->prefix);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        $this->uses = $traverser->traverseArray($this->uses);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {

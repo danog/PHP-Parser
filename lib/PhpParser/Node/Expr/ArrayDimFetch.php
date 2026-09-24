@@ -40,6 +40,20 @@ class ArrayDimFetch extends Expr {
         return ['var' => $this->var, 'dim' => $this->dim];
     }
 
+    #[\Override]
+    public function traverseSubNodes(\PhpParser\NodeTraverser $traverser): void {
+        $this->var = $traverser->traverseRequiredChildNode($this->var);
+        if ($traverser->stopTraversal) {
+            return;
+        }
+        if ($this->dim !== null) {
+            $this->dim = $traverser->traverseChildNode($this->dim);
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+    }
+
 
     /** @return \PhpParser\Node|list<\PhpParser\Node|null>|string|int|float|bool|null */
     public function getSubNode(string $name): mixed {
