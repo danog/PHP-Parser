@@ -3,6 +3,7 @@
 namespace PhpParser\Internal;
 
 if (\PHP_VERSION_ID >= 80000) {
+    /** @psalm-immutable */
     class TokenPolyfill extends \PhpToken {
     }
     return;
@@ -14,6 +15,8 @@ if (\PHP_VERSION_ID >= 80000) {
  * not meet our requirements.
  *
  * @internal
+  *
+ * @psalm-immutable
  */
 class TokenPolyfill {
     /** @var int The ID of the token. Either a T_* constant of a character code < 256. */

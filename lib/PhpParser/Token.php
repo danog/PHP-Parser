@@ -3,7 +3,9 @@
 namespace PhpParser;
 
 /**
- * A PHP token. On PHP 8.0 this extends from PhpToken.
+ * A PHP token. On PHP 8.0 this extends from PhpToken. Never written after construction.
+ *
+ * @psalm-immutable
  */
 class Token extends Internal\TokenPolyfill {
     /** Get (exclusive) zero-based end position of the token. */
