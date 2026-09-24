@@ -1255,6 +1255,7 @@ class Descent extends Php8 {
         return $consts;
     }
 
+    /** @param list<Node\AttributeGroup> $attrGroups */
     private function functionDeclaration(int $start, array $attrGroups): Stmt {
         $this->expect(\T_FUNCTION);
         $byRef = $this->optionalRef();
@@ -1275,6 +1276,7 @@ class Descent extends Php8 {
         ], $this->attrs($start));
     }
 
+    /** @param list<Node\AttributeGroup> $attrGroups */
     private function classDeclaration(int $start, array $attrGroups): Stmt {
         $flags = $this->classEntryType();
         $namePos = $this->pos;
@@ -1305,6 +1307,7 @@ class Descent extends Php8 {
         return $flags;
     }
 
+    /** @param list<Node\AttributeGroup> $attrGroups */
     private function interfaceDeclaration(int $start, array $attrGroups): Stmt {
         $this->expect(\T_INTERFACE);
         $namePos = $this->pos;
@@ -1316,6 +1319,7 @@ class Descent extends Php8 {
         return $iface;
     }
 
+    /** @param list<Node\AttributeGroup> $attrGroups */
     private function traitDeclaration(int $start, array $attrGroups): Stmt {
         $this->expect(\T_TRAIT);
         $name = $this->identifierNotReserved();
@@ -1323,6 +1327,7 @@ class Descent extends Php8 {
         return new Stmt\Trait_($name, ['stmts' => $stmts, 'attrGroups' => $attrGroups], $this->attrs($start));
     }
 
+    /** @param list<Node\AttributeGroup> $attrGroups */
     private function enumDeclaration(int $start, array $attrGroups): Stmt {
         $this->expect(\T_ENUM);
         $namePos = $this->pos;
@@ -2107,6 +2112,7 @@ class Descent extends Php8 {
         return $this->postfixExpr();
     }
 
+    /** @param list<Node\AttributeGroup> $attrGroups */
     private function closureWithAttrs(int $start, array $attrGroups): Expr {
         if ($this->is(\T_STATIC)) {
             $this->advance();
@@ -2116,6 +2122,7 @@ class Descent extends Php8 {
     }
 
     /** Closure or arrow function; the `static` keyword (if any) has been consumed. */
+    /** @param list<Node\AttributeGroup> $attrGroups */
     private function closure(int $start, array $attrGroups, bool $static): Expr {
         if ($this->is(\T_FN)) {
             $this->advance();
