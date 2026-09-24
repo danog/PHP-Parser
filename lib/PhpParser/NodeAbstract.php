@@ -179,4 +179,28 @@ abstract class NodeAbstract implements Node, \JsonSerializable {
         }
         return $result;
     }
+
+    /**
+     * Visits every child node with the traverser. The bundled node classes override this with generated code
+     * (direct property access, each child through NodeTraverser::traverseChildNode() / traverseArray()); this
+     * default walks getSubNodes() for other subclasses.
+     */
+    public function traverseSubNodes(NodeTraverser $traverser): void {
+        foreach ($this->getSubNodes() as $name => $subNode) {
+            if ($subNode instanceof Node) {
+                $traversed = $traverser->traverseChildNode($subNode);
+                if ($traversed !== $subNode) {
+                    $this->setSubNode($name, $traversed);
+                }
+            } elseif (\is_array($subNode)) {
+                $traversed = $traverser->traverseArray($subNode);
+                if ($traversed !== $subNode) {
+                    $this->setSubNode($name, $traversed);
+                }
+            }
+            if ($traverser->stopTraversal) {
+                return;
+            }
+        }
+    }
 }

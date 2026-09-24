@@ -36,12 +36,6 @@ interface Node {
     public function getSubNodes(): array;
 
     /**
-     * Visits every child node with the traverser (generated per node class: direct property access, each
-     * child through NodeTraverser::traverseChildNode() / traverseArray(), stopping when the traverser stops).
-     */
-    public function traverseSubNodes(NodeTraverser $traverser): void;
-
-    /**
      * Sets the sub node with the given name (one of getSubNodeNames()).
      */
     /** @param Node|list<Node|null>|string|int|float|bool|null $value */

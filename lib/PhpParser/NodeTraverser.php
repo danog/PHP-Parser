@@ -72,9 +72,29 @@ class NodeTraverser implements NodeTraverserInterface {
      * @param Node $node Node to traverse.
      */
     protected function traverseNode(Node $node): void {
-        // each node class visits its own children with direct property access (generated code): no
-        // per-node map of children, no child lookup by name
-        $node->traverseSubNodes($this);
+        if ($node instanceof NodeAbstract) {
+            // each bundled node class visits its own children with direct property access (generated code): no
+            // per-node map of children, no child lookup by name
+            $node->traverseSubNodes($this);
+            return;
+        }
+        // a foreign Node implementation: walk its getSubNodes()
+        foreach ($node->getSubNodes() as $name => $subNode) {
+            if ($subNode instanceof Node) {
+                $traversed = $this->traverseChildNode($subNode);
+                if ($traversed !== $subNode) {
+                    $node->setSubNode($name, $traversed);
+                }
+            } elseif (\is_array($subNode)) {
+                $traversed = $this->traverseArray($subNode);
+                if ($traversed !== $subNode) {
+                    $node->setSubNode($name, $traversed);
+                }
+            }
+            if ($this->stopTraversal) {
+                return;
+            }
+        }
     }
 
     /**
