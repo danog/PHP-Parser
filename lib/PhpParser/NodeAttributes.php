@@ -9,7 +9,7 @@ use PhpParser\Node\Name;
  * and the annotations visitors attach). This replaces the string-keyed attribute array: the compiled
  * program never looks attributes up by name.
  *
- * @psalm-type AttributeArray = array{startLine?: int, endLine?: int, startTokenPos?: int, endTokenPos?: int, startFilePos?: int, endFilePos?: int, kind?: int, comments?: list<Comment>, rawValue?: string, docLabel?: string, docIndentation?: string, propertyName?: string, hasLeadingNewline?: bool, shouldPrintRawValue?: bool, pure?: bool, memoizable?: bool, external_mutation_free?: bool, allMatched?: bool, assigned_var_id?: string, recursive_var_id?: string, resolvedName?: Name|string, namespacedName?: Name|string, originalName?: Name|string, parent?: Node, previous?: Node, next?: Node, origNode?: Node, weak_parent?: \WeakReference<Node>, weak_previous?: \WeakReference<Node>, weak_next?: \WeakReference<Node>}
+ * @psalm-type AttributeArray = array{startLine?: int, endLine?: int, startTokenPos?: int, endTokenPos?: int, startFilePos?: int, endFilePos?: int, kind?: int, comments?: list<Comment>, rawValue?: string, docLabel?: string, docIndentation?: string, propertyName?: string, hasLeadingNewline?: bool, shouldPrintRawValue?: bool, pure?: bool, memoizable?: bool, external_mutation_free?: bool, allMatched?: bool, assigned_var_id?: string, recursive_var_id?: string, resolvedName?: Name|string, resolvedId?: int, namespacedName?: Name|string, originalName?: Name|string, parent?: Node, previous?: Node, next?: Node, origNode?: Node, weak_parent?: \WeakReference<Node>, weak_previous?: \WeakReference<Node>, weak_next?: \WeakReference<Node>}
  */
 final class NodeAttributes {
     public ?int $startLine = null;
@@ -36,6 +36,7 @@ final class NodeAttributes {
     /** Psalm: the by-reference closure variable that makes a closure recursive */
     public ?string $recursive_var_id = null;
     public Name|string|null $resolvedName = null;
+    public ?int $resolvedId = null;
     public Name|string|null $namespacedName = null;
     public Name|string|null $originalName = null;
     public ?Node $parent = null;
@@ -118,6 +119,9 @@ final class NodeAttributes {
         }
         if (isset($attributes['resolvedName'])) {
             $a->resolvedName = $attributes['resolvedName'];
+        }
+        if (isset($attributes['resolvedId'])) {
+            $a->resolvedId = $attributes['resolvedId'];
         }
         if (isset($attributes['namespacedName'])) {
             $a->namespacedName = $attributes['namespacedName'];
@@ -208,6 +212,9 @@ final class NodeAttributes {
         }
         if ($this->resolvedName !== null) {
             $out['resolvedName'] = $this->resolvedName;
+        }
+        if ($this->resolvedId !== null) {
+            $out['resolvedId'] = $this->resolvedId;
         }
         if ($this->namespacedName !== null) {
             $out['namespacedName'] = $this->namespacedName;
